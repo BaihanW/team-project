@@ -1,13 +1,5 @@
 # Team Contract
 
-**Your team is free to revise this contract as your team wishes; we have scaffolded it with a recommended structure similar to the provided sample on Quercus.**
-
-After you reflect on past teamwork experiences and brainstorm a list of actions required for a positive teamwork experience, answer these questions. 
-
-Once you have all agreed on the contents of the team contract, make a PR to merge your team contract into the main branch of your team's repo on GitHub.
-
-**Please remember to remove any of the initial instruction text when your team finalizes your team contract; it should resemble the provided sample once complete, but with details specific to the expectations and norms agreed to by your entire team.**
-
 ---
 ## Purpose of this Contract
 
@@ -18,37 +10,36 @@ This contract sets out shared expectations and commitments for how our team will
 
 ### Communication
 
-* Which platform will you use for communication outside of class, when required for work on your course project? (Examples: Text message, Discord, WeChat, etc.)
+* The team will use Instagram as its primary communication platform. All members agree to check and respond to messages requiring a reply by 11:00 p.m. each day.
+  Mentions (@) should be used only when work-related communication is necessary. 
 
-* Each teammate agrees to respond to messages in at most how long? 1 day? 2 days? Some other amount of time? 
+* Members are also required to check the email linked to GitHub daily and report completed and pending tasks every Saturday evening.
 
-* What things should a teammate notify you about? (Examples: if they think they won't be able to meet a deadline, if they have to miss lecture, etc.)
-
-* Respectful and inclusive behaviour are necessary for smooth and productive communication. What are some respectful and inclusive behaviours you expect when communicating with each other during lectures, labs, or outside of class? (Examples: Actively listening to each team members ideas, giving everyone a chance to meaningfully contribute, etc.)
-
+* Any major design or architecture change must be discussed in a GitHub issue or RFC and remain open for feedback for at least 48 hours.(last as permanent record)
 ---
 
-### [Other Categories of norms and expectations go here]
+### Role of Maintainer
 
-* Based on your previous teamwork experiences, what other behaviours do you agree upon as a team?
-    - some examples of possible additional team norms and expectations are included in the sample team contract in case your team needs some help getting ideas for what else you want to include.
-
+* Since in this project everyone has the same submission requirement (one use case). Who ever finished their part first will be in this role. Others need to listen to him judging their codes and reply to each issue he wrote.
 ---
 
 ## Decision Making
+* This team would follow the form of voting when making decisions, since there is 5 people there would always be a exact outcome. However, if the vote is very close such as 2:3, it is possible that further discussion may happen such that one group would
+* Try to convince the other such that we can avoid conflict.
+* At the very end of the project, listen to the maintainer and change your code actively.
 
-* How will decisions about your team project be made? (Examples: By majority vote, by unanimous vote, etc.)
-
----
 ## Conflict resolution
 
-* How will your team resolve conflicts? (Example: by listening to each other's side of the issue and attempting to reach a compromise. By consulting a TA or instructor as a team, if a resolution has not yet been reached.)
-
----
+* when conflicts occur, we would  try our best to work it out, listen to what others have to say, be patient. If conflicts cannot be resolved, we would seek help of others such as TA or professor.
+* Members agree to push their code only to their own branch and always open a pr before merge.
+* When coding conflict occur, 4 out of 5 people need to look at the code and decide which version should we keep or further modifications are needed.
+* Members agree to follow the above procedure. The responsibility for code conflicts is evenly distributed between two individuals who will need to work together to meet the team's schedule
 
 ## Accountability
 
-* Reliability and accountability are also important aspects of teamwork. What are the responsibilities of each team member? (Example: completing their share of the work in a timely manner, seeking assistance from teammates/TAs/instructors when required, etc.)
+* this team would be expected to show up in tutorials, if not, there should be a valid reason such as: overwelming loads of work, test, or other problems. If team member decides not to show up, they would have to inform all the group members by instagram, and would have to make
+* up by doing the assigned group work discussed by group members present to the tutorial. This is same for lectures where there is iRat, team members are expected to show up on days where we have to collaborate as a team.
+
 
 ---
 
@@ -58,4 +49,4 @@ By signing below, we acknowledge that we have read, discussed, and agreed to the
 
 Team Member Signatures:
 
-(type names here)
+Tim Wu, Raymond zhang, DongMyeong Park, Phonlakrit (MP) Tiraratn
