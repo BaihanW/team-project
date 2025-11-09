@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CheckStyle-IDEA" serialisationVersion="2">
+<<<<<<< HEAD
+    <checkstyleVersion>12.0.1</checkstyleVersion>
+=======
     <checkstyleVersion>11.0.1</checkstyleVersion>
+>>>>>>> 48061f726cdba5e22177475b6b9318e43d4998a2
     <scanScope>JavaOnly</scanScope>
     <copyLibs>true</copyLibs>
     <option name="thirdPartyClasspath" />
