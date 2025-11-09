@@ -1,12 +1,13 @@
 package interface_adapter.search;
 
 /**
- * The state for the Login View Model.
+ * The state for the Search Model.
  */
 public class SearchState {
     private String locationName;
     private double latitude;
     private double longitude;
+    private String searchError;
 
     public double getLatitude() {
         return latitude;
@@ -23,8 +24,6 @@ public class SearchState {
     public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
-
-    private String searchError;
 
     public String getLocationName() {
         return locationName;

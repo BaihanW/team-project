@@ -1,9 +1,12 @@
 package use_case.search;
 
 /**
- * Output Data for the Login Use Case.
+ * Output Data for the Search Use Case.
  */
 public class SearchOutputData {
+    /**
+     * Formal out put data (partial information of Location)
+     */
     private final String locationName;
     private final double latitude;
     private final double longitude;

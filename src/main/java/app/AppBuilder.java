@@ -10,18 +10,22 @@ import use_case.search.SearchInteractor;
 import use_case.search.SearchOutputBoundary;
 import view.SearchView;
 import view.ViewManager;
-
 import javax.swing.*;
 import java.awt.*;
+import java.net.http.HttpClient;
 
+/**
+ * Builder of the final GUI
+ */
 public class AppBuilder {
+
     private final JPanel cardPanel = new JPanel();
     private final CardLayout cardLayout = new CardLayout();
     final ViewManagerModel viewManagerModel = new ViewManagerModel();
     ViewManager viewManager = new ViewManager(cardPanel, cardLayout, viewManagerModel);
 
-
-    final OSMDataAccessObject OSMDataAccessObject = new OSMDataAccessObject();
+    private final HttpClient client = HttpClient.newHttpClient();
+    final OSMDataAccessObject osmDataAccessObject = new OSMDataAccessObject(client);
 
 
     private SearchViewModel searchViewModel;
@@ -41,7 +45,7 @@ public class AppBuilder {
     public AppBuilder addSearchUseCase() {
         final SearchOutputBoundary searchOutputBoundary = new SearchPresenter(searchViewModel);
         final SearchInputBoundary searchInteractor = new SearchInteractor(
-                OSMDataAccessObject, searchOutputBoundary);
+                osmDataAccessObject, searchOutputBoundary);
 
         SearchController searchController = new SearchController(searchInteractor);
         searchView.setSearchController(searchController);

@@ -1,7 +1,7 @@
 package use_case.search;
 
 /**
- * Input Boundary for actions which are related to logging in.
+ * Input Boundary for actions which are related to search and display on map.
  */
 public interface SearchInputBoundary {
 
@@ -9,5 +9,5 @@ public interface SearchInputBoundary {
      * Executes the search use case.
      * @param searchInputData the input data
      */
-    void execute(SearchInputData searchInputData) throws Exception;
+    void execute(SearchInputData searchInputData);
 }

@@ -4,7 +4,7 @@ import use_case.search.SearchOutputBoundary;
 import use_case.search.SearchOutputData;
 
 /**
- * The Presenter for the Login Use Case.
+ * The Presenter for the Search Use Case.
  */
 public class SearchPresenter implements SearchOutputBoundary {
 
@@ -21,6 +21,7 @@ public class SearchPresenter implements SearchOutputBoundary {
         searchState.setLocationName(response.getLocationName());
         searchState.setLatitude(response.getLatitude());
         searchState.setLongitude(response.getLongitude());
+        searchState.setSearchError(null);
         this.searchViewModel.firePropertyChange();
     }
 

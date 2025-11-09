@@ -1,4 +1,4 @@
-package entity;
+package interface_adapter;
 
 public class MapState {
     private double centerLatitude;
