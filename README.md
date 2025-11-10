@@ -7,7 +7,7 @@ Follows Clean Architecture principles (Entities → Use Cases → Interface Adap
 ## Team Members
 - Baihan -
 - DongMyeong Park
--  
+- Raymond Zhang
 
 SwingTripPlanner Project Blueprint
 
