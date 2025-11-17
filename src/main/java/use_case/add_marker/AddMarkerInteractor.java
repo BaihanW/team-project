@@ -31,9 +31,9 @@ public class AddMarkerInteractor implements AddMarkerInputBoundary {
         Marker marker = new Marker(location);
         addMarkerAccessObj.save(marker);
 
-        AddMarkerOutputData =
+        AddMarkerOutputData outputData=
                 new  AddMarkerOutputData(lat, lon);
-        addMarkerPreseneter.prepareSuccessView(outputData);
+        addMarkerPresenter.prepareSuccessView(outputData);
     }
 
 
