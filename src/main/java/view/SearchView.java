@@ -39,6 +39,16 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
     private final List<GeoPosition> stopPositions = new ArrayList<>();
     private final List<entity.Location> currentSuggestions = new ArrayList<>();
 
+    // progress UI for rerouting
+    private final JPanel progressPanelContainer; // hold in bottom-right
+    private final JProgressBar rerouteProgressBar;
+    private final JLabel rerouteLabel;
+    private javax.swing.Timer progressTimer;
+    private int fakeProgress = 0;
+
+    /**
+     * Construct the SearchView JPanel from its SearchViewModel (contain states of the search view)
+     */
     public SearchView(SearchViewModel searchViewModel) {
         this.viewName = searchViewModel.getViewName();
         searchViewModel.addPropertyChangeListener(this);
@@ -330,6 +340,36 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         split.setOneTouchExpandable(true);
         this.add(split, BorderLayout.CENTER);
 
+        // create the bottom-right progress panel but keep it hidden until rerouting
+        JPanel progressBox = new JPanel();
+        progressBox.setLayout(new BoxLayout(progressBox, BoxLayout.Y_AXIS));
+        progressBox.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(new Color(180, 180, 180)),
+                BorderFactory.createEmptyBorder(8, 10, 8, 10)));
+        progressBox.setBackground(new Color(255, 255, 255, 230));
+
+        rerouteLabel = new JLabel("Rerouting...");
+        rerouteLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        rerouteLabel.setFont(rerouteLabel.getFont().deriveFont(Font.PLAIN, 12f));
+        progressBox.add(rerouteLabel);
+        progressBox.add(Box.createRigidArea(new Dimension(0,6)));
+
+        rerouteProgressBar = new JProgressBar(0, 100);
+        rerouteProgressBar.setValue(0);
+        rerouteProgressBar.setPreferredSize(new Dimension(220, 14));
+        rerouteProgressBar.setForeground(new Color(0, 120, 255));
+        rerouteProgressBar.setBorderPainted(false);
+        rerouteProgressBar.setStringPainted(false);
+        progressBox.add(rerouteProgressBar);
+
+        progressPanelContainer = new JPanel(new FlowLayout(FlowLayout.RIGHT, 16, 8));
+        progressPanelContainer.setOpaque(false);
+        progressPanelContainer.add(progressBox);
+        progressPanelContainer.setVisible(false);
+
+        this.add(progressPanelContainer, BorderLayout.SOUTH);
+
+        // wire up actions
         up.addActionListener(e -> moveSelected(-1));
         down.addActionListener(e -> moveSelected(1));
         remove.addActionListener(e -> removeSelected());
@@ -363,17 +403,56 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         });
     }
 
+    private void showRerouteProgress() {
+        SwingUtilities.invokeLater(() -> {
+            fakeProgress = 0;
+            rerouteProgressBar.setValue(0);
+            progressPanelContainer.setVisible(true);
+            // start a timer to increment progress up to 95% while real work is running
+            if (progressTimer != null && progressTimer.isRunning()) progressTimer.stop();
+            progressTimer = new javax.swing.Timer(120, e -> {
+                // increase by small random-ish increments to look natural
+                int add = 3 + (int) (Math.random() * 6);
+                fakeProgress = Math.min(95, fakeProgress + add);
+                rerouteProgressBar.setValue(fakeProgress);
+            });
+            progressTimer.start();
+        });
+    }
+
+    private void hideRerouteProgress() {
+        SwingUtilities.invokeLater(() -> {
+            // stop timer and set to complete, then hide after a short delay
+            if (progressTimer != null) {
+                progressTimer.stop();
+            }
+            rerouteProgressBar.setValue(100);
+            // fade-out delay
+            javax.swing.Timer t = new javax.swing.Timer(300, e -> {
+                progressPanelContainer.setVisible(false);
+                ((javax.swing.Timer) e.getSource()).stop();
+            });
+            t.setRepeats(false);
+            t.start();
+        });
+    }
+
     private void computeAndDisplayRoute() {
         if (routingDao == null) {
             JOptionPane.showMessageDialog(this, "Routing backend not configured.");
             return;
         }
 
+        // Need at least two stops to route through
         if (stopPositions.size() < 2) {
             JOptionPane.showMessageDialog(this, "Add at least two stops to compute a full route.");
             return;
         }
 
+        // show progress UI
+        showRerouteProgress();
+
+        // Compute route segments between successive stops and pass segments to map so painter can render per-segment opacity
         SwingWorker<List<List<org.jxmapviewer.viewer.GeoPosition>>, Void> worker = new SwingWorker<>() {
             @Override
             protected List<List<org.jxmapviewer.viewer.GeoPosition>> doInBackground() throws Exception {
@@ -412,6 +491,9 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
                     }
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(SearchView.this, "Routing error: " + e.getMessage());
+                } finally {
+                    // always hide progress when the worker finishes
+                    hideRerouteProgress();
                 }
             }
         };
