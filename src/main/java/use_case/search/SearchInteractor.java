@@ -4,9 +4,6 @@ import entity.Location;
 
 import java.io.IOException;
 
-/**
- * The Search Interactor.
- */
 public class SearchInteractor implements SearchInputBoundary {
     private final SearchDataAccessInterface searchDataAccessObj;
     private final SearchOutputBoundary searchPresenter;

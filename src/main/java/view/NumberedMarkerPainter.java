@@ -35,22 +35,18 @@ public class NumberedMarkerPainter implements Painter<JXMapViewer> {
             double x = pt.getX() - viewport.getX();
             double y = pt.getY() - viewport.getY();
 
-            // draw a filled circle with white number
             int radius = 12;
             int cx = (int) Math.round(x) - radius;
             int cy = (int) Math.round(y) - radius;
 
-            // marker background
             g2.setColor(new Color(220, 60, 60));
             Ellipse2D circle = new Ellipse2D.Double(cx, cy, radius * 2, radius * 2);
             g2.fill(circle);
 
-            // outline
             g2.setColor(Color.WHITE);
             g2.setStroke(new BasicStroke(2f));
             g2.draw(circle);
 
-            // number text
             String text = String.valueOf(i + 1);
             FontMetrics fm = g2.getFontMetrics();
             int tx = cx + (radius * 2 - fm.stringWidth(text)) / 2;

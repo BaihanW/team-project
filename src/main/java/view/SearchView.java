@@ -201,34 +201,109 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
 
         leftPanel.add(topSearch, BorderLayout.NORTH);
 
+        // stops list center
         stopsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         stopsList.setBackground(new Color(220, 235, 245));
+        // custom renderer to show number to the left of each name and draw connecting lines
         stopsList.setCellRenderer(new ListCellRenderer<String>() {
-            private final JPanel panel = new JPanel(new BorderLayout());
-            private final JLabel numberLabel = new JLabel();
-            private final JLabel nameLabel = new JLabel();
-            {
-                panel.setOpaque(true);
-                numberLabel.setPreferredSize(new Dimension(30, 24));
-                numberLabel.setHorizontalAlignment(SwingConstants.CENTER);
-                numberLabel.setForeground(Color.WHITE);
-                numberLabel.setOpaque(true);
-                numberLabel.setBackground(new Color(100, 100, 140));
-                nameLabel.setBorder(BorderFactory.createEmptyBorder(2,6,2,2));
+            private final Font font = new JLabel().getFont().deriveFont(14f);
+
+            class CellPanel extends JPanel {
+                private String name = "";
+                private int index = 0;
+                private boolean isSelected = false;
+
+                public CellPanel() {
+                    setOpaque(true);
+                    setPreferredSize(new Dimension(0, 52)); // increase vertical spacing
+                }
+
+                public void setData(String name, int index, boolean isSelected) {
+                    this.name = name;
+                    this.index = index;
+                    this.isSelected = isSelected;
+                    setBackground(isSelected ? new Color(200, 220, 240) : new Color(220, 235, 245));
+                }
+
+                @Override
+                protected void paintComponent(Graphics g) {
+                    super.paintComponent(g);
+                    Graphics2D g2 = (Graphics2D) g.create();
+                    g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+                    int w = getWidth();
+                    int h = getHeight();
+
+                    // badge parameters
+                    int radius = 14;
+                    int badgeX = 12;
+                    int centerX = badgeX + radius;
+                    int centerY = h / 2;
+
+                    // draw connecting lines (top and bottom) with route color and per-segment alpha
+                    int n = stopsListModel.getSize();
+                    int segments = Math.max(0, n - 1);
+                    Color routeColor = new Color(0, 120, 255);
+
+                    // draw top connector (connect previous to this)
+                    if (index > 0 && segments > 0) {
+                        int segIndex = index - 1; // segment between index-1 and index
+                        float t = (segments == 1) ? 0f : ((float) segIndex) / (float) (segments - 1);
+                        int alphaStart = 255;
+                        int alphaEnd = Math.max(1, (int) Math.round(255 * 0.30));
+                        int alpha = (int) Math.round(alphaStart + t * (alphaEnd - alphaStart));
+                        alpha = Math.max(0, Math.min(255, alpha));
+                        g2.setColor(new Color(routeColor.getRed(), routeColor.getGreen(), routeColor.getBlue(), alpha));
+                        g2.setStroke(new BasicStroke(6f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
+                        g2.drawLine(centerX, 0, centerX, centerY - radius);
+                    }
+
+                    // draw bottom connector (connect this to next)
+                    if (index < n - 1 && segments > 0) {
+                        int segIndex = index; // segment between index and index+1
+                        float t = (segments == 1) ? 0f : ((float) segIndex) / (float) (segments - 1);
+                        int alphaStart = 255;
+                        int alphaEnd = Math.max(1, (int) Math.round(255 * 0.30));
+                        int alpha = (int) Math.round(alphaStart + t * (alphaEnd - alphaStart));
+                        alpha = Math.max(0, Math.min(255, alpha));
+                        g2.setColor(new Color(routeColor.getRed(), routeColor.getGreen(), routeColor.getBlue(), alpha));
+                        g2.setStroke(new BasicStroke(6f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
+                        g2.drawLine(centerX, centerY + radius, centerX, h);
+                    }
+
+                    // draw badge (dark background)
+                    int bx = badgeX;
+                    int by = centerY - radius;
+                    g2.setColor(new Color(100, 100, 140));
+                    g2.fillOval(bx, by, radius * 2, radius * 2);
+                    g2.setColor(Color.WHITE);
+                    g2.setStroke(new BasicStroke(2f));
+                    g2.drawOval(bx, by, radius * 2, radius * 2);
+
+                    // draw number
+                    String num = String.valueOf(index + 1);
+                    g2.setFont(font);
+                    FontMetrics fm = g2.getFontMetrics();
+                    int tx = bx + (radius * 2 - fm.stringWidth(num)) / 2;
+                    int ty = by + ((radius * 2 - fm.getHeight()) / 2) + fm.getAscent();
+                    g2.setColor(Color.WHITE);
+                    g2.drawString(num, tx, ty);
+
+                    // draw name text
+                    g2.setColor(Color.DARK_GRAY);
+                    int nameX = bx + radius * 2 + 12;
+                    int nameY = centerY + fm.getAscent() / 2 - 2;
+                    g2.drawString(name, nameX, nameY);
+
+                    g2.dispose();
+                }
             }
+
+            private final CellPanel panel = new CellPanel();
 
             @Override
             public Component getListCellRendererComponent(JList<? extends String> list, String value, int index, boolean isSelected, boolean cellHasFocus) {
-                numberLabel.setText(String.valueOf(index + 1));
-                nameLabel.setText(value);
-                panel.removeAll();
-                panel.add(numberLabel, BorderLayout.WEST);
-                panel.add(nameLabel, BorderLayout.CENTER);
-                if (isSelected) {
-                    panel.setBackground(new Color(200, 220, 240));
-                } else {
-                    panel.setBackground(new Color(220, 235, 245));
-                }
+                panel.setData(value == null ? "" : value, index, isSelected);
                 return panel;
             }
         });

@@ -31,7 +31,6 @@ public class RoutePainter implements Painter<JXMapViewer> {
             for (List<GeoPosition> seg : segments) {
                 if (seg == null) continue;
                 if (!this.route.isEmpty() && !seg.isEmpty()) {
-                    // avoid duplicating connecting point
                     this.route.remove(this.route.size() - 1);
                 }
                 this.route.addAll(seg);
@@ -51,8 +50,8 @@ public class RoutePainter implements Painter<JXMapViewer> {
 
         if (segments != null && !segments.isEmpty()) {
             int sCount = segments.size();
-            int alphaStart = 255; // 100%
-            int alphaEnd = Math.max(1, (int) Math.round(255 * 0.30)); // ~30%
+            int alphaStart = 255;
+            int alphaEnd = Math.max(1, (int) Math.round(255 * 0.40)); // opacity lower bound
 
             for (int si = 0; si < sCount; si++) {
                 List<GeoPosition> seg = segments.get(si);

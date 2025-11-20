@@ -22,22 +22,18 @@ import java.util.Set;
 import java.util.Arrays;
 import java.util.function.Consumer;
 
-/**
- * contain map tile
 
- */
 public class MapPanel extends JPanel {
 
     private final JXMapViewer mapViewer;
 
-    // maintain list of marker positions in insertion order (so we can pick last two)
     private final List<GeoPosition> markerPositions = new ArrayList<>();
 
     private final Set<Waypoint> waypoints = new HashSet<>();
 
     private final WaypointPainter<Waypoint> waypointPainter = new WaypointPainter<>();
 
-    private RoutePainter routePainter; // initialize in constructor and allow reassignment
+    private RoutePainter routePainter;
     private NumberedMarkerPainter numberedMarkerPainter;
     private final CompoundPainter<JXMapViewer> compoundPainter = new CompoundPainter<>();
 
@@ -81,7 +77,6 @@ public class MapPanel extends JPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
                 GeoPosition gp = mapViewer.convertPointToGeoPosition(e.getPoint());
-                // notify external listener if present
                 if (clickListener != null) {
                     clickListener.accept(gp);
                 } else {
@@ -103,9 +98,7 @@ public class MapPanel extends JPanel {
 
 
     private void addMarker(GeoPosition position) {
-        // keep ordered list of marker positions
         markerPositions.add(position);
-        // rebuild waypoint set from marker positions
         waypoints.clear();
         for (GeoPosition gp : markerPositions) {
             waypoints.add(new DefaultWaypoint(gp));
