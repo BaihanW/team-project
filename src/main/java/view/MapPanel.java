@@ -52,6 +52,31 @@ public class MapPanel extends JPanel {
         mapViewer.setAddressLocation(new GeoPosition(43.6532, -79.3832));
         mapViewer.setZoom(5);
 
+        // Add mouse wheel zoom: forward (wheel up/negative rotation) -> zoom in; backward -> zoom out
+        mapViewer.addMouseWheelListener(e -> {
+            try {
+                int notches = e.getWheelRotation(); // negative = wheel up/forward, positive = wheel down/backward
+                if (notches == 0) return;
+                int z = mapViewer.getZoom();
+                int newZ = z;
+                final int MAX_Z = 20;
+                if (notches < 0) {
+                    // wheel moved up/forward -> zoom in (decrease zoom index)
+                    newZ = Math.max(0, z - Math.abs(notches));
+                } else {
+                    // wheel moved down/backward -> zoom out (increase zoom index)
+                    newZ = Math.min(MAX_Z, z + notches);
+                }
+                if (newZ != z) {
+                    // preserve current center (use visible center)
+                    GeoPosition center = mapViewer.convertPointToGeoPosition(new Point(mapViewer.getWidth()/2, mapViewer.getHeight()/2));
+                    mapViewer.setZoom(newZ);
+                    mapViewer.setAddressLocation(center);
+                }
+                e.consume();
+            } catch (Exception ignored) {}
+        });
+
         waypointPainter.setWaypoints(waypoints);
         routePainter = new RoutePainter(null);
         numberedMarkerPainter = new NumberedMarkerPainter(markerPositions);

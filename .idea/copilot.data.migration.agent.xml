@@ -46,6 +46,7 @@
             <set>
               <option value="7e981792-26dd-4734-960f-22c138cc3bdf" />
               <option value="8ee2f2b2-a919-4030-85d5-6efcb9a07edb" />
+              <option value="4a32bc05-7d19-4b62-ab8e-aa61bf980be3" />
             </set>
           </value>
         </entry>
@@ -81,6 +82,7 @@
       <entry key="dc993dc3-f236-4644-b435-313e09d52251">
         <set>
           <option value="file://$PROJECT_DIR$/src/main/java/view/SearchView.java" />
+          <option value="file://$PROJECT_DIR$/src/main/java/view/MapPanel.java" />
         </set>
       </entry>
     </pendingWorkingSetItems>
