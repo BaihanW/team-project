@@ -1,5 +1,9 @@
 package use_case.displayRoute;
 
+/**
+ * The Input Data for the Display Route Use Case.
+ * Represents a route request between two geographical points.
+ */
 public class DisplayRouteInputData {
 
     private final double startLatitude;
