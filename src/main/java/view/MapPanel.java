@@ -26,7 +26,7 @@ public class MapPanel extends JPanel {
 
     private static final int MAX_Z = 20;
     private static final double TRACKPAD_PINCH_STEP = 0.03;
-    private static final double HARDWARE_WHEEL_STEP = 0.3;
+    private static final double HARDWARE_WHEEL_STEP = 1.2;  // Doubled from 0.6 for 2x sensitivity
     private static final long PINCH_SESSION_TIMEOUT_MS = 180L;
     private static final double PINCH_ROTATION_THRESHOLD = 0.12;
     private static final long PINCH_TIME_WINDOW_MS = 60L;
@@ -76,6 +76,11 @@ public class MapPanel extends JPanel {
         mapViewer.setTileFactory(tileFactory);
         mapViewer.setAddressLocation(new GeoPosition(43.6532, -79.3832));
         mapViewer.setZoom(5);
+
+        // Remove default wheel listeners so we have full control over zoom/pan behavior
+        for (MouseWheelListener listener : mapViewer.getMouseWheelListeners()) {
+            mapViewer.removeMouseWheelListener(listener);
+        }
 
         // initialize smooth zoom state
         zoomLevelDouble = mapViewer.getZoom();
@@ -202,8 +207,12 @@ public class MapPanel extends JPanel {
                     // ZOOM: Smaller increments for smoother pinch-to-zoom
                     double deltaUnits;
                     if (isHardwareWheel) {
-                        // Hardware mouse wheel: larger steps
+                        // Hardware mouse wheel: larger steps, zoom only (no pan)
                         deltaUnits = wheelRot * HARDWARE_WHEEL_STEP;
+                        // Reset all pan offsets to prevent any panning during hardware wheel scroll
+                        panOffsetX = 0.0;
+                        panOffsetY = 0.0;
+                        pendingHorizontalScroll = 0.0;
                     } else {
                         // Trackpad pinch: multiple micro steps for ultra-smooth zooming
                         double perStep = precise * TRACKPAD_PINCH_STEP;
@@ -215,11 +224,11 @@ public class MapPanel extends JPanel {
 
                     int targetInt = (int) Math.round(zoomLevelDouble);
                     if (targetInt != mapViewer.getZoom()) {
-                        GeoPosition center = mapViewer.convertPointToGeoPosition(new Point(mapViewer.getWidth()/2, mapViewer.getHeight()/2));
+                        GeoPosition center = mapViewer.getAddressLocation();
                         mapViewer.setZoom(targetInt);
                         mapViewer.setAddressLocation(center);
                     }
-                } else {
+                } else if (!isHardwareWheel) {  // Only pan if NOT hardware wheel
                     // PAN: Two-finger scroll in any direction
                     final double PAN_SENSITIVITY = 35.0; // pixels per rotation unit
 
