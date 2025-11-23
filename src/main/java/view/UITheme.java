@@ -26,6 +26,9 @@ public class UITheme {
     /** Color for stop badges (numbered circles) */
     public static final Color STOP_BADGE_BACKGROUND = new Color(77, 77, 89);
 
+    /** Color for the selected stop's badge (numbered circle) - stands out from other badges */
+    public static final Color STOP_BADGE_SELECTED_BACKGROUND = new Color(255, 100, 0);
+
     /** Border and outline color for stop badges */
     public static final Color STOP_BADGE_BORDER = new Color(255, 255, 255);
 
@@ -81,6 +84,70 @@ public class UITheme {
     /** Focus/hover color for buttons */
     public static final Color BUTTON_HOVER = new Color(90, 150, 200);
 
+    // ============ BUTTON TEXT LABELS ============
+    /** Text for Search button */
+    public static final String BUTTON_TEXT_SEARCH = "Search";
+
+    /** Text for Route button */
+    public static final String BUTTON_TEXT_ROUTE = "Route";
+
+    /** Text for Zoom In button */
+    public static final String BUTTON_TEXT_ZOOM_IN = "+";
+
+    /** Text for Zoom Out button */
+    public static final String BUTTON_TEXT_ZOOM_OUT = "-";
+
+    /** Text for Up button (move stop up in list) */
+    public static final String BUTTON_TEXT_UP = "Up";
+
+    /** Text for Down button (move stop down in list) */
+    public static final String BUTTON_TEXT_DOWN = "Down";
+
+    /** Text for Remove button (remove stop from list) */
+    public static final String BUTTON_TEXT_REMOVE = "Remove";
+
+    /** Text for Start New Map button */
+    public static final String BUTTON_TEXT_START_NEW_MAP = "Start new map";
+
+    // ============ BUTTON SIZES ============
+    /** Width of Search button */
+    public static final int BUTTON_SEARCH_WIDTH = 60;
+
+    /** Height of Search button */
+    public static final int BUTTON_SEARCH_HEIGHT = 24;
+
+    /** Width of Route button */
+    public static final int BUTTON_ROUTE_WIDTH = 60;
+
+    /** Height of Route button */
+    public static final int BUTTON_ROUTE_HEIGHT = 24;
+
+    /** Width of Zoom In button */
+    public static final int BUTTON_ZOOM_WIDTH = 36;
+
+    /** Height of Zoom In button */
+    public static final int BUTTON_ZOOM_HEIGHT = 24;
+
+    /** Width of Zoom Out button (same as Zoom In) */
+    // Uses BUTTON_ZOOM_WIDTH and BUTTON_ZOOM_HEIGHT
+
+    /** Width of Up button */
+    public static final int BUTTON_CONTROL_WIDTH = 70;
+
+    /** Height of Up button */
+    public static final int BUTTON_CONTROL_HEIGHT = 24;
+
+    // Uses BUTTON_CONTROL_WIDTH and BUTTON_CONTROL_HEIGHT for Down and Remove buttons
+
+    /** Width of Start New Map button */
+    public static final int BUTTON_START_NEW_MAP_WIDTH = 120;
+
+    /** Height of Start New Map button */
+    public static final int BUTTON_START_NEW_MAP_HEIGHT = 34;
+
+    /** Font size for all buttons */
+    public static final float BUTTON_FONT_SIZE = 12f;
+
     // ============ SPACING CONSTANTS ============
     /** Standard padding/margin inside panels */
     public static final int STANDARD_PADDING = 10;
@@ -98,11 +165,27 @@ public class UITheme {
     /** Width of the sidebar (left panel) */
     public static final int SIDEBAR_WIDTH = 350;
 
-    /** Default window width */
-    public static final int DEFAULT_WINDOW_WIDTH = 800;
+    // ============ WINDOW RESOLUTION & DISPLAY ============
+    /** Default window width (in pixels) - change this to customize width */
+    public static final int WINDOW_WIDTH = 1200;
 
-    /** Default window height */
-    public static final int DEFAULT_WINDOW_HEIGHT = 600;
+    /** Default window height (in pixels) - change this to customize height */
+    public static final int WINDOW_HEIGHT = 800;
+
+    /** Enable fullscreen mode (true = fullscreen, false = windowed) */
+    public static final boolean FULLSCREEN_ENABLED = false;
+
+    /** Maximize window on startup (only applies if FULLSCREEN_ENABLED is false) */
+    public static final boolean MAXIMIZE_WINDOW = false;
+
+    /** Window decoration style (true = show title bar and borders, false = no decoration) */
+    public static final boolean SHOW_WINDOW_DECORATION = true;
+
+    /** Default window width (legacy constant - use WINDOW_WIDTH instead) */
+    public static final int DEFAULT_WINDOW_WIDTH = WINDOW_WIDTH;
+
+    /** Default window height (legacy constant - use WINDOW_HEIGHT instead) */
+    public static final int DEFAULT_WINDOW_HEIGHT = WINDOW_HEIGHT;
 
     /** Height of the progress/reroute panel at the bottom */
     public static final int PROGRESS_PANEL_HEIGHT = 72;

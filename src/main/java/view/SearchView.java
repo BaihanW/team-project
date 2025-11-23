@@ -58,6 +58,7 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         searchViewModel.addPropertyChangeListener(this);
 
         // Style search button
+        search.setText(UITheme.BUTTON_TEXT_SEARCH);
         search.setBackground(UITheme.BUTTON_BACKGROUND);
         search.setForeground(UITheme.BUTTON_TEXT);
         search.setBorder(BorderFactory.createLineBorder(UITheme.BUTTON_BORDER, 1));
@@ -65,6 +66,7 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         search.setFocusPainted(false);
 
         // Style route button
+        routeButton.setText(UITheme.BUTTON_TEXT_ROUTE);
         routeButton.setBackground(UITheme.BUTTON_BACKGROUND);
         routeButton.setForeground(UITheme.BUTTON_TEXT);
         routeButton.setBorder(BorderFactory.createLineBorder(UITheme.BUTTON_BORDER, 1));
@@ -121,10 +123,10 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         searchProgressContainer.setBackground(UITheme.TOP_PANEL_BACKGROUND);
         searchProgressContainer.add(searchProgressLabel);
         searchProgressContainer.add(searchProgressBar);
-        JButton leftZoomBtn = new JButton("+");
+        JButton leftZoomBtn = new JButton(UITheme.BUTTON_TEXT_ZOOM_IN);
         leftZoomBtn.setToolTipText("Zoom in");
-        leftZoomBtn.setPreferredSize(new Dimension(36, 24));
-        leftZoomBtn.setFont(leftZoomBtn.getFont().deriveFont(Font.BOLD, 14f));
+        leftZoomBtn.setPreferredSize(new Dimension(UITheme.BUTTON_ZOOM_WIDTH, UITheme.BUTTON_ZOOM_HEIGHT));
+        leftZoomBtn.setFont(leftZoomBtn.getFont().deriveFont(Font.BOLD, UITheme.BUTTON_FONT_SIZE));
         leftZoomBtn.setMargin(new Insets(2, 4, 2, 4));
         leftZoomBtn.setHorizontalAlignment(SwingConstants.CENTER);
         leftZoomBtn.setBackground(UITheme.BUTTON_BACKGROUND);
@@ -143,10 +145,10 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
             } catch (Exception ignored) {}
         });
 
-        JButton rightZoomBtn = new JButton("-");
+        JButton rightZoomBtn = new JButton(UITheme.BUTTON_TEXT_ZOOM_OUT);
         rightZoomBtn.setToolTipText("Zoom out");
-        rightZoomBtn.setPreferredSize(new Dimension(36, 24));
-        rightZoomBtn.setFont(rightZoomBtn.getFont().deriveFont(Font.BOLD, 14f));
+        rightZoomBtn.setPreferredSize(new Dimension(UITheme.BUTTON_ZOOM_WIDTH, UITheme.BUTTON_ZOOM_HEIGHT));
+        rightZoomBtn.setFont(rightZoomBtn.getFont().deriveFont(Font.BOLD, UITheme.BUTTON_FONT_SIZE));
         rightZoomBtn.setMargin(new Insets(2, 4, 2, 4));
         rightZoomBtn.setHorizontalAlignment(SwingConstants.CENTER);
         rightZoomBtn.setBackground(UITheme.BUTTON_BACKGROUND);
@@ -170,8 +172,6 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         zoomPanel.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
         searchProgressContainer.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 
-        leftZoomBtn.setText("+");
-        rightZoomBtn.setText("-");
 
         zoomPanel.add(leftZoomBtn);
         zoomPanel.add(rightZoomBtn);
@@ -408,7 +408,9 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
 
                     int bx = badgeX;
                     int by = centerY - radius;
-                    g2.setColor(UITheme.STOP_BADGE_BACKGROUND);
+                    // Use different color for selected stop's badge
+                    Color badgeColor = isSelected ? UITheme.STOP_BADGE_SELECTED_BACKGROUND : UITheme.STOP_BADGE_BACKGROUND;
+                    g2.setColor(badgeColor);
                     g2.fillOval(bx, by, radius * 2, radius * 2);
                     g2.setColor(UITheme.STOP_BADGE_BORDER);
                     g2.setStroke(new BasicStroke(UITheme.BADGE_STROKE_WIDTH));
@@ -454,12 +456,14 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
 
         JPanel controls = new JPanel(new GridLayout(1,3,5,5));
         controls.setOpaque(false);
-        JButton up = new JButton("Up");
-        JButton down = new JButton("Down");
-        JButton remove = new JButton("Remove");
+        JButton up = new JButton(UITheme.BUTTON_TEXT_UP);
+        JButton down = new JButton(UITheme.BUTTON_TEXT_DOWN);
+        JButton remove = new JButton(UITheme.BUTTON_TEXT_REMOVE);
 
         // Style control buttons
         for (JButton btn : new JButton[]{up, down, remove}) {
+            btn.setPreferredSize(new Dimension(UITheme.BUTTON_CONTROL_WIDTH, UITheme.BUTTON_CONTROL_HEIGHT));
+            btn.setFont(btn.getFont().deriveFont(UITheme.BUTTON_FONT_SIZE));
             btn.setBackground(UITheme.BUTTON_BACKGROUND);
             btn.setForeground(UITheme.BUTTON_TEXT);
             btn.setBorder(BorderFactory.createLineBorder(UITheme.BUTTON_BORDER, 1));
@@ -502,10 +506,10 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         rerouteProgressBar.setStringPainted(false);
         progressBox.add(rerouteProgressBar);
 
-        JButton startNewMapButton = new JButton("Start new map");
+        JButton startNewMapButton = new JButton(UITheme.BUTTON_TEXT_START_NEW_MAP);
         startNewMapButton.setToolTipText("Clear all stops and routes to start over");
-        startNewMapButton.setPreferredSize(new Dimension(120, 34));
-        startNewMapButton.setFont(startNewMapButton.getFont().deriveFont(Font.PLAIN, UITheme.SMALL_FONT_SIZE));
+        startNewMapButton.setPreferredSize(new Dimension(UITheme.BUTTON_START_NEW_MAP_WIDTH, UITheme.BUTTON_START_NEW_MAP_HEIGHT));
+        startNewMapButton.setFont(startNewMapButton.getFont().deriveFont(Font.PLAIN, UITheme.BUTTON_FONT_SIZE));
         startNewMapButton.setBackground(UITheme.BUTTON_BACKGROUND);
         startNewMapButton.setForeground(UITheme.BUTTON_TEXT);
         startNewMapButton.setBorder(BorderFactory.createLineBorder(UITheme.BUTTON_BORDER, 1));

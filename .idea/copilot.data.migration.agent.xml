@@ -24,6 +24,9 @@
               <option value="cdb5ea9f-4f17-452a-942c-ddbe5aec7de3" />
               <option value="f1d6e1bf-c325-4a82-81d1-a5c51371402c" />
               <option value="0435933c-f1e2-4d5f-8847-2fe922150bec" />
+              <option value="f99f02df-965a-44ab-9e7e-55fc52d9dc63" />
+              <option value="acb5e073-2ade-45f5-952f-8870a6e970c7" />
+              <option value="493b7e14-64ca-4559-89a5-da5dd06b69e0" />
             </set>
           </value>
         </entry>
@@ -41,6 +44,10 @@
           <option value="file://$PROJECT_DIR$/UITHEME_IMPLEMENTATION.md" />
           <option value="file://$PROJECT_DIR$/UITHEME_QUICK_REFERENCE.md" />
           <option value="file://$PROJECT_DIR$/UI_START_HERE.md" />
+          <option value="file://$PROJECT_DIR$/BUTTON_CUSTOMIZATION_GUIDE.md" />
+          <option value="file://$PROJECT_DIR$/src/main/java/app/Main.java" />
+          <option value="file://$PROJECT_DIR$/WINDOW_CUSTOMIZATION_GUIDE.md" />
+          <option value="file://$PROJECT_DIR$/SELECTED_BADGE_CUSTOMIZATION.md" />
         </set>
       </entry>
     </pendingWorkingSetItems>
