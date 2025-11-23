@@ -308,16 +308,31 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
                 private String name = "";
                 private int index = 0;
                 private boolean isSelected = false;
+                private boolean isRoutedAbove = false;  // Is the stop above routed to this stop?
+                private boolean isRoutedBelow = false;  // Is this stop routed to the stop below?
+                private boolean isStrandedAbove = false;  // Is there a stranded stop above?
+                private boolean isStrandedBelow = false;  // Is there a stranded stop below?
+                private int strandedAboveCount = 0;  // How many stranded stops above?
+                private int strandedBelowCount = 0;  // How many stranded stops below?
 
                 public CellPanel() {
                     setOpaque(true);
                     setPreferredSize(new Dimension(0, 52));
                 }
 
-                public void setData(String name, int index, boolean isSelected) {
+                public void setData(String name, int index, boolean isSelected,
+                                  boolean isRoutedAbove, boolean isRoutedBelow,
+                                  boolean isStrandedAbove, boolean isStrandedBelow,
+                                  int strandedAboveCount, int strandedBelowCount) {
                     this.name = name;
                     this.index = index;
                     this.isSelected = isSelected;
+                    this.isRoutedAbove = isRoutedAbove;
+                    this.isRoutedBelow = isRoutedBelow;
+                    this.isStrandedAbove = isStrandedAbove;
+                    this.isStrandedBelow = isStrandedBelow;
+                    this.strandedAboveCount = strandedAboveCount;
+                    this.strandedBelowCount = strandedBelowCount;
                     setBackground(isSelected ? new Color(200, 220, 240) : new Color(220, 235, 245));
                 }
 
@@ -336,11 +351,12 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
                     int centerY = h / 2;
 
                     int n = stopsListModel.getSize();
-                    int segments = Math.max(0, n - 1);
                     Color routeColor = new Color(0, 120, 255);
 
-                    if (index > 0 && segments > 0) {
+                    // Draw line above if routed to above
+                    if (isRoutedAbove) {
                         int segIndex = index - 1;
+                        int segments = Math.max(1, n - 1);
                         float t = (segments == 1) ? 0f : ((float) segIndex) / (float) (segments - 1);
                         int alphaStart = 255;
                         int alphaEnd = Math.max(1, (int) Math.round(255 * 0.30));
@@ -351,8 +367,10 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
                         g2.drawLine(centerX, 0, centerX, centerY - radius);
                     }
 
-                    if (index < n - 1 && segments > 0) {
+                    // Draw line below if routed to below
+                    if (isRoutedBelow) {
                         int segIndex = index;
+                        int segments = Math.max(1, n - 1);
                         float t = (segments == 1) ? 0f : ((float) segIndex) / (float) (segments - 1);
                         int alphaStart = 255;
                         int alphaEnd = Math.max(1, (int) Math.round(255 * 0.30));
@@ -362,6 +380,7 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
                         g2.setStroke(new BasicStroke(6f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
                         g2.drawLine(centerX, centerY + radius, centerX, h);
                     }
+
 
                     int bx = badgeX;
                     int by = centerY - radius;
@@ -392,7 +411,16 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
 
             @Override
             public Component getListCellRendererComponent(JList<? extends String> list, String value, int index, boolean isSelected, boolean cellHasFocus) {
-                panel.setData(value == null ? "" : value, index, isSelected);
+                // Determine routing status of this and adjacent stops
+                boolean isThisRouted = isStopRouted(index);
+                boolean isAboveRouted = (index > 0) ? isStopRouted(index - 1) : false;
+                boolean isBelowRouted = (index < stopsListModel.getSize() - 1) ? isStopRouted(index + 1) : false;
+
+                boolean isRoutedAbove = isThisRouted && isAboveRouted && areConsecutiveStopsConnected(index - 1, index);
+                boolean isRoutedBelow = isThisRouted && isBelowRouted && areConsecutiveStopsConnected(index, index + 1);
+
+                panel.setData(value == null ? "" : value, index, isSelected,
+                            isRoutedAbove, isRoutedBelow, false, false, 0, 0);
                 return panel;
             }
         });
@@ -626,6 +654,8 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
                         routeHasBeenComputed = true;
                         routedStops.clear();
                         routedStops.addAll(stopPositions);
+                        // Repaint the stops list to update sidebar display
+                        SwingUtilities.invokeLater(() -> stopsList.repaint());
                     }
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(SearchView.this, "Routing error: " + e.getMessage());
@@ -657,6 +687,7 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         stopsList.setSelectedIndex(newIdx);
         mapPanel.setStops(stopPositions);
         computeAndDisplayRouteIfAuto();
+        stopsList.repaint();  // Repaint to update routing display
     }
 
     private void removeSelected() {
@@ -666,16 +697,58 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         stopPositions.remove(idx);
         mapPanel.setStops(stopPositions);
         computeAndDisplayRouteIfAuto();
+        stopsList.repaint();  // Repaint to update routing display
     }
 
     private void computeAndDisplayRouteIfAuto() {
         if (routingDao != null && stopPositions.size() >= 2 && routeHasBeenComputed) {
+            // Build a list of stops to route, including stranded markers that are sandwiched between routed stops
             List<GeoPosition> stopsToRoute = new ArrayList<>();
-            for (GeoPosition pos : stopPositions) {
+
+            // First, identify which positions are routed
+            List<Integer> routedIndices = new ArrayList<>();
+            for (int i = 0; i < stopPositions.size(); i++) {
+                GeoPosition pos = stopPositions.get(i);
                 for (GeoPosition routedPos : routedStops) {
                     if (geoPositionsEqual(pos, routedPos)) {
-                        stopsToRoute.add(pos);
+                        routedIndices.add(i);
                         break;
+                    }
+                }
+            }
+
+            // If we don't have at least 2 routed stops, just use the original logic
+            if (routedIndices.size() < 2) {
+                for (GeoPosition pos : stopPositions) {
+                    for (GeoPosition routedPos : routedStops) {
+                        if (geoPositionsEqual(pos, routedPos)) {
+                            stopsToRoute.add(pos);
+                            break;
+                        }
+                    }
+                }
+            } else {
+                // Consume stranded markers sandwiched between routed markers
+                for (int i = 0; i < stopPositions.size(); i++) {
+                    GeoPosition pos = stopPositions.get(i);
+                    boolean isRouted = routedIndices.contains(i);
+
+                    if (isRouted) {
+                        stopsToRoute.add(pos);
+                    } else {
+                        // Check if this stranded marker is sandwiched between two routed markers
+                        boolean hasPreviousRouted = false;
+                        boolean hasNextRouted = false;
+
+                        for (int idx : routedIndices) {
+                            if (idx < i) hasPreviousRouted = true;
+                            if (idx > i) hasNextRouted = true;
+                        }
+
+                        // If sandwiched between routed markers, include it
+                        if (hasPreviousRouted && hasNextRouted) {
+                            stopsToRoute.add(pos);
+                        }
                     }
                 }
             }
@@ -740,10 +813,15 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
                     if (segs == null || segs.isEmpty()) {
                     } else {
                         mapPanel.setRouteSegments(segs);
+                        // Update routedStops to reflect the current stops being routed (including consumed stranded markers)
+                        routedStops.clear();
+                        routedStops.addAll(stops);
                     }
                 } catch (Exception e) {
                 } finally {
                     hideRerouteProgress();
+                    // Repaint the stops list to update routing display
+                    SwingUtilities.invokeLater(() -> stopsList.repaint());
                 }
             }
         };
@@ -761,6 +839,54 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         currentSuggestions.clear();
         routeHasBeenComputed = false;
         routedStops.clear();
+    }
+
+    /**
+     * Check if a stop at the given index is part of the routed stops
+     */
+    private boolean isStopRouted(int index) {
+        if (index < 0 || index >= stopPositions.size()) {
+            return false;
+        }
+        GeoPosition stopPos = stopPositions.get(index);
+        for (GeoPosition routedPos : routedStops) {
+            if (geoPositionsEqual(stopPos, routedPos)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+    /**
+     * Check if two consecutive stops (by index) are actually connected in the route
+     */
+    private boolean areConsecutiveStopsConnected(int fromIndex, int toIndex) {
+        if (fromIndex < 0 || toIndex < 0 || fromIndex >= stopPositions.size() || toIndex >= stopPositions.size()) {
+            return false;
+        }
+        if (!isStopRouted(fromIndex) || !isStopRouted(toIndex)) {
+            return false;
+        }
+
+        GeoPosition fromPos = stopPositions.get(fromIndex);
+        GeoPosition toPos = stopPositions.get(toIndex);
+
+        // Find the indices of these positions in the routedStops list
+        int fromRoutedIndex = -1;
+        int toRoutedIndex = -1;
+
+        for (int i = 0; i < routedStops.size(); i++) {
+            if (geoPositionsEqual(fromPos, routedStops.get(i))) {
+                fromRoutedIndex = i;
+            }
+            if (geoPositionsEqual(toPos, routedStops.get(i))) {
+                toRoutedIndex = i;
+            }
+        }
+
+        // They are connected if they are consecutive in the routed stops
+        return fromRoutedIndex >= 0 && toRoutedIndex >= 0 && (toRoutedIndex == fromRoutedIndex + 1);
     }
 
     public void actionPerformed(ActionEvent evt) {

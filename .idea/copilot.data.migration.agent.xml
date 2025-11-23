@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AgentMigrationStateService">
+    <option name="pendingSessionIds">
+      <option value="b6344923-919a-4f13-97c2-5d6b38764b02" />
+    </option>
+    <option name="pendingTurns">
+      <map>
+        <entry key="b6344923-919a-4f13-97c2-5d6b38764b02">
+          <value>
+            <set>
+              <option value="82c4fabd-d05c-4d10-914f-82ae16736b3e" />
+              <option value="d4ad56c9-3e64-48f8-9cf6-4a8118032a99" />
+              <option value="e76380a3-5833-409f-ac53-573605737450" />
+              <option value="fd272ccd-308e-4ab1-b5dd-815d5c496cf4" />
+              <option value="da3262ee-62bc-47bd-9da1-43bf72f8f099" />
+            </set>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <pendingWorkingSetItems>
+      <entry key="b6344923-919a-4f13-97c2-5d6b38764b02">
+        <set>
+          <option value="file://$PROJECT_DIR$/src/main/java/view/SearchView.java" />
+        </set>
+      </entry>
+    </pendingWorkingSetItems>
+  </component>
+</project>
