@@ -61,7 +61,8 @@ public class RoutePainter implements Painter<JXMapViewer> {
                 int alpha = (int) Math.round(alphaStart + t * (alphaEnd - alphaStart));
                 alpha = Math.max(0, Math.min(255, alpha));
 
-                g.setColor(new Color(0, 120, 255, alpha));
+                Color routeColor = UITheme.ROUTE_COLOR;
+                g.setColor(new Color(routeColor.getRed(), routeColor.getGreen(), routeColor.getBlue(), alpha));
 
                 GeneralPath path = new GeneralPath();
                 boolean first = true;
@@ -75,7 +76,8 @@ public class RoutePainter implements Painter<JXMapViewer> {
                 g.draw(path);
             }
         } else {
-            g.setColor(new Color(0, 120, 255, 180));
+            Color routeColor = UITheme.ROUTE_COLOR;
+            g.setColor(new Color(routeColor.getRed(), routeColor.getGreen(), routeColor.getBlue(), 180));
             GeneralPath path = new GeneralPath();
             boolean first = true;
             for (GeoPosition gp : route) {

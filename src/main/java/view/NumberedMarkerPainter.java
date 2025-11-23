@@ -39,11 +39,11 @@ public class NumberedMarkerPainter implements Painter<JXMapViewer> {
             int cx = (int) Math.round(x) - radius;
             int cy = (int) Math.round(y) - radius;
 
-            g2.setColor(new Color(220, 60, 60));
+            g2.setColor(UITheme.MARKER_BACKGROUND);
             Ellipse2D circle = new Ellipse2D.Double(cx, cy, radius * 2, radius * 2);
             g2.fill(circle);
 
-            g2.setColor(Color.WHITE);
+            g2.setColor(UITheme.MARKER_TEXT);
             g2.setStroke(new BasicStroke(2f));
             g2.draw(circle);
 
@@ -51,7 +51,7 @@ public class NumberedMarkerPainter implements Painter<JXMapViewer> {
             FontMetrics fm = g2.getFontMetrics();
             int tx = cx + (radius * 2 - fm.stringWidth(text)) / 2;
             int ty = cy + ((radius * 2 - fm.getHeight()) / 2) + fm.getAscent();
-            g2.setColor(Color.WHITE);
+            g2.setColor(UITheme.MARKER_TEXT);
             g2.drawString(text, tx, ty);
         }
 

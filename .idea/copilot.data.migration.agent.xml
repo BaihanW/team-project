@@ -3,6 +3,7 @@
   <component name="AgentMigrationStateService">
     <option name="pendingSessionIds">
       <option value="b6344923-919a-4f13-97c2-5d6b38764b02" />
+      <option value="bf3a8867-bc24-4475-8586-55d25a535b46" />
     </option>
     <option name="pendingTurns">
       <map>
@@ -11,18 +12,35 @@
             <set>
               <option value="82c4fabd-d05c-4d10-914f-82ae16736b3e" />
               <option value="d4ad56c9-3e64-48f8-9cf6-4a8118032a99" />
+              <option value="da3262ee-62bc-47bd-9da1-43bf72f8f099" />
               <option value="e76380a3-5833-409f-ac53-573605737450" />
               <option value="fd272ccd-308e-4ab1-b5dd-815d5c496cf4" />
-              <option value="da3262ee-62bc-47bd-9da1-43bf72f8f099" />
+            </set>
+          </value>
+        </entry>
+        <entry key="bf3a8867-bc24-4475-8586-55d25a535b46">
+          <value>
+            <set>
+              <option value="cdb5ea9f-4f17-452a-942c-ddbe5aec7de3" />
+              <option value="f1d6e1bf-c325-4a82-81d1-a5c51371402c" />
+              <option value="0435933c-f1e2-4d5f-8847-2fe922150bec" />
             </set>
           </value>
         </entry>
       </map>
     </option>
     <pendingWorkingSetItems>
-      <entry key="b6344923-919a-4f13-97c2-5d6b38764b02">
+      <entry key="b6344923-919a-4f13-97c2-5d6b38764b02" />
+      <entry key="bf3a8867-bc24-4475-8586-55d25a535b46">
         <set>
+          <option value="file://$PROJECT_DIR$/src/main/java/view/UITheme.java" />
           <option value="file://$PROJECT_DIR$/src/main/java/view/SearchView.java" />
+          <option value="file://$PROJECT_DIR$/src/main/java/view/RoutePainter.java" />
+          <option value="file://$PROJECT_DIR$/src/main/java/view/NumberedMarkerPainter.java" />
+          <option value="file://$PROJECT_DIR$/UI_CUSTOMIZATION_GUIDE.md" />
+          <option value="file://$PROJECT_DIR$/UITHEME_IMPLEMENTATION.md" />
+          <option value="file://$PROJECT_DIR$/UITHEME_QUICK_REFERENCE.md" />
+          <option value="file://$PROJECT_DIR$/UI_START_HERE.md" />
         </set>
       </entry>
     </pendingWorkingSetItems>

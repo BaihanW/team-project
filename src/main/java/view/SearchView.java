@@ -57,6 +57,20 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         this.viewName = searchViewModel.getViewName();
         searchViewModel.addPropertyChangeListener(this);
 
+        // Style search button
+        search.setBackground(UITheme.BUTTON_BACKGROUND);
+        search.setForeground(UITheme.BUTTON_TEXT);
+        search.setBorder(BorderFactory.createLineBorder(UITheme.BUTTON_BORDER, 1));
+        search.setOpaque(true);
+        search.setFocusPainted(false);
+
+        // Style route button
+        routeButton.setBackground(UITheme.BUTTON_BACKGROUND);
+        routeButton.setForeground(UITheme.BUTTON_TEXT);
+        routeButton.setBorder(BorderFactory.createLineBorder(UITheme.BUTTON_BORDER, 1));
+        routeButton.setOpaque(true);
+        routeButton.setFocusPainted(false);
+
         search.addActionListener(
                 evt -> {
                     if (evt.getSource().equals(search)) {
@@ -98,12 +112,13 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         this.setLayout(new BorderLayout());
 
         searchProgressLabel = new JLabel("Searching the area...");
-        searchProgressLabel.setFont(searchProgressLabel.getFont().deriveFont(Font.PLAIN, 12f));
+        searchProgressLabel.setFont(searchProgressLabel.getFont().deriveFont(Font.PLAIN, UITheme.SMALL_FONT_SIZE));
         searchProgressBar = new JProgressBar();
         searchProgressBar.setIndeterminate(true);
         searchProgressBar.setPreferredSize(new Dimension(120, 12));
         searchProgressContainer = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 8));
-        searchProgressContainer.setOpaque(false);
+        searchProgressContainer.setOpaque(true);
+        searchProgressContainer.setBackground(UITheme.TOP_PANEL_BACKGROUND);
         searchProgressContainer.add(searchProgressLabel);
         searchProgressContainer.add(searchProgressBar);
         JButton leftZoomBtn = new JButton("+");
@@ -112,6 +127,11 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         leftZoomBtn.setFont(leftZoomBtn.getFont().deriveFont(Font.BOLD, 14f));
         leftZoomBtn.setMargin(new Insets(2, 4, 2, 4));
         leftZoomBtn.setHorizontalAlignment(SwingConstants.CENTER);
+        leftZoomBtn.setBackground(UITheme.BUTTON_BACKGROUND);
+        leftZoomBtn.setForeground(UITheme.BUTTON_TEXT);
+        leftZoomBtn.setBorder(BorderFactory.createLineBorder(UITheme.BUTTON_BORDER, 1));
+        leftZoomBtn.setOpaque(true);
+        leftZoomBtn.setFocusPainted(false);
         leftZoomBtn.addActionListener(evt -> {
             try {
                 JComponent viewer = mapPanel.getMapViewer();
@@ -129,6 +149,11 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         rightZoomBtn.setFont(rightZoomBtn.getFont().deriveFont(Font.BOLD, 14f));
         rightZoomBtn.setMargin(new Insets(2, 4, 2, 4));
         rightZoomBtn.setHorizontalAlignment(SwingConstants.CENTER);
+        rightZoomBtn.setBackground(UITheme.BUTTON_BACKGROUND);
+        rightZoomBtn.setForeground(UITheme.BUTTON_TEXT);
+        rightZoomBtn.setBorder(BorderFactory.createLineBorder(UITheme.BUTTON_BORDER, 1));
+        rightZoomBtn.setOpaque(true);
+        rightZoomBtn.setFocusPainted(false);
         rightZoomBtn.addActionListener(evt -> {
             try {
                 JComponent viewer = mapPanel.getMapViewer();
@@ -152,7 +177,7 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         zoomPanel.add(rightZoomBtn);
         searchProgressContainer.add(zoomPanel);
 
-        searchProgressContainer.setPreferredSize(new Dimension(0, 44));
+        searchProgressContainer.setPreferredSize(new Dimension(0, UITheme.SEARCH_PANEL_HEIGHT));
         searchProgressContainer.setVisible(true);
         searchProgressLabel.setText("");
         searchProgressBar.setVisible(false);
@@ -162,13 +187,13 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
 
 
         JPanel leftPanel = new JPanel();
-        leftPanel.setBackground(new Color(70,130,180));
+        leftPanel.setBackground(UITheme.SIDEBAR_BACKGROUND);
         leftPanel.setLayout(new BorderLayout());
-        leftPanel.setPreferredSize(new Dimension(350, 800));
+        leftPanel.setPreferredSize(new Dimension(UITheme.SIDEBAR_WIDTH, 800));
 
         JPanel topSearch = new JPanel(new BorderLayout());
         topSearch.setOpaque(false);
-        topSearch.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        topSearch.setBorder(BorderFactory.createEmptyBorder(UITheme.STANDARD_PADDING, UITheme.STANDARD_PADDING, UITheme.STANDARD_PADDING, UITheme.STANDARD_PADDING));
         topSearch.add(searchInputField, BorderLayout.CENTER);
         JPanel btns = new JPanel(new GridLayout(1,2,5,5));
         btns.setOpaque(false);
@@ -179,7 +204,7 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         final JPopupMenu suggestionPopup = new JPopupMenu();
         final JList<String> suggestionList = new JList<>();
         suggestionList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        suggestionPopup.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+        suggestionPopup.setBorder(BorderFactory.createLineBorder(UITheme.SEARCH_POPUP_BORDER));
         suggestionPopup.add(new JScrollPane(suggestionList));
 
         suggestionList.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -300,9 +325,9 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         leftPanel.add(topSearch, BorderLayout.NORTH);
 
         stopsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        stopsList.setBackground(new Color(220, 235, 245));
+        stopsList.setBackground(UITheme.STOPS_LIST_BACKGROUND);
         stopsList.setCellRenderer(new ListCellRenderer<String>() {
-            private final Font font = new JLabel().getFont().deriveFont(14f);
+            private final Font font = new JLabel().getFont().deriveFont(UITheme.STANDARD_FONT_SIZE);
 
             class CellPanel extends JPanel {
                 private String name = "";
@@ -317,7 +342,7 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
 
                 public CellPanel() {
                     setOpaque(true);
-                    setPreferredSize(new Dimension(0, 52));
+                    setPreferredSize(new Dimension(0, UITheme.STOP_LIST_CELL_HEIGHT));
                 }
 
                 public void setData(String name, int index, boolean isSelected,
@@ -333,7 +358,7 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
                     this.isStrandedBelow = isStrandedBelow;
                     this.strandedAboveCount = strandedAboveCount;
                     this.strandedBelowCount = strandedBelowCount;
-                    setBackground(isSelected ? new Color(200, 220, 240) : new Color(220, 235, 245));
+                    setBackground(isSelected ? UITheme.STOPS_LIST_SELECTED : UITheme.STOPS_LIST_BACKGROUND);
                 }
 
                 @Override
@@ -345,13 +370,13 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
                     int w = getWidth();
                     int h = getHeight();
 
-                    int radius = 14;
+                    int radius = UITheme.STOP_BADGE_RADIUS;
                     int badgeX = 12;
                     int centerX = badgeX + radius;
                     int centerY = h / 2;
 
                     int n = stopsListModel.getSize();
-                    Color routeColor = new Color(0, 120, 255);
+                    Color routeColor = UITheme.ROUTE_COLOR;
 
                     // Draw line above if routed to above
                     if (isRoutedAbove) {
@@ -363,7 +388,7 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
                         int alpha = (int) Math.round(alphaStart + t * (alphaEnd - alphaStart));
                         alpha = Math.max(0, Math.min(255, alpha));
                         g2.setColor(new Color(routeColor.getRed(), routeColor.getGreen(), routeColor.getBlue(), alpha));
-                        g2.setStroke(new BasicStroke(6f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
+                        g2.setStroke(new BasicStroke(UITheme.ROUTE_STROKE_WIDTH, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
                         g2.drawLine(centerX, 0, centerX, centerY - radius);
                     }
 
@@ -377,17 +402,16 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
                         int alpha = (int) Math.round(alphaStart + t * (alphaEnd - alphaStart));
                         alpha = Math.max(0, Math.min(255, alpha));
                         g2.setColor(new Color(routeColor.getRed(), routeColor.getGreen(), routeColor.getBlue(), alpha));
-                        g2.setStroke(new BasicStroke(6f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
+                        g2.setStroke(new BasicStroke(UITheme.ROUTE_STROKE_WIDTH, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
                         g2.drawLine(centerX, centerY + radius, centerX, h);
                     }
 
-
                     int bx = badgeX;
                     int by = centerY - radius;
-                    g2.setColor(new Color(100, 100, 140));
+                    g2.setColor(UITheme.STOP_BADGE_BACKGROUND);
                     g2.fillOval(bx, by, radius * 2, radius * 2);
-                    g2.setColor(Color.WHITE);
-                    g2.setStroke(new BasicStroke(2f));
+                    g2.setColor(UITheme.STOP_BADGE_BORDER);
+                    g2.setStroke(new BasicStroke(UITheme.BADGE_STROKE_WIDTH));
                     g2.drawOval(bx, by, radius * 2, radius * 2);
 
                     String num = String.valueOf(index + 1);
@@ -395,10 +419,10 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
                     FontMetrics fm = g2.getFontMetrics();
                     int tx = bx + (radius * 2 - fm.stringWidth(num)) / 2;
                     int ty = by + ((radius * 2 - fm.getHeight()) / 2) + fm.getAscent();
-                    g2.setColor(Color.WHITE);
+                    g2.setColor(UITheme.STOP_BADGE_TEXT);
                     g2.drawString(num, tx, ty);
 
-                    g2.setColor(Color.DARK_GRAY);
+                    g2.setColor(UITheme.STOP_NAME_TEXT);
                     int nameX = bx + radius * 2 + 12;
                     int nameY = centerY + fm.getAscent() / 2 - 2;
                     g2.drawString(name, nameX, nameY);
@@ -433,6 +457,16 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         JButton up = new JButton("Up");
         JButton down = new JButton("Down");
         JButton remove = new JButton("Remove");
+
+        // Style control buttons
+        for (JButton btn : new JButton[]{up, down, remove}) {
+            btn.setBackground(UITheme.BUTTON_BACKGROUND);
+            btn.setForeground(UITheme.BUTTON_TEXT);
+            btn.setBorder(BorderFactory.createLineBorder(UITheme.BUTTON_BORDER, 1));
+            btn.setOpaque(true);
+            btn.setFocusPainted(false);
+        }
+
         controls.add(up);
         controls.add(down);
         controls.add(remove);
@@ -442,7 +476,7 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         rightPanel.add(mapPanel, BorderLayout.CENTER);
 
         JSplitPane split = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, leftPanel, rightPanel);
-        split.setDividerLocation(350);
+        split.setDividerLocation(UITheme.SIDEBAR_WIDTH);
         split.setResizeWeight(0);
         split.setOneTouchExpandable(true);
         this.add(split, BorderLayout.CENTER);
@@ -450,20 +484,20 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
          JPanel progressBox = new JPanel();
          progressBox.setLayout(new BoxLayout(progressBox, BoxLayout.Y_AXIS));
          progressBox.setBorder(BorderFactory.createCompoundBorder(
-                 BorderFactory.createLineBorder(new Color(180, 180, 180)),
+                 BorderFactory.createLineBorder(UITheme.PROGRESS_BOX_BORDER),
                  BorderFactory.createEmptyBorder(8, 10, 8, 10)));
-         progressBox.setBackground(new Color(255, 255, 255, 230));
+         progressBox.setBackground(UITheme.PROGRESS_BOX_BACKGROUND);
 
         rerouteLabel = new JLabel("");
         rerouteLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        rerouteLabel.setFont(rerouteLabel.getFont().deriveFont(Font.PLAIN, 12f));
+        rerouteLabel.setFont(rerouteLabel.getFont().deriveFont(Font.PLAIN, UITheme.SMALL_FONT_SIZE));
         progressBox.add(rerouteLabel);
         progressBox.add(Box.createRigidArea(new Dimension(0,6)));
 
         rerouteProgressBar = new JProgressBar(0, 100);
         rerouteProgressBar.setValue(0);
         rerouteProgressBar.setPreferredSize(new Dimension(220, 14));
-        rerouteProgressBar.setForeground(new Color(0, 120, 255));
+        rerouteProgressBar.setForeground(UITheme.ROUTE_PROGRESS_BAR);
         rerouteProgressBar.setBorderPainted(false);
         rerouteProgressBar.setStringPainted(false);
         progressBox.add(rerouteProgressBar);
@@ -471,14 +505,20 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         JButton startNewMapButton = new JButton("Start new map");
         startNewMapButton.setToolTipText("Clear all stops and routes to start over");
         startNewMapButton.setPreferredSize(new Dimension(120, 34));
-        startNewMapButton.setFont(startNewMapButton.getFont().deriveFont(Font.PLAIN, 12f));
+        startNewMapButton.setFont(startNewMapButton.getFont().deriveFont(Font.PLAIN, UITheme.SMALL_FONT_SIZE));
+        startNewMapButton.setBackground(UITheme.BUTTON_BACKGROUND);
+        startNewMapButton.setForeground(UITheme.BUTTON_TEXT);
+        startNewMapButton.setBorder(BorderFactory.createLineBorder(UITheme.BUTTON_BORDER, 1));
+        startNewMapButton.setOpaque(true);
+        startNewMapButton.setFocusPainted(false);
         startNewMapButton.addActionListener(e -> clearAllStopsAndRoutes());
 
         progressPanelContainer = new JPanel(new FlowLayout(FlowLayout.RIGHT, 16, 8));
-        progressPanelContainer.setOpaque(false);
+        progressPanelContainer.setOpaque(true);
+        progressPanelContainer.setBackground(UITheme.BOTTOM_PANEL_BACKGROUND);
         progressPanelContainer.add(progressBox);
         progressPanelContainer.add(startNewMapButton);
-        progressPanelContainer.setPreferredSize(new Dimension(0, 72));
+        progressPanelContainer.setPreferredSize(new Dimension(0, UITheme.PROGRESS_PANEL_HEIGHT));
         progressPanelContainer.setVisible(true);
          rerouteLabel.setText("");
          rerouteProgressBar.setVisible(false);
@@ -900,7 +940,7 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         if (state.getSearchError() != null) {
             JLabel label = new JLabel(state.getSearchError());
             label.setOpaque(true);
-            label.setBackground(new Color(255, 255, 150));
+            label.setBackground(UITheme.NOTIFICATION_BACKGROUND);
             Window window = SwingUtilities.getWindowAncestor(this);
             Popup popup = PopupFactory.getSharedInstance()
                     .getPopup(window, label, 700, 400);
