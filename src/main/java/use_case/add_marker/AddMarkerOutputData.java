@@ -19,3 +19,4 @@ public class AddMarkerOutputData {
     public double getLongitude() {
         return longitude;
     }
+}
