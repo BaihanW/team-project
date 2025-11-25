@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="AgentMigrationStateService">
+    <option name="migrationStatus" value="IN_PROGRESS" />
     <option name="pendingSessionIds">
+      <option value="518ceb75-a4dc-42e7-8f30-323612df5e3c" />
+      <option value="a87b787b-e051-454a-809e-c6b82351a439" />
       <option value="b6344923-919a-4f13-97c2-5d6b38764b02" />
       <option value="bf3a8867-bc24-4475-8586-55d25a535b46" />
+      <option value="f8a2decb-ff74-43cd-9987-ed77b126fd65" />
     </option>
     <option name="pendingTurns">
       <map>
@@ -21,12 +25,20 @@
         <entry key="bf3a8867-bc24-4475-8586-55d25a535b46">
           <value>
             <set>
+              <option value="0435933c-f1e2-4d5f-8847-2fe922150bec" />
+              <option value="493b7e14-64ca-4559-89a5-da5dd06b69e0" />
+              <option value="acb5e073-2ade-45f5-952f-8870a6e970c7" />
               <option value="cdb5ea9f-4f17-452a-942c-ddbe5aec7de3" />
               <option value="f1d6e1bf-c325-4a82-81d1-a5c51371402c" />
-              <option value="0435933c-f1e2-4d5f-8847-2fe922150bec" />
               <option value="f99f02df-965a-44ab-9e7e-55fc52d9dc63" />
-              <option value="acb5e073-2ade-45f5-952f-8870a6e970c7" />
-              <option value="493b7e14-64ca-4559-89a5-da5dd06b69e0" />
+            </set>
+          </value>
+        </entry>
+        <entry key="f8a2decb-ff74-43cd-9987-ed77b126fd65">
+          <value>
+            <set>
+              <option value="5a38fa4f-4b71-4382-8af5-df849a1933ef" />
+              <option value="f4ad786f-ffc7-400f-aba6-116a349c6c98" />
             </set>
           </value>
         </entry>
@@ -34,20 +46,10 @@
     </option>
     <pendingWorkingSetItems>
       <entry key="b6344923-919a-4f13-97c2-5d6b38764b02" />
-      <entry key="bf3a8867-bc24-4475-8586-55d25a535b46">
+      <entry key="bf3a8867-bc24-4475-8586-55d25a535b46" />
+      <entry key="f8a2decb-ff74-43cd-9987-ed77b126fd65">
         <set>
-          <option value="file://$PROJECT_DIR$/src/main/java/view/UITheme.java" />
-          <option value="file://$PROJECT_DIR$/src/main/java/view/SearchView.java" />
-          <option value="file://$PROJECT_DIR$/src/main/java/view/RoutePainter.java" />
-          <option value="file://$PROJECT_DIR$/src/main/java/view/NumberedMarkerPainter.java" />
-          <option value="file://$PROJECT_DIR$/UI_CUSTOMIZATION_GUIDE.md" />
-          <option value="file://$PROJECT_DIR$/UITHEME_IMPLEMENTATION.md" />
-          <option value="file://$PROJECT_DIR$/UITHEME_QUICK_REFERENCE.md" />
-          <option value="file://$PROJECT_DIR$/UI_START_HERE.md" />
-          <option value="file://$PROJECT_DIR$/BUTTON_CUSTOMIZATION_GUIDE.md" />
-          <option value="file://$PROJECT_DIR$/src/main/java/app/Main.java" />
-          <option value="file://$PROJECT_DIR$/WINDOW_CUSTOMIZATION_GUIDE.md" />
-          <option value="file://$PROJECT_DIR$/SELECTED_BADGE_CUSTOMIZATION.md" />
+          <option value="file://$PROJECT_DIR$/src/main/java/view/MapPanel.java" />
         </set>
       </entry>
     </pendingWorkingSetItems>

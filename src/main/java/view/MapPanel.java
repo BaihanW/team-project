@@ -276,6 +276,83 @@ public class MapPanel extends JPanel {
         MouseInputListener mia = new PanMouseInputListener(mapViewer);
         mapViewer.addMouseListener(mia);
         mapViewer.addMouseMotionListener(mia);
+
+        // Add custom listener for middle-click dragging
+        MouseInputListener middleClickListener = new MiddleClickPanListener(mapViewer);
+        mapViewer.addMouseListener(middleClickListener);
+        mapViewer.addMouseMotionListener(middleClickListener);
+    }
+
+    /**
+     * Custom mouse input listener to handle middle-click (scroll wheel) dragging
+     * for panning the map, matching left-click drag behavior.
+     */
+    private static class MiddleClickPanListener implements MouseInputListener {
+        private final JXMapViewer mapViewer;
+        private Point lastPoint = null;
+        private boolean isDragging = false;
+
+        public MiddleClickPanListener(JXMapViewer mapViewer) {
+            this.mapViewer = mapViewer;
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+            if (e.getButton() == MouseEvent.BUTTON2) {
+                isDragging = true;
+                lastPoint = e.getPoint();
+                e.consume();
+            }
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+            if (e.getButton() == MouseEvent.BUTTON2) {
+                isDragging = false;
+                lastPoint = null;
+                e.consume();
+            }
+        }
+
+        @Override
+        public void mouseDragged(MouseEvent e) {
+            if (isDragging && lastPoint != null) {
+                int dx = e.getX() - lastPoint.x;
+                int dy = e.getY() - lastPoint.y;
+
+                Point centerP = new Point(mapViewer.getWidth() / 2, mapViewer.getHeight() / 2);
+                int targetX = centerP.x - dx;
+                int targetY = centerP.y - dy;
+
+                GeoPosition gp = mapViewer.convertPointToGeoPosition(new Point(targetX, targetY));
+                if (gp != null) {
+                    mapViewer.setAddressLocation(gp);
+                }
+
+                lastPoint = e.getPoint();
+                e.consume();
+            }
+        }
+
+        @Override
+        public void mouseMoved(MouseEvent e) {
+            // Not needed for middle-click panning
+        }
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            // Not needed
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+            // Not needed
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+            // Not needed
+        }
     }
 
 
