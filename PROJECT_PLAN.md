@@ -21,7 +21,7 @@ The purpose of TripPlanner is to help users plan routes between locations with d
 | View Past Plans   | Display and reopen saved trips                |             |
 
 ## 4. Architecture Overview
-- **Entity Layer:** `Location`, `Route`, `TripPlan`
+- **entity Layer:** `Location`, `Route`, `TripPlan`
 - **Use Case Layer:** independent logic for search, retrieval, selection, saving
 - **Interface Adapters:** controllers, presenters, gateways
 - **Frameworks:** Swing GUI and external APIs

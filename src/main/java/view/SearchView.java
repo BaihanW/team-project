@@ -57,9 +57,6 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         setLayout(new BorderLayout());
 
         // Build and attach UI components
-        JPanel zoomControlsContainer = buildZoomControls();
-        add(zoomControlsContainer, BorderLayout.NORTH);
-
         JSplitPane layoutSplit = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
                 buildLeftSidebar(), buildRightMapPanel());
         layoutSplit.setDividerLocation(350);
@@ -75,52 +72,6 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
     /* --------------------------------------------------------------------- */
     /* UI BUILDERS                                                           */
     /* --------------------------------------------------------------------- */
-
-    /**
-     * Build the zoom control panel (top-right).
-     */
-    private JPanel buildZoomControls() {
-        JPanel container = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 8));
-        container.setOpaque(false);
-
-        JButton zoomIn = buildZoomButton("+", "Zoom in", -1);
-        JButton zoomOut = buildZoomButton("-", "Zoom out", +1);
-
-        JPanel inner = new JPanel(new FlowLayout(FlowLayout.CENTER, 4, 0));
-        inner.setOpaque(false);
-        inner.add(zoomIn);
-        inner.add(zoomOut);
-
-        container.add(inner);
-        container.setPreferredSize(new Dimension(0, 44));
-
-        return container;
-    }
-
-    /**
-     * Create a single zoom button with its behavior encapsulated.
-     */
-    private JButton buildZoomButton(String label, String tooltip, int zoomDelta) {
-        JButton btn = new JButton(label);
-        btn.setPreferredSize(new Dimension(36, 24));
-        btn.setToolTipText(tooltip);
-        btn.setFont(btn.getFont().deriveFont(Font.BOLD, 14f));
-        btn.setMargin(new Insets(2, 4, 2, 4));
-
-        btn.addActionListener(e -> {
-            try {
-                JComponent viewer = mapPanel.getMapViewer();
-                GeoPosition center = mapPanel.getMapViewer()
-                        .convertPointToGeoPosition(new Point(viewer.getWidth() / 2, viewer.getHeight() / 2));
-                int z = mapPanel.getMapViewer().getZoom();
-                int newZ = Math.min(20, Math.max(0, z + zoomDelta));
-                mapPanel.getMapViewer().setZoom(newZ);
-                mapPanel.getMapViewer().setCenterPosition(center);
-            } catch (Exception ignored) {}
-        });
-
-        return btn;
-    }
 
     /**
      * Build the left sidebar that contains:
