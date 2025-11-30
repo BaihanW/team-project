@@ -1,5 +1,6 @@
 package view;
 
+import interface_adapter.save_stops.SaveStopsController;
 import interface_adapter.search.SearchController;
 import interface_adapter.search.SearchState;
 import interface_adapter.search.SearchViewModel;
@@ -36,9 +37,11 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
     private final JTextField searchInputField = new JTextField(15);
     private final JButton searchButton = new JButton("Search");
     private final JButton routeButton = new JButton("Route");
+    private final JButton saveButton = new JButton("Save");
 
     // Controller
     private transient SearchController searchController = null;
+    private transient SaveStopsController saveStopsController = null;
 
     // Map panel
     private final MapPanel mapPanel = new MapPanel();
@@ -67,6 +70,7 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         attachStopsListDoubleClickListener();
         attachSearchFieldListener();
         attachSearchButtonListener();
+        attachSaveButtonListener();
     }
 
     /* --------------------------------------------------------------------- */
@@ -103,6 +107,7 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         buttons.setOpaque(false);
         buttons.add(searchButton);
         buttons.add(routeButton);
+        buttons.add(saveButton);
 
         container.add(searchInputField, BorderLayout.CENTER);
         container.add(buttons, BorderLayout.EAST);
@@ -180,6 +185,13 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         searchInputField.addActionListener(evt -> searchButton.doClick());
     }
 
+    private void attachSaveButtonListener() {
+        saveButton.addActionListener(e -> {
+            SearchState s = searchViewModel.getState();
+            saveStopsController.execute(s.getStopNames(), s.getStops());
+        });
+    }
+
     private void attachGlobalEnterKey() {
         this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
                 .put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), "globalEnter");
@@ -216,32 +228,57 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        Object value = evt.getNewValue();
-        if (value instanceof SearchState state) {
-            handleSearchState(state, evt.getPropertyName());
+        String property = evt.getPropertyName();
+        Object newValue = evt.getNewValue();
+
+        // 1. Save success / error (newValue is String)
+        if ("save_success".equals(property)) {
+            JOptionPane.showMessageDialog(
+                    this,newValue,
+                    "Save Successful",
+                    JOptionPane.INFORMATION_MESSAGE
+            );
+            return;
+        }
+
+        if ("save_error".equals(property)) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    newValue,
+                    "Save Failed",
+                    JOptionPane.ERROR_MESSAGE
+            );
+            return;
+        }
+
+        // 2. SearchState updates (newValue MUST be SearchState)
+        if ("state".equals(property)) {
+            SearchState state = (SearchState) newValue;
+            handleSearchState(state);
         }
     }
 
-    private void handleSearchState(SearchState state, String propertyName) {
 
-        if ("state".equals(propertyName)) {
-            // update textField
-            updateFields(state);
+    private void handleSearchState(SearchState state) {
 
-            // update stop list
-            stopsListModel.clear();
-            for (String name : state.getStopNames()) {
-                stopsListModel.addElement(name);
-            }
+        // 1. update text field
+        updateFields(state);
 
-            // update center if needed
-            mapPanel.setCenter(state.getLatitude(), state.getLongitude());
+        // 2. update stop list
+        stopsListModel.clear();
+        for (String name : state.getStopNames()) {
+            stopsListModel.addElement(name);
+        }
 
-            // handle error
-            if (state.getSearchError() != null) showPopupError(state.getSearchError());
+        // 3. update map center
+        mapPanel.setCenter(state.getLatitude(), state.getLongitude());
 
+        // 4. show error popup if needed
+        if (state.getSearchError() != null) {
+            showPopupError(state.getSearchError());
         }
     }
+
 
     private void updateFields(SearchState state) {
         searchInputField.setText(state.getLocationName());
@@ -277,6 +314,10 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
 
     public void setSearchController(SearchController searchController) {
         this.searchController = searchController;
+    }
+
+    public void setSaveStopsController(SaveStopsController saveStopsController) {
+        this.saveStopsController = saveStopsController;
     }
 
     @Override
