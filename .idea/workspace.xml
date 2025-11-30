@@ -5,21 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b50313f8-1e33-41e4-88d3-e829184e5d9f" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/test/java/use_case/add_marker/AddMarkerInteractorTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/entity/Marker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/entity/Marker.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/interface_adapter/addMarker/AddMarkerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/interface_adapter/addMarker/AddMarkerController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/interface_adapter/addMarker/AddMarkerPresenter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/interface_adapter/addMarker/AddMarkerPresenter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/interface_adapter/addMarker/AddMarkerState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/interface_adapter/addMarker/AddMarkerState.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/interface_adapter/addMarker/AddMarkerViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/interface_adapter/addMarker/AddMarkerViewModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/use_case/add_marker/AddMarkerDataAccessInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/use_case/add_marker/AddMarkerDataAccessInterface.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/use_case/add_marker/AddMarkerInputBoundary.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/use_case/add_marker/AddMarkerInputBoundary.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/use_case/add_marker/AddMarkerInteractor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/use_case/add_marker/AddMarkerInteractor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/use_case/add_marker/AddMarkerOutputBoundary.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/use_case/add_marker/AddMarkerOutputBoundary.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/use_case/add_marker/AddMarkerOutputData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/use_case/add_marker/AddMarkerOutputData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/view/AddMarkerView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/AddMarkerView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/.gitkeep" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/use_case/.gitkeep" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -164,6 +150,7 @@
       <workItem from="1764391015831" duration="129000" />
       <workItem from="1764391769093" duration="5000" />
       <workItem from="1764392380345" duration="835000" />
+      <workItem from="1764464923305" duration="1185000" />
     </task>
     <servers />
   </component>
