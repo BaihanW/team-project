@@ -45,6 +45,7 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
     private final JButton removeButton = new JButton("Remove");
     private final DefaultListModel<String> suggestionListModel = new DefaultListModel<>();
     private final JList<String> suggestionList = new JList<>(suggestionListModel);
+    private final Timer suggestionDebounceTimer;
 
     // Controller
     private transient SearchController searchController = null;
@@ -59,12 +60,22 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
     private final DefaultListModel<String> stopsListModel = new DefaultListModel<>();
     private final JList<String> stopsList = new JList<>(stopsListModel);
 
+    // UI update guard
+    private boolean updatingFromModel = false;
+
     public SearchView(SearchViewModel searchViewModel) {
 
         this.viewName = searchViewModel.getViewName();
         this.searchViewModel = searchViewModel;
 
         this.searchViewModel.addPropertyChangeListener(this);
+
+        this.suggestionDebounceTimer = new Timer(250, evt -> {
+            if (suggestionController != null) {
+                suggestionController.execute(searchInputField.getText());
+            }
+        });
+        this.suggestionDebounceTimer.setRepeats(false);
 
         setLayout(new BorderLayout());
 
@@ -215,12 +226,12 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
     private void attachSearchFieldListener() {
         searchInputField.getDocument().addDocumentListener(new DocumentListener() {
             private void updateState() {
+                if (updatingFromModel) return;
+
                 SearchState stateCopy = new SearchState(searchViewModel.getState());
                 stateCopy.setLocationName(searchInputField.getText());
                 searchViewModel.setState(stateCopy);
-                if (suggestionController != null) {
-                    suggestionController.execute(searchInputField.getText());
-                }
+                suggestionDebounceTimer.restart();
             }
 
             @Override public void insertUpdate(DocumentEvent e) { updateState(); }
@@ -291,7 +302,15 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         String selection = suggestionList.getSelectedValue();
         if (selection == null) return;
 
-        searchInputField.setText(selection);
+        updatingFromModel = true;
+        try {
+            searchInputField.setText(selection);
+            int caret = selection.length();
+            searchInputField.setCaretPosition(caret);
+            searchInputField.select(caret, caret);
+        } finally {
+            updatingFromModel = false;
+        }
         SearchState updatedState = new SearchState(searchViewModel.getState());
         updatedState.setLocationName(selection);
         searchViewModel.setState(updatedState);
@@ -336,7 +355,32 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
     }
 
     private void updateFields(SearchState state) {
-        searchInputField.setText(state.getLocationName());
+        String newText = state.getLocationName() == null ? "" : state.getLocationName();
+        String currentText = searchInputField.getText();
+
+        if (newText.equals(currentText)) {
+            updatingFromModel = true;
+            try {
+                int caret = newText.length();
+                searchInputField.setCaretPosition(caret);
+                searchInputField.select(caret, caret);
+            } finally {
+                updatingFromModel = false;
+            }
+            return;
+        }
+
+        SwingUtilities.invokeLater(() -> {
+            updatingFromModel = true;
+            try {
+                searchInputField.setText(newText);
+                int caret = newText.length();
+                searchInputField.setCaretPosition(caret);
+                searchInputField.select(caret, caret);
+            } finally {
+                updatingFromModel = false;
+            }
+        });
     }
 
     private void showPopupError(String message) {
