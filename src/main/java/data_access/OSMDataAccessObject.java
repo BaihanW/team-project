@@ -6,6 +6,8 @@ import java.net.http.*;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import entity.Location;
@@ -48,13 +50,13 @@ public class OSMDataAccessObject implements SearchDataAccessInterface {
 
     @Override
     public boolean existsByName(String locationName) throws IOException, InterruptedException {
-        JSONArray array = fetchSearchResult(locationName);
+        JSONArray array = fetchSearchResult(locationName, 1);
         return array.length() > 0;
     }
 
     @Override
     public Location get(String locationName) throws IOException, InterruptedException {
-        JSONArray array = fetchSearchResult(locationName);
+        JSONArray array = fetchSearchResult(locationName, 1);
 
         if (array.isEmpty()) {
             throw new IOException("No results found for: " + locationName);
@@ -70,14 +72,31 @@ public class OSMDataAccessObject implements SearchDataAccessInterface {
     }
 
     /** Core helper: performs GET request and returns raw JSON search array. */
-    private JSONArray fetchSearchResult(String locationName)
+    @Override
+    public List<Location> searchSuggestions(String query, int limit) throws IOException, InterruptedException {
+        JSONArray array = fetchSearchResult(query, limit);
+
+        List<Location> suggestions = new ArrayList<>();
+        for (int i = 0; i < array.length(); i++) {
+            JSONObject obj = array.getJSONObject(i);
+            String name = obj.optString("display_name", query);
+            double lat = obj.optDouble("lat", 0);
+            double lon = obj.optDouble("lon", 0);
+            suggestions.add(new Location(name, lat, lon));
+        }
+
+        return suggestions;
+    }
+
+    /** Core helper: performs GET request and returns raw JSON search array. */
+    private JSONArray fetchSearchResult(String locationName, int limit)
             throws IOException, InterruptedException {
 
         applyRateLimit();
 
         String url = "https://nominatim.openstreetmap.org/search?q="
                 + URLEncoder.encode(locationName, StandardCharsets.UTF_8)
-                + "&format=json&limit=1";
+                + "&format=json&limit=" + limit;
 
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(url))

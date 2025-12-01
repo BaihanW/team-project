@@ -2,17 +2,23 @@ package app;
 
 import data_access.OSMDataAccessObject;
 import interface_adapter.ViewManagerModel;
+
 import interface_adapter.search.SearchController;
 import interface_adapter.search.SearchPresenter;
 import interface_adapter.search.SearchViewModel;
 import interface_adapter.remove_marker.RemoveMarkerController;
 import interface_adapter.remove_marker.RemoveMarkerPresenter;
+import interface_adapter.suggestion.SuggestionController;
+import interface_adapter.suggestion.SuggestionPresenter;
 import use_case.search.SearchInputBoundary;
 import use_case.search.SearchInteractor;
 import use_case.search.SearchOutputBoundary;
 import use_case.remove_marker.RemoveMarkerInputBoundary;
 import use_case.remove_marker.RemoveMarkerInteractor;
 import use_case.remove_marker.RemoveMarkerOutputBoundary;
+import use_case.suggestion.SuggestionInputBoundary;
+import use_case.suggestion.SuggestionInteractor;
+import use_case.suggestion.SuggestionOutputBoundary;
 import view.SearchView;
 import view.ViewManager;
 import javax.swing.*;
@@ -53,6 +59,16 @@ public class AppBuilder {
 
         SearchController searchController = new SearchController(searchInteractor);
         searchView.setSearchController(searchController);
+
+        return this;
+    }
+
+    public AppBuilder addSuggestionUseCase() {
+        final SuggestionOutputBoundary outputBoundary = new SuggestionPresenter(searchViewModel);
+        final SuggestionInputBoundary interactor = new SuggestionInteractor(osmDataAccessObject, outputBoundary);
+
+        SuggestionController suggestionController = new SuggestionController(interactor);
+        searchView.setSuggestionController(suggestionController);
 
         return this;
     }
