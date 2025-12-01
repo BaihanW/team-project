@@ -59,6 +59,7 @@ public class AppBuilder {
 
     public AppBuilder addSearchView() {
         searchViewModel = new SearchViewModel();
+        generateRouteViewModel = new GenerateRouteViewModel();
         searchView = new SearchView(searchViewModel, generateRouteViewModel);
         cardPanel.add(searchView, searchView.getViewName());
         return this;

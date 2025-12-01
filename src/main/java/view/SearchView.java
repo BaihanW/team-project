@@ -50,7 +50,6 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
     private transient SearchController searchController = null;
     private transient SaveStopsController saveStopsController = null;
     private transient RemoveMarkerController removeMarkerController = null;
-    private final transient GenerateRouteViewModel routeViewModel;
     private transient GenerateRouteController generateRouteController = null;
 
     // Map panel
@@ -64,10 +63,9 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
 
         this.viewName = searchViewModel.getViewName();
         this.searchViewModel = searchViewModel;
-        this.routeViewModel = routeViewModel;
 
         this.searchViewModel.addPropertyChangeListener(this);
-        this.routeViewModel.addPropertyChangeListener(this);
+        routeViewModel.addPropertyChangeListener(this);
 
         setLayout(new BorderLayout());
 
