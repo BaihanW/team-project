@@ -31,7 +31,7 @@ import java.awt.*;
 import java.net.http.HttpClient;
 
 /**
- * Configures and wires the application using the simplified Clean Architecture graph.
+ * Configures and wires the application using the simplified Clean Architecture graph
  */
 public class AppBuilder {
 
