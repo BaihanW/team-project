@@ -6,6 +6,8 @@ import interface_adapter.ViewManagerModel;
 import interface_adapter.search.SearchController;
 import interface_adapter.search.SearchPresenter;
 import interface_adapter.search.SearchViewModel;
+import interface_adapter.save_stops.SaveStopsController;
+import interface_adapter.save_stops.SaveStopsPresenter;
 import interface_adapter.remove_marker.RemoveMarkerController;
 import interface_adapter.remove_marker.RemoveMarkerPresenter;
 import interface_adapter.suggestion.SuggestionController;
@@ -112,21 +114,23 @@ public class AppBuilder {
                 state.setStopNames(stored.names);
                 state.setStops(stored.positions);
 
-        RemoveMarkerController removeMarkerController = new RemoveMarkerController(removeMarkerInteractor);
-        searchView.setRemoveMarkerController(removeMarkerController);
+                RemoveMarkerController removeMarkerController = new RemoveMarkerController(removeMarkerInteractor);
+                searchView.setRemoveMarkerController(removeMarkerController);
 
-        return this;
-    }
+                return this;
+            }
 
-    public JFrame build() {
-        final JFrame application = new JFrame("trip planner");
-        application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+            public JFrame build () {
+                final JFrame application = new JFrame("trip planner");
+                application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-        application.add(cardPanel);
+                application.add(cardPanel);
 
-        viewManagerModel.setState(searchView.getViewName());
-        viewManagerModel.firePropertyChange();
+                viewManagerModel.setState(searchView.getViewName());
+                viewManagerModel.firePropertyChange();
 
-        return application;
+                return application;
+            }
+        }
     }
 }
