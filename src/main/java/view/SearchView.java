@@ -2,6 +2,7 @@ package view;
 
 import interface_adapter.save_stops.SaveStopsController;
 import interface_adapter.search.SearchController;
+import interface_adapter.remove_marker.RemoveMarkerController;
 import interface_adapter.search.SearchState;
 import interface_adapter.search.SearchViewModel;
 import javax.swing.*;
@@ -38,10 +39,14 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
     private final JButton searchButton = new JButton("Search");
     private final JButton routeButton = new JButton("Route");
     private final JButton saveButton = new JButton("Save");
+        private final JButton moveUpButton = new JButton("Up");
+    private final JButton moveDownButton = new JButton("Down");
+    private final JButton removeButton = new JButton("Remove");
 
     // Controller
     private transient SearchController searchController = null;
     private transient SaveStopsController saveStopsController = null;
+    private transient RemoveMarkerController removeMarkerController = null;
 
     // Map panel
     private final MapPanel mapPanel = new MapPanel();
@@ -71,6 +76,7 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         attachSearchFieldListener();
         attachSearchButtonListener();
         attachSaveButtonListener();
+        attachRemoveButtonListener();
     }
 
     /* --------------------------------------------------------------------- */
@@ -136,9 +142,9 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         JPanel controls = new JPanel(new GridLayout(1, 3, 5, 5));
         controls.setOpaque(false);
 
-        controls.add(new JButton("Up"));     // Placeholder for clean architecture hooks
-        controls.add(new JButton("Down"));
-        controls.add(new JButton("Remove"));
+        controls.add(moveUpButton);     // Placeholder for clean architecture hooks
+        controls.add(moveDownButton);
+        controls.add(removeButton);
 
         return controls;
     }
@@ -222,6 +228,25 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         });
     }
 
+     private void attachRemoveButtonListener() {
+        removeButton.addActionListener(evt -> {
+            if (removeMarkerController == null) return;
+
+            int selectedIndex = stopsList.getSelectedIndex();
+            if (selectedIndex < 0) {
+                showPopupError("Select a stop to remove.");
+                return;
+            }
+
+            SearchState currentState = searchViewModel.getState();
+            removeMarkerController.removeAt(
+                    selectedIndex,
+                    currentState.getStopNames(),
+                    currentState.getStops()
+            );
+        });
+    }
+    
     /* --------------------------------------------------------------------- */
     /* PROPERTY CHANGE HANDLING                                              */
     /* --------------------------------------------------------------------- */
@@ -318,6 +343,10 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
 
     public void setSaveStopsController(SaveStopsController saveStopsController) {
         this.saveStopsController = saveStopsController;
+    }
+
+    public void setRemoveMarkerController(RemoveMarkerController removeMarkerController) {
+        this.removeMarkerController = removeMarkerController;
     }
 
     @Override
