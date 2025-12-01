@@ -1,5 +1,6 @@
 package view;
 
+import interface_adapter.addMarker.AddMarkerController;
 import org.jxmapviewer.*;
 import org.jxmapviewer.input.PanMouseInputListener;
 import org.jxmapviewer.viewer.*;
@@ -8,6 +9,8 @@ import javax.swing.*;
 import javax.swing.event.MouseInputListener;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -16,6 +19,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  *  - Display OpenStreetMap using JXMapViewer.
  *  - Smooth zooming (mouse wheel, trackpad pinch).
  *  - Smooth panning (two-finger scroll).
+ *  - (추가) 클릭 시 마커 추가 + AddMarkerController 호출.
  */
 public class MapPanel extends JPanel {
 
@@ -62,6 +66,15 @@ public class MapPanel extends JPanel {
     /* Trackpad horizontal scrolling detection */
     private long lastScrollEventTime = 0;
 
+    /* --------------------- Marker / Controller ---------------------- */
+
+
+    private final Set<Waypoint> waypoints = new HashSet<>();
+    private final WaypointPainter<Waypoint> waypointPainter = new WaypointPainter<>();
+
+
+    private AddMarkerController addMarkerController;
+
     /* ================================================================
      *                    CONSTRUCTOR
      * ================================================================ */
@@ -85,6 +98,10 @@ public class MapPanel extends JPanel {
         mapViewer.setAddressLocation(new GeoPosition(43.6532, -79.3832));
         mapViewer.setZoom(5);
 
+        // 🔹 마커 오버레이 설정
+        waypointPainter.setWaypoints(waypoints);
+        mapViewer.setOverlayPainter(waypointPainter);
+
         // Remove default wheel zoom
         removeDefaultWheelListeners();
 
@@ -102,7 +119,53 @@ public class MapPanel extends JPanel {
         // Drag-to-pan support
         enableDragPanning();
 
+        // 🔹 클릭하면 마커 추가 + 컨트롤러 호출
+        installClickToAddMarker();
+
         add(mapViewer, BorderLayout.CENTER);
+    }
+
+    /* ================================================================
+     *           AddMarkerController + helper
+     * ================================================================ */
+
+    /**
+     * AppBuilder → SearchView
+     */
+    public void setAddMarkerController(AddMarkerController controller) {
+        this.addMarkerController = controller;
+    }
+
+
+    public void addMarker(double lat, double lon) {
+        waypoints.add(new DefaultWaypoint(lat, lon));
+        waypointPainter.setWaypoints(waypoints);
+        mapViewer.repaint();
+    }
+
+
+    private void installClickToAddMarker() {
+        mapViewer.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                // 왼쪽 버튼만 처리
+                if (!SwingUtilities.isLeftMouseButton(e)) return;
+
+                GeoPosition pos = mapViewer.convertPointToGeoPosition(e.getPoint());
+                if (pos == null) return;
+
+                double lat = pos.getLatitude();
+                double lon = pos.getLongitude();
+
+                // 1) 유스케이스 실행
+                if (addMarkerController != null) {
+                    addMarkerController.execute(lat, lon);
+                }
+
+                // 2) UI에 마커 추가
+                addMarker(lat, lon);
+            }
+        });
     }
 
     /* ================================================================
@@ -196,7 +259,6 @@ public class MapPanel extends JPanel {
         mapViewer.addMouseWheelListener(e -> {
             try {
                 handleWheelEvent(e);
-                e.consume();
             } catch (Exception ignored) {}
         });
     }
@@ -212,10 +274,6 @@ public class MapPanel extends JPanel {
      *                    WHEEL HANDLING (zoom + pan)
      * ================================================================ */
 
-    /**
-     * Handles all zoom/pan logic for mouse wheel and trackpad gestures.
-     * (Implementation continues below in next message.)
-     */
     private void handleWheelEvent(MouseWheelEvent e) {
 
         double preciseRot = e.getPreciseWheelRotation();  // fractional (trackpads)
@@ -227,21 +285,12 @@ public class MapPanel extends JPanel {
         long dt = now - lastRotationTime;
         boolean quickEvent = dt < 100;
 
-
-        /* --------------------------------------------------------------
-         *  Detect whether this sequence is a directional scroll
-         *  (trackpad vertical/horizontal sliding), not a pinch gesture.
-         *
-         *  Continuous same-direction movements → scrolling.
-         *  Alternating small movements → pinch.
-         * -------------------------------------------------------------- */
         boolean directionalScroll = false;
 
         if (quickEvent && Math.abs(preciseRot) > 0.001) {
             if (Math.signum(preciseRot) == Math.signum(lastRotation)) {
                 sameDirectionCount++;
 
-                // Even 2 same-direction events in a row implies "scrolling".
                 if (sameDirectionCount >= 2) {
                     directionalScroll = true;
                 }
@@ -250,13 +299,6 @@ public class MapPanel extends JPanel {
             }
         }
 
-
-        /* --------------------------------------------------------------
-         *  Pinch gesture detection:
-         *      - consecutive alternating small rotations
-         *      - short time window
-         *      - very small rotation magnitude
-         * -------------------------------------------------------------- */
         boolean isPinchGesture = false;
 
         if (!directionalScroll) {
@@ -277,7 +319,6 @@ public class MapPanel extends JPanel {
             }
         }
 
-        // If inside an active pinch session, keep interpreting as pinch
         if (!isPinchGesture && pinchSessionExpire > now) {
             isPinchGesture = true;
         }
@@ -285,57 +326,40 @@ public class MapPanel extends JPanel {
         lastRotation = preciseRot;
         lastRotationTime = now;
 
-
-        /* --------------------------------------------------------------
-         *  Distinguish "hardware wheel" from "trackpad"
-         *  (This must happen *after* pinch detection)
-         * -------------------------------------------------------------- */
         boolean looksLikeTrackpad =
                 Math.abs(preciseRot - wheelNotches) > 0.001
                         || Math.abs(preciseRot) < 0.75;
 
         boolean couldBeTrackpad =
                 looksLikeTrackpad
-                        || (dt > 0 && dt < 35);   // fast gesture frequency
+                        || (dt > 0 && dt < 35);
 
         boolean isHardwareWheel =
                 !couldBeTrackpad
                         && Math.abs(wheelNotches) >= 1;
 
-
-        /* --------------------------------------------------------------
-         *  Determine whether this event should trigger ZOOM
-         * -------------------------------------------------------------- */
         boolean zoomIntent =
-                e.isControlDown()      // ctrl+scroll → zoom
-                        || isPinchGesture      // trackpad pinch → zoom
-                        || isHardwareWheel;    // mouse wheel → zoom
+                e.isControlDown()
+                        || isPinchGesture
+                        || isHardwareWheel;
 
-
-        /* ==============================================================
-         *  ZOOM
-         * ==============================================================*/
         AtomicInteger pendingHorizontal = new AtomicInteger();
         if (zoomIntent) {
 
             double zoomDelta;
 
             if (isHardwareWheel) {
-                // Hardware mouse wheel → coarse zoom
                 zoomDelta = wheelNotches * MOUSE_WHEEL_STEP;
 
-                // Hardware wheel must NOT pan — clear pending pan state.
                 panOffsetX = 0;
                 panOffsetY = 0;
                 pendingHorizontal.set(0);
 
             } else {
-                // Trackpad pinch → extremely smooth zooming
                 double perStep = preciseRot * PINCH_STEP;
                 zoomDelta = perStep * PINCH_MULTIPLIER;
             }
 
-            // Apply smooth zoom accumulator
             smoothZoom += zoomDelta;
             smoothZoom = Math.max(0.0, Math.min(MAX_ZOOM, smoothZoom));
 
@@ -350,11 +374,6 @@ public class MapPanel extends JPanel {
             return;
         }
 
-
-        /* ==============================================================
-         *  PAN HANDLING (trackpad two-finger scrolling)
-         * ==============================================================*/
-
         final double PAN_SENSITIVITY = 35.0;
 
         double dx = 0;
@@ -362,26 +381,22 @@ public class MapPanel extends JPanel {
 
         long now2 = System.currentTimeMillis();
 
-        // If we recently captured horizontal scroll info, use it
         if (now2 - lastScrollEventTime < 100
                 && Math.abs(pendingHorizontal.get()) > 0.001) {
 
             dx = pendingHorizontal.get() * PAN_SENSITIVITY;
             dy = 0;
-            pendingHorizontal.set(0);  // consume
+            pendingHorizontal.set(0);
 
         } else if (e.isShiftDown()) {
-            // Shift + vertical scroll → horizontal pan (fallback)
             dx = preciseRot * PAN_SENSITIVITY;
             dy = 0;
 
         } else {
-            // Standard vertical two-finger pan
             dx = 0;
             dy = preciseRot * PAN_SENSITIVITY;
         }
 
-        // Accumulate pan offsets for smooth multi-event movement
         panOffsetX += dx;
         panOffsetY += dy;
 
@@ -390,7 +405,6 @@ public class MapPanel extends JPanel {
         if (Math.abs(panOffsetX) >= APPLY_THRESHOLD ||
                 Math.abs(panOffsetY) >= APPLY_THRESHOLD) {
 
-            // Convert pixel offset into new map center
             Point centerPoint = new Point(
                     mapViewer.getWidth() / 2,
                     mapViewer.getHeight() / 2
@@ -407,12 +421,10 @@ public class MapPanel extends JPanel {
                 mapViewer.setAddressLocation(gp);
             }
 
-            // Remove applied movement from offset
             panOffsetX -= (targetX - centerPoint.x);
             panOffsetY -= (targetY - centerPoint.y);
         }
     }
-
 
     /* ================================================================
      *               Repaints (used by SearchView)
@@ -437,3 +449,6 @@ public class MapPanel extends JPanel {
         }
     }
 }
+
+
+
