@@ -231,6 +231,14 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         searchInputField.addActionListener(evt -> searchButton.doClick());
     }
 
+    private void attachSaveButtonListener() {
+        saveButton.addActionListener(e -> {
+            SearchState s = searchViewModel.getState();
+            saveStopsController.execute(s.getStopNames(), s.getStops());
+        });
+    }
+
+
     private void attachGlobalEnterKey() {
         this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
                 .put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), "globalEnter");

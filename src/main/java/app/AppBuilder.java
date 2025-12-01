@@ -1,10 +1,12 @@
 package app;
 
+import data_access.FileStopListDAO;
 import data_access.OSMDataAccessObject;
 import interface_adapter.ViewManagerModel;
 
 import interface_adapter.search.SearchController;
 import interface_adapter.search.SearchPresenter;
+import interface_adapter.search.SearchState;
 import interface_adapter.search.SearchViewModel;
 import interface_adapter.save_stops.SaveStopsController;
 import interface_adapter.save_stops.SaveStopsPresenter;
@@ -28,6 +30,7 @@ import view.SearchView;
 import view.ViewManager;
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 import java.net.http.HttpClient;
 
 /**
@@ -94,7 +97,7 @@ public class AppBuilder {
 
     public AppBuilder addRemoveMarkerUseCase() {
         final RemoveMarkerOutputBoundary removeMarkerOutputBoundary = new RemoveMarkerPresenter(searchViewModel);
-        final RemoveMarkerInputBoundary removeMarkerInteractor = new RemoveMarkerInteractor(removeMarkerOutputBoundary);
+        RemoveMarkerInteractor removeMarkerInteractor = new RemoveMarkerInteractor(removeMarkerOutputBoundary);
 
         RemoveMarkerController removeMarkerController = new RemoveMarkerController(removeMarkerInteractor);
         searchView.setRemoveMarkerController(removeMarkerController);
@@ -106,31 +109,38 @@ public class AppBuilder {
         try {
             FileStopListDAO.LoadedStops stored = fileStopListDAO.load();
 
-            if (!stored.names.isEmpty()) {
+            if (!stored.names().isEmpty()) {
 
-                var state = searchViewModel.getState();
+                SearchState state = new SearchState(searchViewModel.getState());
 
-                // Load stops into state
-                state.setStopNames(stored.names);
-                state.setStops(stored.positions);
+                state.setStopNames(stored.names());
+                state.setStops(stored.positions());
 
-                RemoveMarkerController removeMarkerController = new RemoveMarkerController(removeMarkerInteractor);
-                searchView.setRemoveMarkerController(removeMarkerController);
+                if (!stored.positions().isEmpty()) {
+                    var firstStop = stored.positions().get(0);
+                    state.setLatitude(firstStop.getLatitude());
+                    state.setLongitude(firstStop.getLongitude());
+                    state.setLocationName(stored.names().get(0));
+                }
 
-                return this;
+                searchViewModel.setState(state);
+                searchViewModel.firePropertyChange();
             }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-            public JFrame build () {
-                final JFrame application = new JFrame("trip planner");
-                application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        return this;
+    }
+    public JFrame build() {
+        final JFrame application = new JFrame("trip planner");
+        application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-                application.add(cardPanel);
+        application.add(cardPanel);
 
-                viewManagerModel.setState(searchView.getViewName());
-                viewManagerModel.firePropertyChange();
+        viewManagerModel.setState(searchView.getViewName());
+        viewManagerModel.firePropertyChange();
 
-                return application;
+        return application;
             }
         }
-    }
-}

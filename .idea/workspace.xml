@@ -5,21 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b50313f8-1e33-41e4-88d3-e829184e5d9f" name="Changes" comment="implement usecase in files">
-      <change afterPath="$PROJECT_DIR$/src/main/java/interface_adapter/suggestion/SuggestionController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/interface_adapter/suggestion/SuggestionPresenter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/use_case/suggestion/SuggestionInputBoundary.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/use_case/suggestion/SuggestionInputData.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/use_case/suggestion/SuggestionInteractor.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/use_case/suggestion/SuggestionOutputBoundary.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/use_case/suggestion/SuggestionOutputData.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/app/AppBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/AppBuilder.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/app/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/data_access/OSMDataAccessObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/data_access/OSMDataAccessObject.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/interface_adapter/search/SearchPresenter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/interface_adapter/search/SearchPresenter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/interface_adapter/search/SearchState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/interface_adapter/search/SearchState.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/use_case/search/SearchDataAccessInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/use_case/search/SearchDataAccessInterface.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/view/SearchView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/SearchView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/data_access/FileStopListDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/data_access/FileStopListDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/interface_adapter/save_stops/SaveStopsPresenter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/interface_adapter/save_stops/SaveStopsPresenter.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -82,7 +72,7 @@
     "RunOnceActivity.git.unshallow": "true",
     "SONARLINT_PRECOMMIT_ANALYSIS": "true",
     "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
-    "git-widget-placeholder": "Suggestion",
+    "git-widget-placeholder": "testmain",
     "junie.onboarding.icon.badge.shown": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/Motion/IdeaProjects/csc207/team-project/src/main",
@@ -107,10 +97,10 @@
       <recent name="interface_adapter.search" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.Main">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="app.Main" />
-      <module name="team-project" />
+      <module name="TeamProject" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="app.*" />
@@ -184,11 +174,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.Main" />
         <item itemvalue="JUnit.SearchViewModelTest" />
         <item itemvalue="JUnit.SearchInteractorTest" />
         <item itemvalue="JUnit.OSMDataAccessObjectTest.testGetReturnsCorrectLocation" />
         <item itemvalue="JUnit.OSMDataAccessObjectTest" />
-        <item itemvalue="Application.Main" />
       </list>
     </recent_temporary>
   </component>
