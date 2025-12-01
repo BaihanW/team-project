@@ -5,6 +5,7 @@
     <option name="pendingSessionIds">
       <option value="518ceb75-a4dc-42e7-8f30-323612df5e3c" />
       <option value="a87b787b-e051-454a-809e-c6b82351a439" />
+      <option value="b0033a87-e623-4027-9f9a-5152e5e07083" />
       <option value="b6344923-919a-4f13-97c2-5d6b38764b02" />
       <option value="bf3a8867-bc24-4475-8586-55d25a535b46" />
       <option value="f8a2decb-ff74-43cd-9987-ed77b126fd65" />
@@ -37,15 +38,16 @@
         <entry key="f8a2decb-ff74-43cd-9987-ed77b126fd65">
           <value>
             <set>
-              <option value="5a38fa4f-4b71-4382-8af5-df849a1933ef" />
-              <option value="f4ad786f-ffc7-400f-aba6-116a349c6c98" />
-              <option value="15b5cd00-6f83-4e76-9450-0fc31953d6a8" />
-              <option value="99aa3170-1a3f-4eb5-90f3-1d18daefdba1" />
               <option value="09e7b9d7-af49-4889-a995-3096316b6c89" />
-              <option value="e5da3ad9-357d-4280-a751-54ffe7a42363" />
-              <option value="0e2c8b51-7859-45c8-9178-88883cc9a369" />
-              <option value="4e221477-a498-44ac-b71d-f0ddf222d283" />
               <option value="0baf5b56-51bf-42bd-8c41-b02e70432f36" />
+              <option value="0e2c8b51-7859-45c8-9178-88883cc9a369" />
+              <option value="15b5cd00-6f83-4e76-9450-0fc31953d6a8" />
+              <option value="4a6782c3-c926-4bce-8c2e-b598aa30cddc" />
+              <option value="4e221477-a498-44ac-b71d-f0ddf222d283" />
+              <option value="5a38fa4f-4b71-4382-8af5-df849a1933ef" />
+              <option value="99aa3170-1a3f-4eb5-90f3-1d18daefdba1" />
+              <option value="e5da3ad9-357d-4280-a751-54ffe7a42363" />
+              <option value="f4ad786f-ffc7-400f-aba6-116a349c6c98" />
             </set>
           </value>
         </entry>
@@ -54,12 +56,7 @@
     <pendingWorkingSetItems>
       <entry key="b6344923-919a-4f13-97c2-5d6b38764b02" />
       <entry key="bf3a8867-bc24-4475-8586-55d25a535b46" />
-      <entry key="f8a2decb-ff74-43cd-9987-ed77b126fd65">
-        <set>
-          <option value="file://$PROJECT_DIR$/src/main/java/view/MapPanel.java" />
-          <option value="file://$PROJECT_DIR$/src/main/java/view/SearchView.java" />
-        </set>
-      </entry>
+      <entry key="f8a2decb-ff74-43cd-9987-ed77b126fd65" />
     </pendingWorkingSetItems>
   </component>
 </project>
