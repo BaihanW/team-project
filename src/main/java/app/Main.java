@@ -8,8 +8,8 @@ public class Main {
         JFrame application = appBuilder
                 .addSearchView()
                 .addSearchUseCase()
-                .addAddMarkerUseCase()
-                .addAddMarkerView()
+                .addSaveStopsUseCase()
+
                 .build();
 
         application.pack();

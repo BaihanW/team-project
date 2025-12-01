@@ -19,7 +19,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  *  - Display OpenStreetMap using JXMapViewer.
  *  - Smooth zooming (mouse wheel, trackpad pinch).
  *  - Smooth panning (two-finger scroll).
- *  - (추가) 클릭 시 마커 추가 + AddMarkerController 호출.
+ *
  */
 public class MapPanel extends JPanel {
 
@@ -119,7 +119,7 @@ public class MapPanel extends JPanel {
         // Drag-to-pan support
         enableDragPanning();
 
-        // 🔹 클릭하면 마커 추가 + 컨트롤러 호출
+
         installClickToAddMarker();
 
         add(mapViewer, BorderLayout.CENTER);
@@ -148,7 +148,7 @@ public class MapPanel extends JPanel {
         mapViewer.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                // 왼쪽 버튼만 처리
+
                 if (!SwingUtilities.isLeftMouseButton(e)) return;
 
                 GeoPosition pos = mapViewer.convertPointToGeoPosition(e.getPoint());
@@ -157,12 +157,11 @@ public class MapPanel extends JPanel {
                 double lat = pos.getLatitude();
                 double lon = pos.getLongitude();
 
-                // 1) 유스케이스 실행
+
                 if (addMarkerController != null) {
                     addMarkerController.execute(lat, lon);
                 }
 
-                // 2) UI에 마커 추가
                 addMarker(lat, lon);
             }
         });

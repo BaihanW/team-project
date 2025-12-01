@@ -1,20 +1,26 @@
 package use_case.add_marker;
 
+
 import entity.Location;
 import entity.Marker;
 
+
 import java.util.List;
+
 
 public class AddMarkerInteractor implements AddMarkerInputBoundary {
 
+
     private final AddMarkerDataAccessInterface markerDataAccess;
     private final AddMarkerOutputBoundary addMarkerPresenter;
+
 
     public AddMarkerInteractor(AddMarkerDataAccessInterface markerDataAccess,
                                AddMarkerOutputBoundary addMarkerPresenter) {
         this.markerDataAccess = markerDataAccess;
         this.addMarkerPresenter = addMarkerPresenter;
     }
+
 
     @Override
     public void execute(AddMarkerInputData inputData) {
@@ -27,29 +33,36 @@ public class AddMarkerInteractor implements AddMarkerInputBoundary {
                 inputData.getLongitude()
         );
 
+
         Marker marker = new Marker(location);
 
+
         try {
-            // 2) 도메인 규칙: 같은 위치에 두 번 찍지 않기
+            // 2)
             if (markerDataAccess.exists(location)) {
                 addMarkerPresenter.prepareFailView("Marker already exists at this location.");
                 return;
             }
 
-            // 3) 저장
+
+            // 3)
             markerDataAccess.save(marker);
 
-            // 4) 필요하면 전체 마커 목록 가져오기
+
+            // 4)
             List<Marker> allMarkers = markerDataAccess.allMarkers();
 
-            // 5) OutputData 만들어서 Presenter에 전달
+
+            // 5)
             AddMarkerOutputData outputData = new AddMarkerOutputData(
                     location.getLatitude(),
                     location.getLongitude()
-                    // 필요하면 allMarkers 도 필드로 넣을 수 있음
+
             );
 
+
             addMarkerPresenter.prepareSuccessView(outputData);
+
 
         } catch (Exception e) {
             addMarkerPresenter.prepareFailView(
@@ -58,4 +71,3 @@ public class AddMarkerInteractor implements AddMarkerInputBoundary {
         }
     }
 }
-

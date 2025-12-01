@@ -12,18 +12,18 @@ public class AddMarkerController {
         this.addMarkerInteractor = addMarkerInteractor;
     }
 
-    /** MapPanel에서 쓰는 버전 */
+    /** for MapPanel */
     public void execute(double latitude, double longitude) {
         AddMarkerInputData inputData = new AddMarkerInputData(latitude, longitude);
         addMarkerInteractor.execute(inputData);
     }
 
-    /** 🔹다른 코드가 addMarker(lat, lon) 를 호출하는 경우 호환용 */
+    /**  lat, lon version */
     public void addMarker(double latitude, double longitude) {
         execute(latitude, longitude);
     }
 
-    /** 🔹혹시 addMarker(GeoPosition) 으로 부르는 코드가 있으면 이것도 커버 */
+    /**  addMarker(GeoPosition)  version covered just in case*/
     public void addMarker(GeoPosition pos) {
         if (pos != null) {
             execute(pos.getLatitude(), pos.getLongitude());

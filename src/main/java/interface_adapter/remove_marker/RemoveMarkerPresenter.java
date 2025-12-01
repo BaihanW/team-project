@@ -20,7 +20,6 @@ public class RemoveMarkerPresenter implements RemoveMarkerOutputBoundary {
         state.setStops(outputData.getStops());
         state.setErrorMessage(null);
         searchViewModel.setState(state);
-        searchViewModel.firePropertyChange("stops");
     }
 
     @Override
@@ -28,6 +27,5 @@ public class RemoveMarkerPresenter implements RemoveMarkerOutputBoundary {
         SearchState state = new SearchState(searchViewModel.getState());
         state.setErrorMessage(error);
         searchViewModel.setState(state);
-        searchViewModel.firePropertyChange("error");
     }
 }

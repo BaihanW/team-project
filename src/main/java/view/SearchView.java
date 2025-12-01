@@ -1,11 +1,9 @@
 package view;
 
+import interface_adapter.save_stops.SaveStopsController;
 import interface_adapter.search.SearchController;
 import interface_adapter.search.SearchState;
 import interface_adapter.search.SearchViewModel;
-import interface_adapter.addMarker.AddMarkerController;
-import org.jxmapviewer.viewer.GeoPosition;
-
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -16,30 +14,44 @@ import java.beans.PropertyChangeListener;
 import java.util.List;
 import java.util.logging.Logger;
 
+import org.jxmapviewer.viewer.GeoPosition;
+
 /**
  * SearchView
- *  - SearchBar + StopsList + MapPanel
- *  - SearchViewModel 상태 관찰
- *  - SearchController / AddMarkerController 는 AppBuilder에서 주입
+ * A Swing UI panel that displays:
+ * - A search bar (text field + search button)
+ * - A list of stops
+ * - A map with zoom controls
+ * <p>
+ * Responsibilities:
+ * - Render UI and react to UI events
+ * - Notify the SearchController when the user initiates a search
+ * - Listen to SearchViewModel changes and update UI accordingly
  */
 public class SearchView extends JPanel implements ActionListener, PropertyChangeListener {
 
     private final String viewName;
     private final transient SearchViewModel searchViewModel;
 
+    // UI controls
     private final JTextField searchInputField = new JTextField(15);
     private final JButton searchButton = new JButton("Search");
     private final JButton routeButton = new JButton("Route");
+    private final JButton saveButton = new JButton("Save");
 
+    // Controller
     private transient SearchController searchController = null;
+    private transient SaveStopsController saveStopsController = null;
 
-    // 🔹 MapPanel은 여기서 생성 (Clean Architecture: View가 View를 소유)
+    // Map panel
     private final MapPanel mapPanel = new MapPanel();
 
+    // Stop list UI
     private final DefaultListModel<String> stopsListModel = new DefaultListModel<>();
     private final JList<String> stopsList = new JList<>(stopsListModel);
 
     public SearchView(SearchViewModel searchViewModel) {
+
         this.viewName = searchViewModel.getViewName();
         this.searchViewModel = searchViewModel;
 
@@ -47,11 +59,9 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
 
         setLayout(new BorderLayout());
 
-        JSplitPane layoutSplit = new JSplitPane(
-                JSplitPane.HORIZONTAL_SPLIT,
-                buildLeftSidebar(),
-                buildRightMapPanel()
-        );
+        // Build and attach UI components
+        JSplitPane layoutSplit = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
+                buildLeftSidebar(), buildRightMapPanel());
         layoutSplit.setDividerLocation(350);
         layoutSplit.setOneTouchExpandable(true);
 
@@ -60,21 +70,19 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         attachStopsListDoubleClickListener();
         attachSearchFieldListener();
         attachSearchButtonListener();
+        attachSaveButtonListener();
     }
 
-    /* ===== controller setters ===== */
+    /* --------------------------------------------------------------------- */
+    /* UI BUILDERS                                                           */
+    /* --------------------------------------------------------------------- */
 
-    public void setSearchController(SearchController searchController) {
-        this.searchController = searchController;
-    }
-
-    /** AppBuilder에서 AddMarkerController 주입 → 내부 MapPanel에 넘김 */
-    public void setAddMarkerController(AddMarkerController addMarkerController) {
-        this.mapPanel.setAddMarkerController(addMarkerController);
-    }
-
-    /* ------------------------------------------------------------------ */
-
+    /**
+     * Build the left sidebar that contains:
+     * - Search bar
+     * - Stop list
+     * - Reorder/remove buttons
+     */
     private JPanel buildLeftSidebar() {
         JPanel left = new JPanel(new BorderLayout());
         left.setPreferredSize(new Dimension(350, 800));
@@ -87,6 +95,9 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         return left;
     }
 
+    /**
+     * Build the search bar (text field + buttons).
+     */
     private JPanel buildSearchSection() {
         JPanel container = new JPanel(new BorderLayout());
         container.setOpaque(false);
@@ -96,6 +107,7 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         buttons.setOpaque(false);
         buttons.add(searchButton);
         buttons.add(routeButton);
+        buttons.add(saveButton);
 
         container.add(searchInputField, BorderLayout.CENTER);
         container.add(buttons, BorderLayout.EAST);
@@ -103,6 +115,9 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         return container;
     }
 
+    /**
+     * Stop list section with custom renderer.
+     */
     private JScrollPane buildStopsListSection() {
         stopsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         stopsList.setBackground(new Color(220, 235, 245));
@@ -114,24 +129,33 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         return scroll;
     }
 
+    /**
+     * Buttons for stop reordering/removal.
+     */
     private JPanel buildStopsControlSection() {
         JPanel controls = new JPanel(new GridLayout(1, 3, 5, 5));
         controls.setOpaque(false);
 
-        controls.add(new JButton("Up"));
+        controls.add(new JButton("Up"));     // Placeholder for clean architecture hooks
         controls.add(new JButton("Down"));
         controls.add(new JButton("Remove"));
 
         return controls;
     }
 
+    /**
+     * Build right side map container.
+     */
     private JPanel buildRightMapPanel() {
         JPanel right = new JPanel(new BorderLayout());
         right.add(mapPanel, BorderLayout.CENTER);
+
         return right;
     }
 
-    /* ===== 이벤트 연결 ===== */
+    /* --------------------------------------------------------------------- */
+    /* EVENT ATTACHMENTS                                                     */
+    /* --------------------------------------------------------------------- */
 
     private void attachSearchButtonListener() {
         searchButton.addActionListener(evt -> {
@@ -141,6 +165,10 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         });
     }
 
+    /**
+     * When user types in search box, update the ViewModel's state.
+     * (This keeps state consistent.)
+     */
     private void attachSearchFieldListener() {
         searchInputField.getDocument().addDocumentListener(new DocumentListener() {
             private void updateState() {
@@ -155,6 +183,13 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         });
 
         searchInputField.addActionListener(evt -> searchButton.doClick());
+    }
+
+    private void attachSaveButtonListener() {
+        saveButton.addActionListener(e -> {
+            SearchState s = searchViewModel.getState();
+            saveStopsController.execute(s.getStopNames(), s.getStops());
+        });
     }
 
     private void attachGlobalEnterKey() {
@@ -177,7 +212,7 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
                 if (evt.getClickCount() != 2) return;
 
                 int idx = stopsList.locationToIndex(evt.getPoint());
-                java.util.List<GeoPosition> stops = searchViewModel.getState().getStops();
+                List<GeoPosition> stops = searchViewModel.getState().getStops();
 
                 if (idx >= 0 && idx < stops.size()) {
                     GeoPosition p = stops.get(idx);
@@ -187,32 +222,63 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         });
     }
 
-    /* ===== ViewModel 변경 처리 ===== */
+    /* --------------------------------------------------------------------- */
+    /* PROPERTY CHANGE HANDLING                                              */
+    /* --------------------------------------------------------------------- */
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        Object value = evt.getNewValue();
-        if (value instanceof SearchState state) {
-            handleSearchState(state, evt.getPropertyName());
+        String property = evt.getPropertyName();
+        Object newValue = evt.getNewValue();
+
+        // 1. Save success / error (newValue is String)
+        if ("save_success".equals(property)) {
+            JOptionPane.showMessageDialog(
+                    this,newValue,
+                    "Save Successful",
+                    JOptionPane.INFORMATION_MESSAGE
+            );
+            return;
+        }
+
+        if ("save_error".equals(property)) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    newValue,
+                    "Save Failed",
+                    JOptionPane.ERROR_MESSAGE
+            );
+            return;
+        }
+
+        // 2. SearchState updates (newValue MUST be SearchState)
+        if ("state".equals(property)) {
+            SearchState state = (SearchState) newValue;
+            handleSearchState(state);
         }
     }
 
-    private void handleSearchState(SearchState state, String propertyName) {
-        if (!"state".equals(propertyName)) return;
 
+    private void handleSearchState(SearchState state) {
+
+        // 1. update text field
         updateFields(state);
 
+        // 2. update stop list
         stopsListModel.clear();
         for (String name : state.getStopNames()) {
             stopsListModel.addElement(name);
         }
 
+        // 3. update map center
         mapPanel.setCenter(state.getLatitude(), state.getLongitude());
 
+        // 4. show error popup if needed
         if (state.getSearchError() != null) {
             showPopupError(state.getSearchError());
         }
     }
+
 
     private void updateFields(SearchState state) {
         searchInputField.setText(state.getLocationName());
@@ -238,8 +304,20 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         }, AWTEvent.MOUSE_EVENT_MASK);
     }
 
+    /* --------------------------------------------------------------------- */
+    /* GETTERS / SETTERS                                                     */
+    /* --------------------------------------------------------------------- */
+
     public String getViewName() {
         return viewName;
+    }
+
+    public void setSearchController(SearchController searchController) {
+        this.searchController = searchController;
+    }
+
+    public void setSaveStopsController(SaveStopsController saveStopsController) {
+        this.saveStopsController = saveStopsController;
     }
 
     @Override
