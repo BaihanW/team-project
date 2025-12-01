@@ -41,6 +41,9 @@ public class AppBuilder {
     private final HttpClient client = HttpClient.newHttpClient();
     final OSMDataAccessObject osmDataAccessObject = new OSMDataAccessObject(client);
 
+    private final String stopListPath = "src/main/";
+    final FileStopListDAO fileStopListDAO = new FileStopListDAO(stopListPath);
+
     private SearchViewModel searchViewModel;
     private SearchView searchView;
 
@@ -62,6 +65,17 @@ public class AppBuilder {
 
         SearchController searchController = new SearchController(searchInteractor);
         searchView.setSearchController(searchController);
+
+        return this;
+    }
+
+    public AppBuilder addSaveStopsUseCase() {
+        final SaveStopsOutputBoundary saveStopsOutputBoundary = new SaveStopsPresenter(searchViewModel);
+        final SaveStopsInputBoundary saveStopsInteractor = new SaveStopsInteractor(
+                fileStopListDAO, saveStopsOutputBoundary);
+
+        SaveStopsController saveStopsController = new SaveStopsController(saveStopsInteractor);
+        searchView.setSaveStopsController(saveStopsController);
 
         return this;
     }
