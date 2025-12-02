@@ -10,9 +10,6 @@ import interface_adapter.remove_marker.RemoveMarkerController;
 import interface_adapter.remove_marker.RemoveMarkerPresenter;
 import interface_adapter.suggestion.SuggestionController;
 import interface_adapter.suggestion.SuggestionPresenter;
-import use_case.save_stops.SaveStopsInputBoundary;
-import use_case.save_stops.SaveStopsInteractor;
-import use_case.save_stops.SaveStopsOutputBoundary;
 import use_case.search.SearchInputBoundary;
 import use_case.search.SearchInteractor;
 import use_case.search.SearchOutputBoundary;
@@ -79,24 +76,6 @@ public class AppBuilder {
     public AppBuilder addRemoveMarkerUseCase() {
         final RemoveMarkerOutputBoundary removeMarkerOutputBoundary = new RemoveMarkerPresenter(searchViewModel);
         final RemoveMarkerInputBoundary removeMarkerInteractor = new RemoveMarkerInteractor(removeMarkerOutputBoundary);
-
-        RemoveMarkerController removeMarkerController = new RemoveMarkerController(removeMarkerInteractor);
-        searchView.setRemoveMarkerController(removeMarkerController);
-
-        return this;
-    }
-
-    public AppBuilder loadStopsOnStartup() {
-        try {
-            FileStopListDAO.LoadedStops stored = fileStopListDAO.load();
-
-            if (!stored.names.isEmpty()) {
-
-                var state = searchViewModel.getState();
-
-                // Load stops into state
-                state.setStopNames(stored.names);
-                state.setStops(stored.positions);
 
         RemoveMarkerController removeMarkerController = new RemoveMarkerController(removeMarkerInteractor);
         searchView.setRemoveMarkerController(removeMarkerController);
