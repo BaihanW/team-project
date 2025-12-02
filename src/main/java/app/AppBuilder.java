@@ -12,6 +12,8 @@ import interface_adapter.save_stops.SaveStopsController;
 import interface_adapter.save_stops.SaveStopsPresenter;
 import interface_adapter.remove_marker.RemoveMarkerController;
 import interface_adapter.remove_marker.RemoveMarkerPresenter;
+import interface_adapter.reorder.ReorderController;
+import interface_adapter.reorder.ReorderPresenter;
 import interface_adapter.suggestion.SuggestionController;
 import interface_adapter.suggestion.SuggestionPresenter;
 import use_case.save_stops.SaveStopsInputBoundary;
@@ -23,6 +25,9 @@ import use_case.search.SearchOutputBoundary;
 import use_case.remove_marker.RemoveMarkerInputBoundary;
 import use_case.remove_marker.RemoveMarkerInteractor;
 import use_case.remove_marker.RemoveMarkerOutputBoundary;
+import use_case.reorder.ReorderInputBoundary;
+import use_case.reorder.ReorderInteractor;
+import use_case.reorder.ReorderOutputBoundary;
 import use_case.suggestion.SuggestionInputBoundary;
 import use_case.suggestion.SuggestionInteractor;
 import use_case.suggestion.SuggestionOutputBoundary;
@@ -105,6 +110,16 @@ public class AppBuilder {
         return this;
     }
 
+    public AppBuilder addReorderUseCase() {
+        final ReorderOutputBoundary reorderOutputBoundary = new ReorderPresenter(searchViewModel);
+        final ReorderInputBoundary reorderInteractor = new ReorderInteractor(reorderOutputBoundary);
+
+        ReorderController reorderController = new ReorderController(reorderInteractor);
+        searchView.setReorderController(reorderController);
+
+        return this;
+    }
+
     public AppBuilder loadStopsOnStartup() {
         try {
             FileStopListDAO.LoadedStops stored = fileStopListDAO.load();
@@ -142,5 +157,5 @@ public class AppBuilder {
         viewManagerModel.firePropertyChange();
 
         return application;
-            }
-        }
+    }
+}

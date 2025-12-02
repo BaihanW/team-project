@@ -9,6 +9,7 @@ public class Main {
                 .addSearchView()
                 .addSearchUseCase()
                 .addRemoveMarkerUseCase()
+                .addReorderUseCase()
                 .addSuggestionUseCase()
                 .addSaveStopsUseCase()
                 .loadStopsOnStartup()
