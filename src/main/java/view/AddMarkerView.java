@@ -1,7 +1,5 @@
 package view;
 
-import entity.Marker;
-import entity.Location;
 import interface_adapter.addMarker.AddMarkerController;
 import interface_adapter.addMarker.AddMarkerState;
 import interface_adapter.addMarker.AddMarkerViewModel;
@@ -22,9 +20,14 @@ import java.util.Set;
 
 /**
  * View for the Add Marker (pin) Use Case.
- * <p>
- * Displays a map and allows the user to click to add markers.
- * It listens to AddMarkerViewModel changes to update the pins.
+ *
+ * Responsibilities (UI only):
+ * - Show a map
+ * - Let the user click to request "add marker" via the controller
+ * - Listen to AddMarkerViewModel changes and update the pins (waypoints)
+ *
+ * ❗ 이 View는 엔티티( Location, Marker )에 직접 의존하지 않고,
+ *    오직 ViewModel 상태(위도, 경도 primitive 값)만 사용한다.
  */
 public class AddMarkerView extends JPanel implements PropertyChangeListener {
 
@@ -76,6 +79,7 @@ public class AddMarkerView extends JPanel implements PropertyChangeListener {
 
     /**
      * Reacts to changes in the AddMarkerViewModel's state.
+     * ViewModel → View 업데이트만 담당하고 엔티티는 모른다.
      */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
@@ -96,30 +100,23 @@ public class AddMarkerView extends JPanel implements PropertyChangeListener {
             return;
         }
 
-        // Handle new marker
+        // Handle new marker (primitive lat/lon만 사용)
         if (state.getLastMarkerLatitude() != null &&
                 state.getLastMarkerLongitude() != null) {
 
             double lat = state.getLastMarkerLatitude();
             double lon = state.getLastMarkerLongitude();
 
-            Location location = new Location("", lat, lon);
-            Marker marker = new Marker(location);
-
-            addMarker(marker);
+            addMarker(lat, lon);
         }
     }
 
     /**
      * Adds a marker (pin) to the map and repaints.
-     *
-     * @param marker the marker to display
+     * 엔티티 대신 위도/경도 primitive 값만 사용.
      */
-    private void addMarker(Marker marker) {
-        GeoPosition gp = new GeoPosition(
-                marker.getLatitude(),
-                marker.getLongitude()
-        );
+    private void addMarker(double latitude, double longitude) {
+        GeoPosition gp = new GeoPosition(latitude, longitude);
 
         waypoints.add(new DefaultWaypoint(gp));
         waypointPainter.setWaypoints(waypoints);
@@ -128,13 +125,14 @@ public class AddMarkerView extends JPanel implements PropertyChangeListener {
 
     /**
      * Sets up mouse listening so that clicking on the map
-     * triggers the Add Marker Use Case.
+     * triggers the Add Marker Use Case via the controller.
      */
     private void setupMouseListener() {
         mapViewer.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 GeoPosition gp = mapViewer.convertPointToGeoPosition(e.getPoint());
+                // View는 단순히 좌표만 전달하고, 비즈니스 로직은 Controller/Interactor에 맡김
                 addMarkerController.addMarker(gp.getLatitude(), gp.getLongitude());
             }
         });

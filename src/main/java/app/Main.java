@@ -8,14 +8,16 @@ public class Main {
             AppBuilder builder = new AppBuilder();
 
             JFrame app = builder
-                    .addSearchView()          // 🔥 반드시 제일 먼저
+                    .addSearchView()
                     .addSearchUseCase()
+                    .addAddMarkerView()
+                    .addAddMarkerUseCase()
+                    .addAddMarkerView()
                     .addSaveStopsUseCase()
                     .addSuggestionUseCase()
                     .addRemoveMarkerUseCase()
-                    .loadStopsOnStartup()     // 🔥 여기서 호출
-                    .build();                 // 마지막에 build
-
+                    .loadStopsOnStartup()
+                    .build();
             app.pack();
             app.setLocationRelativeTo(null);
             app.setVisible(true);

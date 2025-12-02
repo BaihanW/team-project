@@ -14,6 +14,11 @@ import interface_adapter.remove_marker.RemoveMarkerController;
 import interface_adapter.remove_marker.RemoveMarkerPresenter;
 import interface_adapter.suggestion.SuggestionController;
 import interface_adapter.suggestion.SuggestionPresenter;
+
+import interface_adapter.addMarker.AddMarkerController;
+import interface_adapter.addMarker.AddMarkerPresenter;
+import interface_adapter.addMarker.AddMarkerViewModel;
+
 import use_case.save_stops.SaveStopsInputBoundary;
 import use_case.save_stops.SaveStopsInteractor;
 import use_case.save_stops.SaveStopsOutputBoundary;
@@ -26,12 +31,25 @@ import use_case.remove_marker.RemoveMarkerOutputBoundary;
 import use_case.suggestion.SuggestionInputBoundary;
 import use_case.suggestion.SuggestionInteractor;
 import use_case.suggestion.SuggestionOutputBoundary;
+
+import use_case.add_marker.AddMarkerDataAccessInterface;
+import use_case.add_marker.AddMarkerInputBoundary;
+import use_case.add_marker.AddMarkerInteractor;
+import use_case.add_marker.AddMarkerOutputBoundary;
+
+import entity.Marker;
+import entity.Location;
+
 import view.SearchView;
 import view.ViewManager;
+
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 import java.net.http.HttpClient;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Configures and wires the application using the simplified Clean Architecture graph
@@ -51,6 +69,8 @@ public class AppBuilder {
 
     private SearchViewModel searchViewModel;
     private SearchView searchView;
+
+    private AddMarkerViewModel addMarkerViewModel;
 
     public AppBuilder() {
         cardPanel.setLayout(cardLayout);
@@ -105,6 +125,50 @@ public class AppBuilder {
         return this;
     }
 
+    public AppBuilder addAddMarkerView() {
+        addMarkerViewModel = new AddMarkerViewModel();
+        return this;
+    }
+
+    public AppBuilder addAddMarkerUseCase() {
+        if (addMarkerViewModel == null) {
+            addAddMarkerView();
+        }
+
+        AddMarkerDataAccessInterface addMarkerDataAccess = new AddMarkerDataAccessInterface() {
+            private final List<Marker> markers = new ArrayList<>();
+
+            @Override
+            public void save(Marker marker) {
+                markers.add(marker);
+            }
+
+            @Override
+            public boolean exist(Location location) {
+                for (Marker m : markers) {
+                    Location loc = m.getLocation();
+                    if (Double.compare(loc.getLatitude(), location.getLatitude()) == 0 &&
+                            Double.compare(loc.getLongitude(), location.getLongitude()) == 0) {
+                        return true;
+                    }
+                }
+                return false;
+            }
+
+            @Override
+            public List<Marker> allMarkers() {
+                return Collections.unmodifiableList(markers);
+            }
+        };
+
+        AddMarkerOutputBoundary addMarkerOutputBoundary = new AddMarkerPresenter(addMarkerViewModel);
+        AddMarkerInputBoundary addMarkerInteractor =
+                new AddMarkerInteractor(addMarkerDataAccess, addMarkerOutputBoundary);
+        AddMarkerController addMarkerController = new AddMarkerController(addMarkerInteractor);
+
+        return this;
+    }
+
     public AppBuilder loadStopsOnStartup() {
         try {
             FileStopListDAO.LoadedStops stored = fileStopListDAO.load();
@@ -126,7 +190,6 @@ public class AppBuilder {
                 searchViewModel.setState(state);
                 searchViewModel.firePropertyChange();
 
-                // 🔥 여기! — 상태 반영한 뒤 실제로 지도에 마커를 찍어주기
                 searchView.showMarkersForCurrentStops();
             }
         } catch (IOException e) {
@@ -135,8 +198,6 @@ public class AppBuilder {
 
         return this;
     }
-
-
 
     public JFrame build() {
         final JFrame application = new JFrame("trip planner");
