@@ -11,6 +11,7 @@ import interface_adapter.save_stops.SaveStopsController;
 import interface_adapter.save_stops.SaveStopsPresenter;
 import interface_adapter.search.SearchController;
 import interface_adapter.search.SearchPresenter;
+import interface_adapter.search.SearchState;
 import interface_adapter.search.SearchViewModel;
 import interface_adapter.remove_marker.RemoveMarkerController;
 import interface_adapter.remove_marker.RemoveMarkerPresenter;
@@ -33,12 +34,17 @@ import use_case.suggestion.SuggestionInteractor;
 import use_case.suggestion.SuggestionOutputBoundary;
 import view.SearchView;
 import view.ViewManager;
+
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 import java.net.http.HttpClient;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
- * Configures and wires the application using the simplified Clean Architecture graph.
+ * Configures and wires the application using the simplified Clean Architecture graph
  */
 public class AppBuilder {
 
@@ -54,9 +60,14 @@ public class AppBuilder {
     private final String stopListPath = "src/main/";
     final FileStopListDAO fileStopListDAO = new FileStopListDAO(stopListPath);
 
+    private final String stopListPath = "src/main/";
+    final FileStopListDAO fileStopListDAO = new FileStopListDAO(stopListPath);
+
     private SearchViewModel searchViewModel;
     private GenerateRouteViewModel generateRouteViewModel;
     private SearchView searchView;
+
+    private AddMarkerViewModel addMarkerViewModel;
 
     public AppBuilder() {
         cardPanel.setLayout(cardLayout);

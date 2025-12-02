@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b50313f8-1e33-41e4-88d3-e829184e5d9f" name="Changes" comment="testing suggestion">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="b50313f8-1e33-41e4-88d3-e829184e5d9f" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -37,12 +35,9 @@
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/BaihanW/team-project.git&quot;,
-    &quot;accountId&quot;: &quot;78095f61-537a-4656-b91c-fd9a6b16111e&quot;
+    &quot;accountId&quot;: &quot;20433112-c384-4120-9d48-06ac955720bf&quot;
   }
 }</component>
-  <component name="ProblemsViewState">
-    <option name="selectedTabId" value="CurrentFile" />
-  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 3
 }</component>
@@ -57,64 +52,32 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Application.Main.executor": "Run",
-    "JUnit.GenerateRouteInteractorTest.executor": "Coverage",
-    "JUnit.LocationTest.executor": "Run",
-    "JUnit.MarkerTest.executor": "Coverage",
-    "JUnit.OSMDataAccessObjectTest.executor": "Run",
-    "JUnit.OSMDataAccessObjectTest.testGetReturnsCorrectLocation.executor": "Run",
-    "JUnit.SearchInteractorTest.executor": "Coverage",
-    "JUnit.SearchViewModelTest.executor": "Run",
+    "JUnit.AddMarkerInteractorTest$InMemoryAddMarkerDataAccess$TestAddMarkerPresenter.addsNewMarkerWhenNotDuplicate.executor": "Run",
+    "JUnit.AddMarkerInteractorTest$TestAddMarkerPresenter.addsNewMarkerWhenNotDuplicate.executor": "Run",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "SONARLINT_PRECOMMIT_ANALYSIS": "true",
+    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultAutoModeForALLUsers.v1": "true",
     "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
-    "git-widget-placeholder": "maintest-suggestion",
+    "git-widget-placeholder": "#24 on Complete-AddMarker",
     "junie.onboarding.icon.badge.shown": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/Users/yizhao/Documents/UT courses/CSC207/team-project/src/main/java/interface_adapter",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "reference.settings.ide.settings.uml",
     "to.speed.mode.migration.done": "true",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src/main/java/interface_adapter" />
-      <recent name="$PROJECT_DIR$" />
-      <recent name="$PROJECT_DIR$/src/main" />
-      <recent name="C:\Users\Motion\IdeaProjects\csc207\team-project\src\main" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\Motion\IdeaProjects\csc207\team-project\src\main" />
-    </key>
-    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
-      <recent name="interface_adapter.search" />
-    </key>
-    <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="view" />
-      <recent name="entity" />
-      <recent name="data_access" />
-    </key>
-  </component>
   <component name="RunManager" selected="Application.Main">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="ALTERNATIVE_JRE_PATH" value="openjdk-25" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
       <option name="MAIN_CLASS_NAME" value="app.Main" />
       <module name="TeamProject" />
-      <selectedOptions>
-        <option name="environmentVariables" visible="false" />
-      </selectedOptions>
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="app.*" />
@@ -208,14 +171,14 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.26199.169" />
-        <option value="bundled-js-predefined-d6986cc7102b-9c94529fcfe0-JavaScript-IU-252.26199.169" />
+        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.26830.84" />
+        <option value="bundled-js-predefined-d6986cc7102b-3aa1da707db6-JavaScript-IU-252.26830.84" />
       </set>
     </attachedChunks>
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="b50313f8-1e33-41e4-88d3-e829184e5d9f" name="Changes" comment="Business logic" />
+      <changelist id="b50313f8-1e33-41e4-88d3-e829184e5d9f" name="Changes" comment="" />
       <created>1760672273012</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -224,115 +187,15 @@
       <workItem from="1760675806708" duration="275000" />
       <workItem from="1760743573745" duration="343000" />
       <workItem from="1760987551082" duration="6000" />
-      <workItem from="1764580758562" duration="5580000" />
-      <workItem from="1764587025490" duration="654000" />
-      <workItem from="1764587694539" duration="5255000" />
+      <workItem from="1764547336228" duration="987000" />
+      <workItem from="1764548348311" duration="29000" />
+      <workItem from="1764548484582" duration="5287000" />
+      <workItem from="1764555775434" duration="3217000" />
+      <workItem from="1764559054804" duration="676000" />
     </task>
-    <task id="LOCAL-00001" summary="gitignore">
-      <option name="closed" value="true" />
-      <created>1764484568319</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1764484568319</updated>
-    </task>
-    <task id="LOCAL-00002" summary="Business logic">
-      <option name="closed" value="true" />
-      <created>1764485205995</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1764485205995</updated>
-    </task>
-    <task id="LOCAL-00003" summary="implement usecase in files">
-      <option name="closed" value="true" />
-      <created>1764548819840</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1764548819840</updated>
-    </task>
-    <task id="LOCAL-00004" summary="Pushed GenerateRoute use_case along with its corresponding interfaces, map_panels.">
-      <option name="closed" value="true" />
-      <created>1764583125852</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1764583125852</updated>
-    </task>
-    <task id="LOCAL-00005" summary="Completed Test cases: GenerateRouteInteractor with 100% coverage on all the codes below the generate_route use_case folder.">
-      <option name="closed" value="true" />
-      <created>1764586675881</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1764586675881</updated>
-    </task>
-    <task id="LOCAL-00006" summary="Entity Marker test completed and reach 100% coverage!">
-      <option name="closed" value="true" />
-      <created>1764586908686</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1764586908686</updated>
-    </task>
-    <task id="LOCAL-00007" summary="Merge branch 'suggestion'&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml&#10;#&#9;src/main/java/app/AppBuilder.java&#10;#&#9;src/main/java/interface_adapter/ViewModel.java&#10;#&#9;src/main/java/view/SearchView.java">
-      <option name="closed" value="true" />
-      <created>1764693500944</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1764693500944</updated>
-    </task>
-    <task id="LOCAL-00008" summary="testing suggestion">
-      <option name="closed" value="true" />
-      <created>1764694197045</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1764694197045</updated>
-    </task>
-    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
-  </component>
-  <component name="Vcs.Log.Tabs.Properties">
-    <option name="TAB_STATES">
-      <map>
-        <entry key="MAIN">
-          <value>
-            <State />
-          </value>
-        </entry>
-      </map>
-    </option>
-  </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="gitignore" />
-    <MESSAGE value="Business logic" />
-    <MESSAGE value="implement usecase in files" />
-    <MESSAGE value="Pushed GenerateRoute use_case along with its corresponding interfaces, map_panels." />
-    <MESSAGE value="Completed Test cases: GenerateRouteInteractor with 100% coverage on all the codes below the generate_route use_case folder." />
-    <MESSAGE value="Entity Marker test completed and reach 100% coverage!" />
-    <MESSAGE value="needed to be modified" />
-    <MESSAGE value="testing suggestion" />
-    <option name="LAST_COMMIT_MESSAGE" value="testing suggestion" />
-  </component>
-  <component name="XSLT-Support.FileAssociations.UIState">
-    <expand />
-    <select />
-  </component>
-  <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/team_project$SearchInteractorTest.ic" NAME="SearchInteractorTest Coverage Results" MODIFIED="1764585239233" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
-      <FILTER>use_case.search.*</FILTER>
-    </SUITE>
-    <SUITE FILE_PATH="coverage/team_project$GenerateRouteInteractorTest.ic" NAME="GenerateRouteInteractorTest Coverage Results" MODIFIED="1764586387659" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
-      <FILTER>use_case.generate_route.*</FILTER>
-    </SUITE>
-    <SUITE FILE_PATH="coverage/team_project$MarkerTest.ic" NAME="MarkerTest Coverage Results" MODIFIED="1764586853232" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
-      <FILTER>entity.*</FILTER>
-    </SUITE>
   </component>
 </project>

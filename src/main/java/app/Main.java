@@ -4,19 +4,23 @@ import javax.swing.*;
 
 public class Main {
     public static void main(String[] args) {
-        AppBuilder appBuilder = new AppBuilder();
-        JFrame application = appBuilder
-                .addSearchView()
-                .addSearchUseCase()
-                .addRemoveMarkerUseCase()
-                .addSuggestionUseCase()
-                .addSaveStopsUseCase()
-                .addRemoveMarkerUseCase()
-                .addGenerateRouteUseCase()
-                .build();
+        SwingUtilities.invokeLater(() -> {
+            AppBuilder builder = new AppBuilder();
 
-        application.pack();
-        application.setLocationRelativeTo(null);
-        application.setVisible(true);
+            JFrame app = builder
+                    .addSearchView()
+                    .addSearchUseCase()
+                    .addAddMarkerView()
+                    .addAddMarkerUseCase()
+                    .addAddMarkerView()
+                    .addSaveStopsUseCase()
+                    .addSuggestionUseCase()
+                    .addRemoveMarkerUseCase()
+                    .loadStopsOnStartup()
+                    .build();
+            app.pack();
+            app.setLocationRelativeTo(null);
+            app.setVisible(true);
+        });
     }
 }

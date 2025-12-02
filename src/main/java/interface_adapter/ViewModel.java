@@ -31,7 +31,7 @@ public class ViewModel<T> {
         this.support.firePropertyChange("state", null, this.state);
     }
 
-    public void firePropertyChange(String propertyName, Object value) {
+    protected void firePropertyChange(String propertyName, Object value) {
         support.firePropertyChange(propertyName, null, value);
     }
 
@@ -47,3 +47,4 @@ public class ViewModel<T> {
 
     }
 }
+
