@@ -4,26 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b50313f8-1e33-41e4-88d3-e829184e5d9f" name="Changes" comment="needed to be modified">
-      <change afterPath="$PROJECT_DIR$/src/main/java/data_access/RoutingDataAccessObject.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/entity/Marker.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/interface_adapter/generate_route/GenerateRouteController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/interface_adapter/generate_route/GenerateRoutePresenter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/interface_adapter/generate_route/GenerateRouteState.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/interface_adapter/generate_route/GenerateRouteViewModel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/use_case/generate_route/GenerateRouteInputBoundary.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/use_case/generate_route/GenerateRouteInputData.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/use_case/generate_route/GenerateRouteInteractor.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/use_case/generate_route/GenerateRouteOutputBoundary.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/use_case/generate_route/GenerateRouteOutputData.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/use_case/generate_route/GenerateRouteRoutingDataAccessInterface.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/view/RoutePainter.java" afterDir="false" />
+    <list default="true" id="b50313f8-1e33-41e4-88d3-e829184e5d9f" name="Changes" comment="testing suggestion">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/AppBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/AppBuilder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/interface_adapter/ViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/interface_adapter/ViewModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/view/MapPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/MapPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/view/SearchView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/SearchView.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -88,7 +70,7 @@
     "RunOnceActivity.git.unshallow": "true",
     "SONARLINT_PRECOMMIT_ANALYSIS": "true",
     "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
-    "git-widget-placeholder": "need-to-be-modified",
+    "git-widget-placeholder": "maintest-suggestion",
     "junie.onboarding.icon.badge.shown": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "/Users/yizhao/Documents/UT courses/CSC207/team-project/src/main/java/interface_adapter",
@@ -294,7 +276,23 @@
       <option name="project" value="LOCAL" />
       <updated>1764586908686</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Merge branch 'suggestion'&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml&#10;#&#9;src/main/java/app/AppBuilder.java&#10;#&#9;src/main/java/interface_adapter/ViewModel.java&#10;#&#9;src/main/java/view/SearchView.java">
+      <option name="closed" value="true" />
+      <created>1764693500944</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1764693500944</updated>
+    </task>
+    <task id="LOCAL-00008" summary="testing suggestion">
+      <option name="closed" value="true" />
+      <created>1764694197045</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1764694197045</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -319,7 +317,8 @@
     <MESSAGE value="Completed Test cases: GenerateRouteInteractor with 100% coverage on all the codes below the generate_route use_case folder." />
     <MESSAGE value="Entity Marker test completed and reach 100% coverage!" />
     <MESSAGE value="needed to be modified" />
-    <option name="LAST_COMMIT_MESSAGE" value="needed to be modified" />
+    <MESSAGE value="testing suggestion" />
+    <option name="LAST_COMMIT_MESSAGE" value="testing suggestion" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

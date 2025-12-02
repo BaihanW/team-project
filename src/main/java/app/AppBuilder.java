@@ -20,12 +20,17 @@ import use_case.generate_route.GenerateRouteOutputBoundary;
 import use_case.save_stops.SaveStopsInputBoundary;
 import use_case.save_stops.SaveStopsInteractor;
 import use_case.save_stops.SaveStopsOutputBoundary;
+import interface_adapter.suggestion.SuggestionController;
+import interface_adapter.suggestion.SuggestionPresenter;
 import use_case.search.SearchInputBoundary;
 import use_case.search.SearchInteractor;
 import use_case.search.SearchOutputBoundary;
 import use_case.remove_marker.RemoveMarkerInputBoundary;
 import use_case.remove_marker.RemoveMarkerInteractor;
 import use_case.remove_marker.RemoveMarkerOutputBoundary;
+import use_case.suggestion.SuggestionInputBoundary;
+import use_case.suggestion.SuggestionInteractor;
+import use_case.suggestion.SuggestionOutputBoundary;
 import view.SearchView;
 import view.ViewManager;
 import javax.swing.*;
@@ -91,9 +96,18 @@ public class AppBuilder {
         final SaveStopsOutputBoundary saveStopsOutputBoundary = new SaveStopsPresenter(searchViewModel);
         final SaveStopsInputBoundary saveStopsInteractor = new SaveStopsInteractor(
                 fileStopListDAO, saveStopsOutputBoundary);
-
         SaveStopsController saveStopsController = new SaveStopsController(saveStopsInteractor);
         searchView.setSaveStopsController(saveStopsController);
+
+        return this;
+    }
+
+    public AppBuilder addSuggestionUseCase() {
+        final SuggestionOutputBoundary outputBoundary = new SuggestionPresenter(searchViewModel);
+        final SuggestionInputBoundary interactor = new SuggestionInteractor(osmDataAccessObject, outputBoundary);
+
+        SuggestionController suggestionController = new SuggestionController(interactor);
+        searchView.setSuggestionController(suggestionController);
 
         return this;
     }

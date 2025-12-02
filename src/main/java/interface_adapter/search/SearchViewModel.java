@@ -18,5 +18,4 @@ public class SearchViewModel extends ViewModel<SearchState> {
     public void showSaveErrorMessage(String msg) {
         firePropertyChange("save_error", msg);
     }
-
 }
