@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b50313f8-1e33-41e4-88d3-e829184e5d9f" name="Changes" comment="testing suggestion">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="b50313f8-1e33-41e4-88d3-e829184e5d9f" name="Changes" comment="Business logic" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -54,41 +52,42 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.Main.executor": "Run",
-    "JUnit.GenerateRouteInteractorTest.executor": "Coverage",
-    "JUnit.LocationTest.executor": "Run",
-    "JUnit.MarkerTest.executor": "Coverage",
-    "JUnit.OSMDataAccessObjectTest.executor": "Run",
-    "JUnit.OSMDataAccessObjectTest.testGetReturnsCorrectLocation.executor": "Run",
-    "JUnit.SearchInteractorTest.executor": "Coverage",
-    "JUnit.SearchViewModelTest.executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "SONARLINT_PRECOMMIT_ANALYSIS": "true",
-    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
-    "git-widget-placeholder": "maintest-suggestion",
-    "junie.onboarding.icon.badge.shown": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/Users/yizhao/Documents/UT courses/CSC207/team-project/src/main/java/interface_adapter",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "reference.settings.ide.settings.uml",
-    "to.speed.mode.migration.done": "true",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.GenerateRouteInteractorTest.executor&quot;: &quot;Coverage&quot;,
+    &quot;JUnit.LocationTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.MarkerTest.executor&quot;: &quot;Coverage&quot;,
+    &quot;JUnit.OSMDataAccessObjectTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.OSMDataAccessObjectTest.testGetReturnsCorrectLocation.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.SearchInteractorTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.SearchViewModelTest.executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SONARLINT_PRECOMMIT_ANALYSIS&quot;: &quot;true&quot;,
+    &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;need-to-be-modified&quot;,
+    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/yizhao/Documents/UT courses/CSC207/team-project/src/test/java/use_case/search&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.ide.settings.uml&quot;,
+    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/test/java/use_case/search" />
       <recent name="$PROJECT_DIR$/src/main/java/interface_adapter" />
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/src/main" />
@@ -101,12 +100,12 @@
       <recent name="interface_adapter.search" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="view" />
       <recent name="entity" />
+      <recent name="view" />
       <recent name="data_access" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Main">
+  <component name="RunManager">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="ALTERNATIVE_JRE_PATH" value="openjdk-25" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
@@ -226,7 +225,7 @@
       <workItem from="1760987551082" duration="6000" />
       <workItem from="1764580758562" duration="5580000" />
       <workItem from="1764587025490" duration="654000" />
-      <workItem from="1764587694539" duration="5255000" />
+      <workItem from="1764587694539" duration="6027000" />
     </task>
     <task id="LOCAL-00001" summary="gitignore">
       <option name="closed" value="true" />
@@ -276,23 +275,15 @@
       <option name="project" value="LOCAL" />
       <updated>1764586908686</updated>
     </task>
-    <task id="LOCAL-00007" summary="Merge branch 'suggestion'&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml&#10;#&#9;src/main/java/app/AppBuilder.java&#10;#&#9;src/main/java/interface_adapter/ViewModel.java&#10;#&#9;src/main/java/view/SearchView.java">
+    <task id="LOCAL-00007" summary="needed to be modified">
       <option name="closed" value="true" />
-      <created>1764693500944</created>
+      <created>1764614158676</created>
       <option name="number" value="00007" />
       <option name="presentableId" value="LOCAL-00007" />
       <option name="project" value="LOCAL" />
-      <updated>1764693500944</updated>
+      <updated>1764614158676</updated>
     </task>
-    <task id="LOCAL-00008" summary="testing suggestion">
-      <option name="closed" value="true" />
-      <created>1764694197045</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1764694197045</updated>
-    </task>
-    <option name="localTasksCounter" value="9" />
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -317,8 +308,7 @@
     <MESSAGE value="Completed Test cases: GenerateRouteInteractor with 100% coverage on all the codes below the generate_route use_case folder." />
     <MESSAGE value="Entity Marker test completed and reach 100% coverage!" />
     <MESSAGE value="needed to be modified" />
-    <MESSAGE value="testing suggestion" />
-    <option name="LAST_COMMIT_MESSAGE" value="testing suggestion" />
+    <option name="LAST_COMMIT_MESSAGE" value="needed to be modified" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
