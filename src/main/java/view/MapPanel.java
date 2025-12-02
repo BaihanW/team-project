@@ -3,12 +3,19 @@ package view;
 import org.jxmapviewer.*;
 import org.jxmapviewer.input.PanMouseInputListener;
 import org.jxmapviewer.viewer.*;
+import org.jxmapviewer.painter.CompoundPainter;
 
 import javax.swing.*;
 import javax.swing.event.MouseInputListener;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.Arrays;
+import java.util.function.Consumer;
 
 /**
  * MapPanel
@@ -42,6 +49,18 @@ public class MapPanel extends JPanel {
 
     /** The JXMapViewer instance that renders the OSM map. */
     private final JXMapViewer mapViewer;
+
+    private final List<GeoPosition> markerPositions = new ArrayList<>();
+
+    private final Set<Waypoint> waypoints = new HashSet<>();
+
+    private final WaypointPainter<Waypoint> waypointPainter = new WaypointPainter<>();
+
+    private RoutePainter routePainter;
+    private NumberedMarkerPainter numberedMarkerPainter;
+    private final CompoundPainter<JXMapViewer> compoundPainter = new CompoundPainter<>();
+
+    private Consumer<GeoPosition> clickListener = null;
 
     /* ------------------- Smooth Zoom & Pan State -------------------- */
 
@@ -102,7 +121,29 @@ public class MapPanel extends JPanel {
         // Drag-to-pan support
         enableDragPanning();
 
+        waypointPainter.setWaypoints(waypoints);
+        routePainter = new RoutePainter(null);
+        numberedMarkerPainter = new NumberedMarkerPainter(markerPositions);
+        compoundPainter.setPainters(Arrays.asList(routePainter, waypointPainter, numberedMarkerPainter));
+        mapViewer.setOverlayPainter(compoundPainter);
+
         add(mapViewer, BorderLayout.CENTER);
+
+        enableClickToAddMarker();
+    }
+
+    private void enableClickToAddMarker() {
+        mapViewer.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                GeoPosition gp = mapViewer.convertPointToGeoPosition(e.getPoint());
+                if (clickListener != null) {
+                    clickListener.accept(gp);
+                } else {
+                    addMarker(gp);
+                }
+            }
+        });
     }
 
     /* ================================================================
@@ -424,8 +465,80 @@ public class MapPanel extends JPanel {
         mapViewer.repaint();
     }
 
-    /** Returns the underlying map viewer. */
     public JXMapViewer getMapViewer() { return mapViewer; }
+
+    private void addMarker(GeoPosition position) {
+        markerPositions.add(position);
+        waypoints.clear();
+        for (GeoPosition gp : markerPositions) {
+            waypoints.add(new DefaultWaypoint(gp));
+        }
+        waypointPainter.setWaypoints(waypoints);
+        numberedMarkerPainter.setPositions(markerPositions);
+        mapViewer.repaint();
+    }
+
+    public void addStop(double latitude, double longitude) {
+        GeoPosition gp = new GeoPosition(latitude, longitude);
+        markerPositions.add(gp);
+        waypoints.clear();
+        for (GeoPosition p : markerPositions) {
+            waypoints.add(new DefaultWaypoint(p));
+        }
+        waypointPainter.setWaypoints(waypoints);
+        numberedMarkerPainter.setPositions(markerPositions);
+        mapViewer.repaint();
+    }
+
+    public void setStops(List<GeoPosition> positions) {
+        markerPositions.clear();
+        if (positions != null) markerPositions.addAll(positions);
+        waypoints.clear();
+        for (GeoPosition p : markerPositions) {
+            waypoints.add(new DefaultWaypoint(p));
+        }
+        waypointPainter.setWaypoints(waypoints);
+        numberedMarkerPainter.setPositions(markerPositions);
+        mapViewer.repaint();
+    }
+
+    public void clearStops() {
+        markerPositions.clear();
+        waypoints.clear();
+        waypointPainter.setWaypoints(waypoints);
+        numberedMarkerPainter.setPositions(markerPositions);
+        clearRoute();
+        mapViewer.repaint();
+    }
+
+    public List<GeoPosition> getLastTwoMarkerPositions() {
+        int size = markerPositions.size();
+        if (size < 2) return new ArrayList<>();
+        GeoPosition a = markerPositions.get(size - 2);
+        GeoPosition b = markerPositions.get(size - 1);
+        return Arrays.asList(a, b);
+    }
+
+    public void setRoute(List<GeoPosition> route) {
+        this.routePainter = new RoutePainter(route);
+        compoundPainter.setPainters(Arrays.asList(routePainter, waypointPainter, numberedMarkerPainter));
+        mapViewer.repaint();
+    }
+
+    public void setRouteSegments(List<List<GeoPosition>> segments) {
+        this.routePainter = new RoutePainter(null);
+        this.routePainter.setSegments(segments);
+        compoundPainter.setPainters(Arrays.asList(routePainter, waypointPainter, numberedMarkerPainter));
+        mapViewer.repaint();
+    }
+
+    public void clearRoute() {
+        setRoute(null);
+    }
+
+    public void setClickListener(Consumer<GeoPosition> listener) {
+        this.clickListener = listener;
+    }
 
     /* ================================================================
      *             Custom HTTPS OSM Tile Loader

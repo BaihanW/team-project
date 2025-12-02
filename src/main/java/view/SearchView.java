@@ -6,6 +6,7 @@ import interface_adapter.search.SearchState;
 import interface_adapter.search.SearchViewModel;
 import interface_adapter.remove_marker.RemoveMarkerController;
 import interface_adapter.suggestion.SuggestionController;
+import interface_adapter.reorder.ReorderController;
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -14,6 +15,7 @@ import java.awt.event.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.logging.Logger;
 
 import org.jxmapviewer.viewer.GeoPosition;
@@ -52,6 +54,7 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
     private transient RemoveMarkerController removeMarkerController = null;
     private transient SuggestionController suggestionController = null;
     private transient SaveStopsController saveStopsController = null;
+    private transient ReorderController reorderController = null;
 
     // Map panel
     private final MapPanel mapPanel = new MapPanel();
@@ -91,8 +94,11 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         attachSearchFieldListener();
         attachSearchButtonListener();
         attachRemoveButtonListener();
+        attachMoveUpButtonListener();
+        attachMoveDownButtonListener();
         attachSuggestionListListeners();
         attachSaveButtonListener();
+        attachMapClickListener();
     }
 
     /* --------------------------------------------------------------------- */
@@ -249,6 +255,20 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         });
     }
 
+    private void attachMoveUpButtonListener() {
+        moveUpButton.addActionListener(evt -> moveSelected(-1));
+    }
+
+    private void attachMoveDownButtonListener() {
+        moveDownButton.addActionListener(evt -> moveSelected(1));
+    }
+
+    private void attachMapClickListener() {
+        mapPanel.setClickListener(gp -> {
+            String name = String.format("%.5f, %.5f", gp.getLatitude(), gp.getLongitude());
+            addStop(name, gp);
+        });
+    }
 
     private void attachGlobalEnterKey() {
         this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
@@ -425,6 +445,34 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
 
     public void setSaveStopsController(SaveStopsController saveStopsController) {
         this.saveStopsController = saveStopsController;
+    }
+
+    public void setReorderController(ReorderController reorderController) {
+        this.reorderController = reorderController;
+    }
+
+    private void moveSelected(int delta) {
+        int idx = stopsList.getSelectedIndex();
+        if (idx == -1) return;
+        int newIdx = idx + delta;
+        if (reorderController != null) {
+            reorderController.move(idx, newIdx, searchViewModel.getState().getStopNames(),
+                    searchViewModel.getState().getStops());
+        }
+    }
+
+    private void addStop(String name, GeoPosition gp) {
+        SearchState current = new SearchState(searchViewModel.getState());
+        List<String> names = new ArrayList<>(current.getStopNames());
+        names.add(name);
+        current.setStopNames(names);
+
+        List<GeoPosition> updatedStops = new ArrayList<>(current.getStops());
+        updatedStops.add(gp);
+        current.setStops(updatedStops);
+        current.setErrorMessage(null);
+        searchViewModel.setState(current);
+        searchViewModel.firePropertyChange("stops");
     }
 
     @Override
