@@ -10,6 +10,7 @@ public class Main {
                 .addSearchUseCase()
                 .addRemoveMarkerUseCase()
                 .addSuggestionUseCase()
+                .addSaveStopsUseCase()
                 .addRemoveMarkerUseCase()
                 .addGenerateRouteUseCase()
                 .build();

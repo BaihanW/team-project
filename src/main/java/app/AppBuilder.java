@@ -96,7 +96,6 @@ public class AppBuilder {
         final SaveStopsOutputBoundary saveStopsOutputBoundary = new SaveStopsPresenter(searchViewModel);
         final SaveStopsInputBoundary saveStopsInteractor = new SaveStopsInteractor(
                 fileStopListDAO, saveStopsOutputBoundary);
-
         SaveStopsController saveStopsController = new SaveStopsController(saveStopsInteractor);
         searchView.setSaveStopsController(saveStopsController);
 
