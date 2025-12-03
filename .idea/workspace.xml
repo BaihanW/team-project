@@ -5,7 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b50313f8-1e33-41e4-88d3-e829184e5d9f" name="Changes" comment="testing suggestion">
+      <change afterPath="$PROJECT_DIR$/src/test/java/interface_adapter/remove_marker/RemoveMarkerControllerTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/interface_adapter/remove_marker/RemoveMarkerPresenterTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/interface_adapter/remove_marker/SearchStateRemoveDataAccessTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/interface_adapter/suggestion/SuggestionControllerTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/interface_adapter/suggestion/SuggestionPresenterTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/use_case/remove_marker/RemoveMarkerInteractorTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/use_case/search/SearchInteractorTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/use_case/search/SearchInteractorTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,12 +41,12 @@
     &quot;assignee&quot;: &quot;parkdongmyeong0707&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/BaihanW/team-project.git&quot;,
-    &quot;accountId&quot;: &quot;78095f61-537a-4656-b91c-fd9a6b16111e&quot;
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/BaihanW/team-project.git",
+    "accountId": "dc9fc20c-87d8-41a8-9653-1929a44520b8"
   }
-}</component>
+}]]></component>
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
   </component>
@@ -62,15 +69,18 @@
     "JUnit.MarkerTest.executor": "Coverage",
     "JUnit.OSMDataAccessObjectTest.executor": "Run",
     "JUnit.OSMDataAccessObjectTest.testGetReturnsCorrectLocation.executor": "Run",
+    "JUnit.RemoveMarkerInteractorTest.executor": "Coverage",
     "JUnit.SearchInteractorTest.executor": "Coverage",
     "JUnit.SearchViewModelTest.executor": "Run",
+    "JUnit.interface_adapter.remove_marker in TeamProject.executor": "Coverage",
+    "JUnit.use_case.remove_marker in TeamProject.executor": "Coverage",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
     "SONARLINT_PRECOMMIT_ANALYSIS": "true",
     "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
-    "git-widget-placeholder": "maintest-suggestion",
+    "git-widget-placeholder": "main",
     "junie.onboarding.icon.badge.shown": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "/Users/yizhao/Documents/UT courses/CSC207/team-project/src/main/java/interface_adapter",
@@ -106,7 +116,7 @@
       <recent name="data_access" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Main">
+  <component name="RunManager" selected="JUnit.use_case.remove_marker in TeamProject">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="ALTERNATIVE_JRE_PATH" value="openjdk-25" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
@@ -125,47 +135,16 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="OSMDataAccessObjectTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="team-project" />
+    <configuration name="RemoveMarkerInteractorTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="TeamProject" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="data_access.*" />
+          <option name="PATTERN" value="use_case.remove_marker.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="data_access" />
-      <option name="MAIN_CLASS_NAME" value="data_access.OSMDataAccessObjectTest" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="OSMDataAccessObjectTest.testGetReturnsCorrectLocation" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="team-project" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="data_access.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="data_access" />
-      <option name="MAIN_CLASS_NAME" value="data_access.OSMDataAccessObjectTest" />
-      <option name="METHOD_NAME" value="testGetReturnsCorrectLocation" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="SearchInteractorTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="team-project" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="use_case.search.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="use_case.search" />
-      <option name="MAIN_CLASS_NAME" value="use_case.search.SearchInteractorTest" />
+      <option name="PACKAGE_NAME" value="use_case.remove_marker" />
+      <option name="MAIN_CLASS_NAME" value="use_case.remove_marker.RemoveMarkerInteractorTest" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -186,6 +165,34 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="interface_adapter.remove_marker in TeamProject" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="TeamProject" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="interface_adapter.remove_marker.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="interface_adapter.remove_marker" />
+      <option name="TEST_OBJECT" value="package" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="use_case.remove_marker in TeamProject" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="TeamProject" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="use_case.remove_marker.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="use_case.remove_marker" />
+      <option name="TEST_OBJECT" value="package" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration default="true" type="JetRunConfigurationType">
       <method v="2">
         <option name="Make" enabled="true" />
@@ -197,19 +204,18 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.use_case.remove_marker in TeamProject" />
+        <item itemvalue="JUnit.interface_adapter.remove_marker in TeamProject" />
+        <item itemvalue="JUnit.RemoveMarkerInteractorTest" />
         <item itemvalue="Application.Main" />
         <item itemvalue="JUnit.SearchViewModelTest" />
-        <item itemvalue="JUnit.SearchInteractorTest" />
-        <item itemvalue="JUnit.OSMDataAccessObjectTest.testGetReturnsCorrectLocation" />
-        <item itemvalue="JUnit.OSMDataAccessObjectTest" />
       </list>
     </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.26199.169" />
-        <option value="bundled-js-predefined-d6986cc7102b-9c94529fcfe0-JavaScript-IU-252.26199.169" />
+        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.25557.131" />
       </set>
     </attachedChunks>
   </component>
@@ -325,14 +331,23 @@
     <select />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/team_project$SearchInteractorTest.ic" NAME="SearchInteractorTest Coverage Results" MODIFIED="1764585239233" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
-      <FILTER>use_case.search.*</FILTER>
+    <SUITE FILE_PATH="coverage/team_project$RemoveMarkerInteractorTest.ic" NAME="RemoveMarkerInteractorTest Coverage Results" MODIFIED="1764725207123" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>use_case.remove_marker.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/team_project$interface_adapter_remove_marker_in_TeamProject.ic" NAME="interface_adapter.remove_marker in TeamProject Coverage Results" MODIFIED="1764725240333" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>interface_adapter.remove_marker.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/team_project$MarkerTest.ic" NAME="MarkerTest Coverage Results" MODIFIED="1764586853232" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>entity.*</FILTER>
     </SUITE>
     <SUITE FILE_PATH="coverage/team_project$GenerateRouteInteractorTest.ic" NAME="GenerateRouteInteractorTest Coverage Results" MODIFIED="1764586387659" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
       <FILTER>use_case.generate_route.*</FILTER>
     </SUITE>
-    <SUITE FILE_PATH="coverage/team_project$MarkerTest.ic" NAME="MarkerTest Coverage Results" MODIFIED="1764586853232" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
-      <FILTER>entity.*</FILTER>
+    <SUITE FILE_PATH="coverage/team_project$SearchInteractorTest.ic" NAME="SearchInteractorTest Coverage Results" MODIFIED="1764585239233" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>use_case.search.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/team_project$use_case_remove_marker_in_TeamProject.ic" NAME="use_case.remove_marker in TeamProject Coverage Results" MODIFIED="1764725539039" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>use_case.remove_marker.*</FILTER>
     </SUITE>
   </component>
 </project>

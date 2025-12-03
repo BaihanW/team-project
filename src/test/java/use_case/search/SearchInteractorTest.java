@@ -3,6 +3,9 @@ package use_case.search;
 import entity.Location;
 import org.junit.jupiter.api.Test;
 
+import java.util.Collections;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class SearchInteractorTest {
@@ -10,7 +13,7 @@ class SearchInteractorTest {
     static class FakeDAO implements SearchDataAccessInterface {
 
         boolean existsReturn = true;
-        Location loc = new Location("Toronto", 43.65, -79.38);
+        Location loc = new Location("Toronto", 0.0, 0.0); // adjust for your constructor
 
         @Override
         public boolean existsByName(String name) {
@@ -20,6 +23,12 @@ class SearchInteractorTest {
         @Override
         public Location get(String name) {
             return loc;
+        }
+
+        @Override
+        public List<Location> searchSuggestions(String query, int limit) {
+            // return a dummy list so the test doesn't crash
+            return Collections.singletonList(loc);
         }
     }
 
