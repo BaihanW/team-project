@@ -20,7 +20,7 @@ public class ReorderPresenter implements ReorderOutputBoundary {
         state.setStops(outputData.getStops());
         state.setErrorMessage(null);
         searchViewModel.setState(state);
-        searchViewModel.firePropertyChange("stops");
+        searchViewModel.firePropertyChange();
     }
 
     @Override
@@ -28,6 +28,6 @@ public class ReorderPresenter implements ReorderOutputBoundary {
         SearchState state = new SearchState(searchViewModel.getState());
         state.setErrorMessage(error);
         searchViewModel.setState(state);
-        searchViewModel.firePropertyChange("error");
+        searchViewModel.firePropertyChange();
     }
 }

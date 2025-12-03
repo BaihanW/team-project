@@ -1,5 +1,6 @@
 package view;
 
+import interface_adapter.reorder.ReorderController;
 import interface_adapter.save_stops.SaveStopsController;
 import interface_adapter.search.SearchController;
 import interface_adapter.remove_marker.RemoveMarkerController;
@@ -57,6 +58,7 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
     private transient RemoveMarkerController removeMarkerController = null;
     private transient GenerateRouteController generateRouteController = null;
     private transient SuggestionController suggestionController = null;
+    private transient ReorderController reorderController = null;
 
     // Map panel
     private final MapPanel mapPanel = new MapPanel();
@@ -250,26 +252,12 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         });
     }
 
-    private void attachSaveButtonListener() {
-        saveButton.addActionListener(e -> {
-            SearchState s = searchViewModel.getState();
-            saveStopsController.execute(s.getStopNames(), s.getStops());
-        });
-    }
-
     private void attachMoveUpButtonListener() {
         moveUpButton.addActionListener(evt -> moveSelected(-1));
     }
 
     private void attachMoveDownButtonListener() {
         moveDownButton.addActionListener(evt -> moveSelected(1));
-    }
-
-    private void attachMapClickListener() {
-        mapPanel.setClickListener(gp -> {
-            String name = String.format("%.5f, %.5f", gp.getLatitude(), gp.getLongitude());
-            addStop(name, gp);
-        });
     }
 
     private void attachGlobalEnterKey() {
@@ -493,6 +481,10 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         this.generateRouteController = generateRouteController;
     }
 
+    public void setRemoveMarkerController(RemoveMarkerController removeMarkerController) {
+        this.removeMarkerController = removeMarkerController;
+    }
+
     public void setSearchController(SearchController searchController) {
         this.searchController = searchController;
     }
@@ -503,10 +495,6 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
 
     public void setSuggestionController(SuggestionController suggestionController) {
         this.suggestionController = suggestionController;
-    }
-
-    public void setSaveStopsController(SaveStopsController saveStopsController) {
-        this.saveStopsController = saveStopsController;
     }
 
     public void setReorderController(ReorderController reorderController) {
@@ -521,20 +509,6 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
             reorderController.move(idx, newIdx, searchViewModel.getState().getStopNames(),
                     searchViewModel.getState().getStops());
         }
-    }
-
-    private void addStop(String name, GeoPosition gp) {
-        SearchState current = new SearchState(searchViewModel.getState());
-        List<String> names = new ArrayList<>(current.getStopNames());
-        names.add(name);
-        current.setStopNames(names);
-
-        List<GeoPosition> updatedStops = new ArrayList<>(current.getStops());
-        updatedStops.add(gp);
-        current.setStops(updatedStops);
-        current.setErrorMessage(null);
-        searchViewModel.setState(current);
-        searchViewModel.firePropertyChange("stops");
     }
 
     @Override
