@@ -13,6 +13,7 @@ public class Main {
                 .addSaveStopsUseCase()
                 .addRemoveMarkerUseCase()
                 .addGenerateRouteUseCase()
+                .addReorderUseCase()
                 .build();
 
         application.pack();
