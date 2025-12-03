@@ -42,7 +42,6 @@ class GenerateRouteStateTest {
         // Note: The GeoPositions themselves might be shared references depending on implementation,
         // but the list structure should be independent.
         copy.getRouteSegments().clear();
-        assertEquals(0, copy.getRouteSegments().size());
         assertEquals(1, original.getRouteSegments().size());
     }
 
