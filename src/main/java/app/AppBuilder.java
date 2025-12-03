@@ -78,6 +78,8 @@ public class AppBuilder {
     private GenerateRouteViewModel generateRouteViewModel;
     private SearchView searchView;
 
+    final InMemoryMarkerDataAccessObject markerDataAccessObject = new InMemoryMarkerDataAccessObject();
+
     public AppBuilder() {
         cardPanel.setLayout(cardLayout);
     }

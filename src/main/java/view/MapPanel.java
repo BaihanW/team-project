@@ -80,7 +80,6 @@ public class MapPanel extends JPanel {
         installSmoothWheelHandler();
         enableDragPanning();
 
-        // ★ 여기서 클릭 이벤트를 받아서 콜백으로 넘김
         mapViewer.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -113,7 +112,6 @@ public class MapPanel extends JPanel {
         mapViewer.repaint();
     }
 
-    // ★ SearchView 에서 지도 클릭 시 실행할 콜백을 등록할 때 사용
     public void setOnMapClickListener(Consumer<GeoPosition> listener) {
         this.mapClickListener = listener;
     }
