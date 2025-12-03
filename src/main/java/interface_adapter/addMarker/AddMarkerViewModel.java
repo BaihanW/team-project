@@ -6,6 +6,6 @@ public class AddMarkerViewModel extends ViewModel<AddMarkerState> {
 
     public AddMarkerViewModel() {
         super("add marker");
-        setState(new AddMarkerState());
+        this.setState(new AddMarkerState());
     }
 }

@@ -1,27 +1,13 @@
 package interface_adapter.addMarker;
 
 public class AddMarkerState {
-    private String locationName;
+
     private Double lastMarkerLatitude;
     private Double lastMarkerLongitude;
     private String errorMessage;
 
     public AddMarkerState() {
-    }
-
-    public AddMarkerState(AddMarkerState copy) {
-        this.locationName = copy.locationName;
-        this.lastMarkerLatitude = copy.lastMarkerLatitude;
-        this.lastMarkerLongitude = copy.lastMarkerLongitude;
-        this.errorMessage = copy.errorMessage;
-    }
-
-    public String getLocationName() {
-        return locationName;
-    }
-
-    public void setLocationName(String locationName) {
-        this.locationName = locationName;
+        // start with no marker and no error
     }
 
     public Double getLastMarkerLatitude() {
@@ -48,3 +34,4 @@ public class AddMarkerState {
         this.errorMessage = errorMessage;
     }
 }
+

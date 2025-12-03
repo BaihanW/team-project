@@ -1,46 +1,33 @@
 package interface_adapter.addMarker;
 
-import interface_adapter.search.SearchState;
-import interface_adapter.search.SearchViewModel;
-import org.jxmapviewer.viewer.GeoPosition;
 import use_case.add_marker.AddMarkerOutputBoundary;
 import use_case.add_marker.AddMarkerOutputData;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class AddMarkerPresenter implements AddMarkerOutputBoundary {
-    private final SearchViewModel searchViewModel;
 
-    public AddMarkerPresenter(SearchViewModel searchViewModel) {
-        this.searchViewModel = searchViewModel;
+    private final AddMarkerViewModel addMarkerViewModel;
+
+    public AddMarkerPresenter(AddMarkerViewModel addMarkerViewModel) {
+        this.addMarkerViewModel = addMarkerViewModel;
     }
 
     @Override
     public void prepareSuccessView(AddMarkerOutputData outputData) {
-        SearchState currentState = searchViewModel.getState();
-        SearchState newState = new SearchState(currentState);
+        AddMarkerState newState = new AddMarkerState();
+        newState.setLastMarkerLatitude(outputData.getLatitude());
+        newState.setLastMarkerLongitude(outputData.getLongitude());
+        newState.setErrorMessage(null);
 
-        List<String> currentNames = newState.getStopNames();
-        currentNames.add(outputData.getLocationName());
-        newState.setStopNames(currentNames);
-
-        List<GeoPosition> currentStops = newState.getStops();
-        currentStops.add(new GeoPosition(outputData.getLatitude(), outputData.getLongitude()));
-        newState.setStops(currentStops);
-        newState.setLatitude(outputData.getLatitude());
-        newState.setLongitude(outputData.getLongitude());
-        newState.setLocationName(outputData.getLocationName());
-
-        searchViewModel.setState(newState);
-        searchViewModel.firePropertyChange();
+        addMarkerViewModel.setState(newState);
+        addMarkerViewModel.firePropertyChange();
     }
 
     @Override
-    public void prepareFailView(String error) {
-        SearchState newState = new SearchState(searchViewModel.getState());
-        newState.setErrorMessage(error);
-        searchViewModel.setState(newState);
-        searchViewModel.firePropertyChange();
+    public void prepareFailView(String errorMessage) {
+        AddMarkerState newState = new AddMarkerState();
+        newState.setErrorMessage(errorMessage);
+
+        addMarkerViewModel.setState(newState);
+        addMarkerViewModel.firePropertyChange();
     }
 }

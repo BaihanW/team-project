@@ -4,49 +4,55 @@ import data_access.FileStopListDAO;
 import data_access.OSMDataAccessObject;
 import data_access.RoutingDataAccessObject;
 import interface_adapter.ViewManagerModel;
+
 import interface_adapter.generate_route.GenerateRouteController;
 import interface_adapter.generate_route.GenerateRoutePresenter;
 import interface_adapter.generate_route.GenerateRouteViewModel;
+
 import interface_adapter.reorder.ReorderController;
 import interface_adapter.reorder.ReorderPresenter;
+
 import interface_adapter.save_stops.SaveStopsController;
 import interface_adapter.save_stops.SaveStopsPresenter;
+
 import interface_adapter.search.SearchController;
 import interface_adapter.search.SearchPresenter;
 import interface_adapter.search.SearchState;
 import interface_adapter.search.SearchViewModel;
-import interface_adapter.save_stops.SaveStopsController;
-import interface_adapter.save_stops.SaveStopsPresenter;
+
 import interface_adapter.remove_marker.RemoveMarkerController;
 import interface_adapter.remove_marker.RemoveMarkerPresenter;
+
+import interface_adapter.suggestion.SuggestionController;
+import interface_adapter.suggestion.SuggestionPresenter;
+
 import use_case.generate_route.GenerateRouteInputBoundary;
 import use_case.generate_route.GenerateRouteInteractor;
 import use_case.generate_route.GenerateRouteOutputBoundary;
+
 import use_case.reorder.ReorderInputBoundary;
 import use_case.reorder.ReorderInteractor;
 import use_case.reorder.ReorderOutputBoundary;
+
 import use_case.save_stops.SaveStopsInputBoundary;
 import use_case.save_stops.SaveStopsInteractor;
 import use_case.save_stops.SaveStopsOutputBoundary;
-import interface_adapter.suggestion.SuggestionController;
-import interface_adapter.suggestion.SuggestionPresenter;
+
 import use_case.search.SearchInputBoundary;
 import use_case.search.SearchInteractor;
 import use_case.search.SearchOutputBoundary;
+
 import use_case.remove_marker.RemoveMarkerInputBoundary;
 import use_case.remove_marker.RemoveMarkerInteractor;
 import use_case.remove_marker.RemoveMarkerOutputBoundary;
+
 import use_case.suggestion.SuggestionInputBoundary;
 import use_case.suggestion.SuggestionInteractor;
 import use_case.suggestion.SuggestionOutputBoundary;
-import data_access.InMemoryMarkerDataAccessObject;
-import interface_adapter.addMarker.AddMarkerController;
-import interface_adapter.addMarker.AddMarkerPresenter;
-import use_case.add_marker.AddMarkerInputBoundary;
-import use_case.add_marker.AddMarkerInteractor;
-import use_case.add_marker.AddMarkerOutputBoundary;
+
 import view.SearchView;
 import view.ViewManager;
+
 import javax.swing.*;
 import java.awt.*;
 import java.net.http.HttpClient;
@@ -78,90 +84,93 @@ public class AppBuilder {
         cardPanel.setLayout(cardLayout);
     }
 
+    /** ---------------------------
+     *  VIEW 생성
+     * --------------------------- */
     public AppBuilder addSearchView() {
         searchViewModel = new SearchViewModel();
         generateRouteViewModel = new GenerateRouteViewModel();
+
         searchView = new SearchView(searchViewModel, generateRouteViewModel);
         cardPanel.add(searchView, searchView.getViewName());
         return this;
     }
 
+    /** ---------------------------
+     *  ROUTE USE CASE
+     * --------------------------- */
     public AppBuilder addGenerateRouteUseCase() {
-        final GenerateRouteOutputBoundary generateRoutePresenter = new GenerateRoutePresenter(generateRouteViewModel);
-        final GenerateRouteInputBoundary generateRouteInteractor = new GenerateRouteInteractor(
-                routingDataAccessObject, generateRoutePresenter);
-
-        GenerateRouteController generateRouteController = new GenerateRouteController(generateRouteInteractor);
-        searchView.setGenerateRouteController(generateRouteController);
-
+        GenerateRouteOutputBoundary presenter = new GenerateRoutePresenter(generateRouteViewModel);
+        GenerateRouteInputBoundary interactor =
+                new GenerateRouteInteractor(routingDataAccessObject, presenter);
+        GenerateRouteController controller = new GenerateRouteController(interactor);
+        searchView.setGenerateRouteController(controller);
         return this;
     }
 
+    /** ---------------------------
+     *  SEARCH USE CASE
+     * --------------------------- */
     public AppBuilder addSearchUseCase() {
-        final SearchOutputBoundary searchOutputBoundary = new SearchPresenter(searchViewModel);
-        final SearchInputBoundary searchInteractor = new SearchInteractor(
-                osmDataAccessObject, searchOutputBoundary);
-
-        SearchController searchController = new SearchController(searchInteractor);
-        searchView.setSearchController(searchController);
-
+        SearchOutputBoundary presenter = new SearchPresenter(searchViewModel);
+        SearchInputBoundary interactor =
+                new SearchInteractor(osmDataAccessObject, presenter);
+        SearchController controller = new SearchController(interactor);
+        searchView.setSearchController(controller);
         return this;
     }
 
-    public AppBuilder addAddMarkerUseCase() {
-        final AddMarkerOutputBoundary addMarkerPresenter = new AddMarkerPresenter(searchViewModel);
-        final AddMarkerInputBoundary addMarkerInteractor = new AddMarkerInteractor(
-                markerDataAccessObject,
-                osmDataAccessObject,
-                addMarkerPresenter
-        );
-        AddMarkerController addMarkerController = new AddMarkerController(addMarkerInteractor);
-
-        searchView.setAddMarkerController(addMarkerController);
-
-        return this;
-    }
-
+    /** ---------------------------
+     *  SAVE USE CASE
+     * --------------------------- */
     public AppBuilder addSaveStopsUseCase() {
-        final SaveStopsOutputBoundary saveStopsOutputBoundary = new SaveStopsPresenter(searchViewModel);
-        final SaveStopsInputBoundary saveStopsInteractor = new SaveStopsInteractor(
-                fileStopListDAO, saveStopsOutputBoundary);
-        SaveStopsController saveStopsController = new SaveStopsController(saveStopsInteractor);
-        searchView.setSaveStopsController(saveStopsController);
-
+        SaveStopsOutputBoundary presenter = new SaveStopsPresenter(searchViewModel);
+        SaveStopsInputBoundary interactor =
+                new SaveStopsInteractor(fileStopListDAO, presenter);
+        SaveStopsController controller = new SaveStopsController(interactor);
+        searchView.setSaveStopsController(controller);
         return this;
     }
 
+    /** ---------------------------
+     *  SUGGESTION USE CASE
+     * --------------------------- */
     public AppBuilder addSuggestionUseCase() {
-        final SuggestionOutputBoundary outputBoundary = new SuggestionPresenter(searchViewModel);
-        final SuggestionInputBoundary interactor = new SuggestionInteractor(osmDataAccessObject, outputBoundary);
-
-        SuggestionController suggestionController = new SuggestionController(interactor);
-        searchView.setSuggestionController(suggestionController);
-
+        SuggestionOutputBoundary presenter = new SuggestionPresenter(searchViewModel);
+        SuggestionInputBoundary interactor =
+                new SuggestionInteractor(osmDataAccessObject, presenter);
+        SuggestionController controller = new SuggestionController(interactor);
+        searchView.setSuggestionController(controller);
         return this;
     }
 
+    /** ---------------------------
+     *  REMOVE MARKER USE CASE
+     * --------------------------- */
     public AppBuilder addRemoveMarkerUseCase() {
-        final RemoveMarkerOutputBoundary removeMarkerOutputBoundary = new RemoveMarkerPresenter(searchViewModel);
-        final RemoveMarkerInputBoundary removeMarkerInteractor = new RemoveMarkerInteractor(removeMarkerOutputBoundary);
-
-        RemoveMarkerController removeMarkerController = new RemoveMarkerController(removeMarkerInteractor);
-        searchView.setRemoveMarkerController(removeMarkerController);
-
+        RemoveMarkerOutputBoundary presenter = new RemoveMarkerPresenter(searchViewModel);
+        RemoveMarkerInputBoundary interactor =
+                new RemoveMarkerInteractor(presenter);
+        RemoveMarkerController controller = new RemoveMarkerController(interactor);
+        searchView.setRemoveMarkerController(controller);
         return this;
     }
 
+    /** ---------------------------
+     *  REORDER USE CASE
+     * --------------------------- */
     public AppBuilder addReorderUseCase() {
-        final ReorderOutputBoundary reorderOutputBoundary = new ReorderPresenter(searchViewModel);
-        final ReorderInputBoundary reorderInteractor = new ReorderInteractor(reorderOutputBoundary);
-
-        ReorderController reorderController = new ReorderController(reorderInteractor);
-        searchView.setReorderController(reorderController);
-
+        ReorderOutputBoundary presenter = new ReorderPresenter(searchViewModel);
+        ReorderInputBoundary interactor =
+                new ReorderInteractor(presenter);
+        ReorderController controller = new ReorderController(interactor);
+        searchView.setReorderController(controller);
         return this;
     }
 
+    /** ---------------------------
+     *  STARTUP STOP LOADING
+     * --------------------------- */
     public AppBuilder loadStopsOnStartup() {
         try {
             FileStopListDAO.LoadedStops stored = fileStopListDAO.load();
@@ -170,11 +179,9 @@ public class AppBuilder {
 
                 var state = searchViewModel.getState();
 
-                // Load stops into state
                 state.setStopNames(stored.names);
                 state.setStops(stored.positions);
 
-                // Center map on the last stop
                 var last = stored.positions.get(stored.positions.size() - 1);
                 state.setLatitude(last.getLatitude());
                 state.setLongitude(last.getLongitude());
@@ -190,16 +197,20 @@ public class AppBuilder {
         return this;
     }
 
+    /** ---------------------------
+     *  BUILD
+     * --------------------------- */
     public JFrame build() {
-        final JFrame application = new JFrame("trip planner");
-        application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        JFrame app = new JFrame("trip planner");
+        app.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-        application.add(cardPanel);
+        app.add(cardPanel);
 
         viewManagerModel.setState(searchView.getViewName());
         viewManagerModel.firePropertyChange();
+
         loadStopsOnStartup();
 
-        return application;
+        return app;
     }
 }
