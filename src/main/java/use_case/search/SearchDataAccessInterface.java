@@ -13,4 +13,6 @@ public interface SearchDataAccessInterface {
 
     List<Location> searchSuggestions(String query, int limit) throws IOException, InterruptedException;
 
+    String getNameFromCoordinates(double lat, double lon) throws IOException, InterruptedException;
+
 }

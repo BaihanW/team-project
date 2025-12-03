@@ -3,6 +3,9 @@ package use_case.search;
 import entity.Location;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class SearchInteractorTest {
@@ -20,6 +23,16 @@ class SearchInteractorTest {
         @Override
         public Location get(String name) {
             return loc;
+        }
+
+        @Override
+        public List<Location> searchSuggestions(String query, int limit) throws IOException, InterruptedException {
+            return List.of();
+        }
+
+        @Override
+        public String getNameFromCoordinates(double lat, double lon) throws IOException, InterruptedException {
+            return "";
         }
     }
 

@@ -39,6 +39,12 @@ import use_case.remove_marker.RemoveMarkerOutputBoundary;
 import use_case.suggestion.SuggestionInputBoundary;
 import use_case.suggestion.SuggestionInteractor;
 import use_case.suggestion.SuggestionOutputBoundary;
+import data_access.InMemoryMarkerDataAccessObject;
+import interface_adapter.addMarker.AddMarkerController;
+import interface_adapter.addMarker.AddMarkerPresenter;
+import use_case.add_marker.AddMarkerInputBoundary;
+import use_case.add_marker.AddMarkerInteractor;
+import use_case.add_marker.AddMarkerOutputBoundary;
 import view.SearchView;
 import view.ViewManager;
 import javax.swing.*;
@@ -65,6 +71,8 @@ public class AppBuilder {
     private SearchViewModel searchViewModel;
     private GenerateRouteViewModel generateRouteViewModel;
     private SearchView searchView;
+
+    final InMemoryMarkerDataAccessObject markerDataAccessObject = new InMemoryMarkerDataAccessObject();
 
     public AppBuilder() {
         cardPanel.setLayout(cardLayout);
@@ -96,6 +104,20 @@ public class AppBuilder {
 
         SearchController searchController = new SearchController(searchInteractor);
         searchView.setSearchController(searchController);
+
+        return this;
+    }
+
+    public AppBuilder addAddMarkerUseCase() {
+        final AddMarkerOutputBoundary addMarkerPresenter = new AddMarkerPresenter(searchViewModel);
+        final AddMarkerInputBoundary addMarkerInteractor = new AddMarkerInteractor(
+                markerDataAccessObject,
+                osmDataAccessObject,
+                addMarkerPresenter
+        );
+        AddMarkerController addMarkerController = new AddMarkerController(addMarkerInteractor);
+
+        searchView.setAddMarkerController(addMarkerController);
 
         return this;
     }

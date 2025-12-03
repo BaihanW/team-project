@@ -8,11 +8,11 @@ public class Main {
         JFrame application = appBuilder
                 .addSearchView()
                 .addSearchUseCase()
-                .addRemoveMarkerUseCase()
                 .addSuggestionUseCase()
                 .addSaveStopsUseCase()
                 .addRemoveMarkerUseCase()
                 .addGenerateRouteUseCase()
+                .addAddMarkerUseCase()
                 .addReorderUseCase()
                 .build();
 
