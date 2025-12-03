@@ -7,24 +7,16 @@ import interface_adapter.ViewManagerModel;
 import interface_adapter.generate_route.GenerateRouteController;
 import interface_adapter.generate_route.GenerateRoutePresenter;
 import interface_adapter.generate_route.GenerateRouteViewModel;
-import interface_adapter.reorder.ReorderController;
-import interface_adapter.reorder.ReorderPresenter;
 import interface_adapter.save_stops.SaveStopsController;
 import interface_adapter.save_stops.SaveStopsPresenter;
 import interface_adapter.search.SearchController;
 import interface_adapter.search.SearchPresenter;
-import interface_adapter.search.SearchState;
 import interface_adapter.search.SearchViewModel;
-import interface_adapter.save_stops.SaveStopsController;
-import interface_adapter.save_stops.SaveStopsPresenter;
 import interface_adapter.remove_marker.RemoveMarkerController;
 import interface_adapter.remove_marker.RemoveMarkerPresenter;
 import use_case.generate_route.GenerateRouteInputBoundary;
 import use_case.generate_route.GenerateRouteInteractor;
 import use_case.generate_route.GenerateRouteOutputBoundary;
-import use_case.reorder.ReorderInputBoundary;
-import use_case.reorder.ReorderInteractor;
-import use_case.reorder.ReorderOutputBoundary;
 import use_case.save_stops.SaveStopsInputBoundary;
 import use_case.save_stops.SaveStopsInteractor;
 import use_case.save_stops.SaveStopsOutputBoundary;
@@ -130,16 +122,6 @@ public class AppBuilder {
         return this;
     }
 
-    public AppBuilder addReorderUseCase() {
-        final ReorderOutputBoundary reorderOutputBoundary = new ReorderPresenter(searchViewModel);
-        final ReorderInputBoundary reorderInteractor = new ReorderInteractor(reorderOutputBoundary);
-
-        ReorderController reorderController = new ReorderController(reorderInteractor);
-        searchView.setReorderController(reorderController);
-
-        return this;
-    }
-
     public AppBuilder loadStopsOnStartup() {
         try {
             FileStopListDAO.LoadedStops stored = fileStopListDAO.load();
@@ -167,6 +149,8 @@ public class AppBuilder {
 
         return this;
     }
+
+
 
     public JFrame build() {
         final JFrame application = new JFrame("trip planner");

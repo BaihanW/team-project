@@ -4,12 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b50313f8-1e33-41e4-88d3-e829184e5d9f" name="Changes" comment="Merge branch 'main' into usecase/reorder&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml&#10;#&#9;src/main/java/app/AppBuilder.java&#10;#&#9;src/main/java/app/Main.java&#10;#&#9;src/main/java/data_access/FileStopListDAO.java&#10;#&#9;src/main/java/interface_adapter/save_stops/SaveStopsPresenter.java&#10;#&#9;src/main/java/view/MapPanel.java&#10;#&#9;src/main/java/view/SearchView.java">
+    <list default="true" id="b50313f8-1e33-41e4-88d3-e829184e5d9f" name="Changes" comment="testing suggestion">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/AppBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/AppBuilder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/interface_adapter/reorder/ReorderPresenter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/interface_adapter/reorder/ReorderPresenter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/view/SearchView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/SearchView.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,7 +48,6 @@
 }</component>
   <component name="ProjectId" id="34B1hosS4zTtQwCHvgzHwdBkYK2" />
   <component name="ProjectLevelVcsManager">
-    <OptionsSetting value="false" id="Update" />
     <ConfirmationsSetting value="2" id="Add" />
   </component>
   <component name="ProjectViewState">
@@ -75,7 +70,7 @@
     "RunOnceActivity.git.unshallow": "true",
     "SONARLINT_PRECOMMIT_ANALYSIS": "true",
     "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
-    "git-widget-placeholder": "usecase/reorder",
+    "git-widget-placeholder": "maintest-suggestion",
     "junie.onboarding.icon.badge.shown": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "/Users/yizhao/Documents/UT courses/CSC207/team-project/src/main/java/interface_adapter",
@@ -116,7 +111,7 @@
       <option name="ALTERNATIVE_JRE_PATH" value="openjdk-25" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
       <option name="MAIN_CLASS_NAME" value="app.Main" />
-      <module name="team-project" />
+      <module name="TeamProject" />
       <selectedOptions>
         <option name="environmentVariables" visible="false" />
       </selectedOptions>

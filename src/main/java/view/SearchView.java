@@ -1,12 +1,10 @@
 package view;
 
-import interface_adapter.reorder.ReorderController;
 import interface_adapter.save_stops.SaveStopsController;
 import interface_adapter.search.SearchController;
 import interface_adapter.remove_marker.RemoveMarkerController;
 import interface_adapter.search.SearchState;
 import interface_adapter.search.SearchViewModel;
-import interface_adapter.remove_marker.RemoveMarkerController;
 import interface_adapter.suggestion.SuggestionController;
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -58,7 +56,6 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
     private transient RemoveMarkerController removeMarkerController = null;
     private transient GenerateRouteController generateRouteController = null;
     private transient SuggestionController suggestionController = null;
-    private transient ReorderController reorderController = null;
 
     // Map panel
     private final MapPanel mapPanel = new MapPanel();
@@ -98,10 +95,6 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         attachStopsListDoubleClickListener();
         attachSearchFieldListener();
         attachSearchButtonListener();
-        attachRemoveButtonListener();
-        attachMoveUpButtonListener();
-        attachMoveDownButtonListener();
-        attachSuggestionListListeners();
         attachSaveButtonListener();
         attachRemoveButtonListener();
         attachRouteButtonListener();
@@ -252,14 +245,6 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         });
     }
 
-    private void attachMoveUpButtonListener() {
-        moveUpButton.addActionListener(evt -> moveSelected(-1));
-    }
-
-    private void attachMoveDownButtonListener() {
-        moveDownButton.addActionListener(evt -> moveSelected(1));
-    }
-
     private void attachGlobalEnterKey() {
         this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
                 .put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), "globalEnter");
@@ -398,7 +383,7 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         // 1. update text field
         updateFields(state);
 
-        // update stop list
+        // 2. update stop list
         stopsListModel.clear();
         for (String name : state.getStopNames()) {
             stopsListModel.addElement(name);
@@ -481,10 +466,6 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         this.generateRouteController = generateRouteController;
     }
 
-    public void setRemoveMarkerController(RemoveMarkerController removeMarkerController) {
-        this.removeMarkerController = removeMarkerController;
-    }
-
     public void setSearchController(SearchController searchController) {
         this.searchController = searchController;
     }
@@ -497,18 +478,8 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         this.suggestionController = suggestionController;
     }
 
-    public void setReorderController(ReorderController reorderController) {
-        this.reorderController = reorderController;
-    }
-
-    private void moveSelected(int delta) {
-        int idx = stopsList.getSelectedIndex();
-        if (idx == -1) return;
-        int newIdx = idx + delta;
-        if (reorderController != null) {
-            reorderController.move(idx, newIdx, searchViewModel.getState().getStopNames(),
-                    searchViewModel.getState().getStops());
-        }
+    public void setRemoveMarkerController(RemoveMarkerController removeMarkerController) {
+        this.removeMarkerController = removeMarkerController;
     }
 
     @Override
