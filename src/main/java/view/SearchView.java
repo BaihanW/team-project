@@ -20,6 +20,8 @@ import java.util.logging.Logger;
 import interface_adapter.generate_route.GenerateRouteController;
 import interface_adapter.generate_route.GenerateRouteViewModel;
 import interface_adapter.generate_route.GenerateRouteState;
+import interface_adapter.addMarker.AddMarkerController;
+
 
 import org.jxmapviewer.viewer.GeoPosition;
 
@@ -59,6 +61,7 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
     private transient GenerateRouteController generateRouteController = null;
     private transient SuggestionController suggestionController = null;
     private transient ReorderController reorderController = null;
+    private transient interface_adapter.addMarker.AddMarkerController addMarkerController = null;
 
     // Map panel
     private final MapPanel mapPanel = new MapPanel();
@@ -412,6 +415,8 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         // update center if needed
         mapPanel.setCenter(state.getLatitude(), state.getLongitude());
 
+        mapPanel.setStops(state.getStops());
+
         // handle errors from search or remove marker use cases
         if (state.getSearchError() != null) showPopupError(state.getSearchError());
         if (state.getErrorMessage() != null) showPopupError(state.getErrorMessage());
@@ -499,6 +504,11 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
 
     public void setReorderController(ReorderController reorderController) {
         this.reorderController = reorderController;
+    }
+
+    public void setAddMarkerController(interface_adapter.addMarker.AddMarkerController addMarkerController) {
+        this.addMarkerController = addMarkerController;
+        this.mapPanel.setAddMarkerController(addMarkerController);
     }
 
     private void moveSelected(int delta) {

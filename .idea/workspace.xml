@@ -4,11 +4,24 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b50313f8-1e33-41e4-88d3-e829184e5d9f" name="Changes" comment="Merge branch 'main' into usecase/reorder&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml&#10;#&#9;src/main/java/app/AppBuilder.java&#10;#&#9;src/main/java/app/Main.java&#10;#&#9;src/main/java/data_access/FileStopListDAO.java&#10;#&#9;src/main/java/interface_adapter/save_stops/SaveStopsPresenter.java&#10;#&#9;src/main/java/view/MapPanel.java&#10;#&#9;src/main/java/view/SearchView.java">
+    <list default="true" id="b50313f8-1e33-41e4-88d3-e829184e5d9f" name="Changes" comment="Write tests for GeneratorRouteInteractor and entity marker. Error appear on the SerchInteractorTest.">
+      <change afterPath="$PROJECT_DIR$/src/main/java/data_access/InMemoryMarkerDataAccessObject.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/interface_adapter/addMarker/AddMarkerController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/interface_adapter/addMarker/AddMarkerPresenter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/interface_adapter/addMarker/AddMarkerState.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/interface_adapter/addMarker/AddMarkerViewModel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/use_case/add_marker/AddMarkerDataAccessInterface.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/use_case/add_marker/AddMarkerInputBoundary.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/use_case/add_marker/AddMarkerInputData.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/use_case/add_marker/AddMarkerInteractor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/use_case/add_marker/AddMarkerOutputBoundary.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/use_case/add_marker/AddMarkerOutputData.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/app/AppBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/AppBuilder.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/app/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/interface_adapter/reorder/ReorderPresenter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/interface_adapter/reorder/ReorderPresenter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/data_access/OSMDataAccessObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/data_access/OSMDataAccessObject.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/use_case/search/SearchDataAccessInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/use_case/search/SearchDataAccessInterface.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/view/MapPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/MapPanel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/view/SearchView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/SearchView.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -52,7 +65,6 @@
 }</component>
   <component name="ProjectId" id="34B1hosS4zTtQwCHvgzHwdBkYK2" />
   <component name="ProjectLevelVcsManager">
-    <OptionsSetting value="false" id="Update" />
     <ConfirmationsSetting value="2" id="Add" />
   </component>
   <component name="ProjectViewState">
@@ -64,10 +76,10 @@
     "Application.Main.executor": "Run",
     "JUnit.GenerateRouteInteractorTest.executor": "Coverage",
     "JUnit.LocationTest.executor": "Run",
-    "JUnit.MarkerTest.executor": "Coverage",
+    "JUnit.MarkerTest.executor": "Run",
     "JUnit.OSMDataAccessObjectTest.executor": "Run",
     "JUnit.OSMDataAccessObjectTest.testGetReturnsCorrectLocation.executor": "Run",
-    "JUnit.SearchInteractorTest.executor": "Coverage",
+    "JUnit.SearchInteractorTest.executor": "Run",
     "JUnit.SearchViewModelTest.executor": "Run",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
@@ -75,10 +87,10 @@
     "RunOnceActivity.git.unshallow": "true",
     "SONARLINT_PRECOMMIT_ANALYSIS": "true",
     "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
-    "git-widget-placeholder": "usecase/reorder",
+    "git-widget-placeholder": "Fix__the__issues__of__add__marker",
     "junie.onboarding.icon.badge.shown": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/Users/yizhao/Documents/UT courses/CSC207/team-project/src/main/java/interface_adapter",
+    "last_opened_file_path": "/Users/yizhao/Documents/UT courses/CSC207/team-project/src/main/java/use_case",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -94,10 +106,11 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/java/use_case" />
+      <recent name="$PROJECT_DIR$/src/test/java/use_case/search" />
       <recent name="$PROJECT_DIR$/src/main/java/interface_adapter" />
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/src/main" />
-      <recent name="C:\Users\Motion\IdeaProjects\csc207\team-project\src\main" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Motion\IdeaProjects\csc207\team-project\src\main" />
@@ -106,17 +119,17 @@
       <recent name="interface_adapter.search" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="view" />
       <recent name="entity" />
+      <recent name="view" />
       <recent name="data_access" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Main">
+  <component name="RunManager">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="ALTERNATIVE_JRE_PATH" value="openjdk-25" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
       <option name="MAIN_CLASS_NAME" value="app.Main" />
-      <module name="team-project" />
+      <module name="TeamProject" />
       <selectedOptions>
         <option name="environmentVariables" visible="false" />
       </selectedOptions>
@@ -231,7 +244,8 @@
       <workItem from="1760987551082" duration="6000" />
       <workItem from="1764580758562" duration="5580000" />
       <workItem from="1764587025490" duration="654000" />
-      <workItem from="1764587694539" duration="5255000" />
+      <workItem from="1764587694539" duration="6027000" />
+      <workItem from="1764717078762" duration="7206000" />
     </task>
     <task id="LOCAL-00001" summary="gitignore">
       <option name="closed" value="true" />
@@ -281,21 +295,21 @@
       <option name="project" value="LOCAL" />
       <updated>1764586908686</updated>
     </task>
-    <task id="LOCAL-00007" summary="Merge branch 'suggestion'&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml&#10;#&#9;src/main/java/app/AppBuilder.java&#10;#&#9;src/main/java/interface_adapter/ViewModel.java&#10;#&#9;src/main/java/view/SearchView.java">
+    <task id="LOCAL-00007" summary="needed to be modified">
       <option name="closed" value="true" />
-      <created>1764693500944</created>
+      <created>1764614158676</created>
       <option name="number" value="00007" />
       <option name="presentableId" value="LOCAL-00007" />
       <option name="project" value="LOCAL" />
-      <updated>1764693500944</updated>
+      <updated>1764614158676</updated>
     </task>
-    <task id="LOCAL-00008" summary="testing suggestion">
+    <task id="LOCAL-00008" summary="Write tests for GeneratorRouteInteractor and entity marker. Error appear on the SerchInteractorTest.">
       <option name="closed" value="true" />
-      <created>1764694197045</created>
+      <created>1764717436439</created>
       <option name="number" value="00008" />
       <option name="presentableId" value="LOCAL-00008" />
       <option name="project" value="LOCAL" />
-      <updated>1764694197045</updated>
+      <updated>1764717436439</updated>
     </task>
     <option name="localTasksCounter" value="9" />
     <servers />
@@ -322,8 +336,8 @@
     <MESSAGE value="Completed Test cases: GenerateRouteInteractor with 100% coverage on all the codes below the generate_route use_case folder." />
     <MESSAGE value="Entity Marker test completed and reach 100% coverage!" />
     <MESSAGE value="needed to be modified" />
-    <MESSAGE value="testing suggestion" />
-    <option name="LAST_COMMIT_MESSAGE" value="testing suggestion" />
+    <MESSAGE value="Write tests for GeneratorRouteInteractor and entity marker. Error appear on the SerchInteractorTest." />
+    <option name="LAST_COMMIT_MESSAGE" value="Write tests for GeneratorRouteInteractor and entity marker. Error appear on the SerchInteractorTest." />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
@@ -335,6 +349,9 @@
     </SUITE>
     <SUITE FILE_PATH="coverage/team_project$GenerateRouteInteractorTest.ic" NAME="GenerateRouteInteractorTest Coverage Results" MODIFIED="1764586387659" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
       <FILTER>use_case.generate_route.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/team_project$Main.ic" NAME="Main Coverage Results" MODIFIED="1764717108675" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>app.*</FILTER>
     </SUITE>
     <SUITE FILE_PATH="coverage/team_project$MarkerTest.ic" NAME="MarkerTest Coverage Results" MODIFIED="1764586853232" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
       <FILTER>entity.*</FILTER>

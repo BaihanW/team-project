@@ -112,4 +112,25 @@ public class OSMDataAccessObject implements SearchDataAccessInterface {
 
         return new JSONArray(response.body());
     }
+
+    public String getNameFromCoordinates(double lat, double lon) throws IOException, InterruptedException {
+        applyRateLimit(); // 遵守 API 限制
+
+        String url = "https://nominatim.openstreetmap.org/reverse?format=json&lat="
+                + lat + "&lon=" + lon;
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(url))
+                .header("User-Agent", "TripPlanner/1.0")
+                .build();
+
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        if (response.statusCode() != 200) {
+            return String.format("%.5f, %.5f", lat, lon);
+        }
+
+        JSONObject obj = new JSONObject(response.body());
+        return obj.optString("display_name", String.format("%.5f, %.5f", lat, lon));
+    }
 }

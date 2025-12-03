@@ -56,6 +56,8 @@ public class MapPanel extends JPanel {
     private RoutePainter routePainter;
     private final CompoundPainter<JXMapViewer> compoundPainter = new CompoundPainter<>();
 
+    private interface_adapter.addMarker.AddMarkerController addMarkerController;
+
     /** The JXMapViewer instance that renders the OSM map. */
     private final JXMapViewer mapViewer;
 
@@ -124,6 +126,8 @@ public class MapPanel extends JPanel {
         // Drag-to-pan support
         enableDragPanning();
 
+        installClickToAddMarker();
+
         add(mapViewer, BorderLayout.CENTER);
     }
 
@@ -141,6 +145,24 @@ public class MapPanel extends JPanel {
         }
         waypointPainter.setWaypoints(waypoints);
         mapViewer.repaint();
+    }
+
+    public void setAddMarkerController(interface_adapter.addMarker.AddMarkerController controller) {
+        this.addMarkerController = controller;
+    }
+
+    private void installClickToAddMarker() {
+        mapViewer.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (!SwingUtilities.isLeftMouseButton(e)) return;
+                GeoPosition pos = mapViewer.convertPointToGeoPosition(e.getPoint());
+                if (pos == null) return;
+                if (addMarkerController != null) {
+                    addMarkerController.execute(pos.getLatitude(), pos.getLongitude());
+                }
+            }
+        });
     }
 
     /* ================================================================
@@ -238,6 +260,7 @@ public class MapPanel extends JPanel {
             } catch (Exception ignored) {}
         });
     }
+
 
     /** Enables click-and-drag panning. */
     private void enableDragPanning() {
