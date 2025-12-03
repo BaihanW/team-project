@@ -9,4 +9,13 @@ public class SearchViewModel extends ViewModel<SearchState> {
         setState(new SearchState());
     }
 
+    @Override
+    public void showSaveSuccessMessage(String msg) {
+        firePropertyChange("save_success", msg);
+    }
+
+    @Override
+    public void showSaveErrorMessage(String msg) {
+        firePropertyChange("save_error", msg);
+    }
 }

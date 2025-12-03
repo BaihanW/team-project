@@ -11,7 +11,8 @@ public class Main {
                 .addRemoveMarkerUseCase()
                 .addSuggestionUseCase()
                 .addSaveStopsUseCase()
-                .loadStopsOnStartup()
+                .addRemoveMarkerUseCase()
+                .addGenerateRouteUseCase()
                 .build();
 
         application.pack();

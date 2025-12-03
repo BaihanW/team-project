@@ -31,11 +31,19 @@ public class ViewModel<T> {
         this.support.firePropertyChange("state", null, this.state);
     }
 
-    public void firePropertyChange(String propertyName) {
-        this.support.firePropertyChange(propertyName, null, this.state);
+    public void firePropertyChange(String propertyName, Object value) {
+        support.firePropertyChange(propertyName, null, value);
     }
 
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         this.support.addPropertyChangeListener(listener);
+    }
+
+    public void showSaveSuccessMessage(String s) {
+
+    }
+
+    public void showSaveErrorMessage(String error) {
+
     }
 }
