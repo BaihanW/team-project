@@ -4,14 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-<<<<<<< HEAD
-    <list default="true" id="b50313f8-1e33-41e4-88d3-e829184e5d9f" name="Changes" comment="Merge branch 'main' into usecase/reorder&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml&#10;#&#9;src/main/java/app/AppBuilder.java&#10;#&#9;src/main/java/app/Main.java&#10;#&#9;src/main/java/data_access/FileStopListDAO.java&#10;#&#9;src/main/java/interface_adapter/save_stops/SaveStopsPresenter.java&#10;#&#9;src/main/java/view/MapPanel.java&#10;#&#9;src/main/java/view/SearchView.java">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-=======
     <list default="true" id="b50313f8-1e33-41e4-88d3-e829184e5d9f" name="Changes" comment="Fix all the issues on use case addmarker. Everything should be working.">
-      <change afterPath="$PROJECT_DIR$/src/test/java/entity/MarkerTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/use_case/generate_route/GenerateRouteInteractorTest.java" afterDir="false" />
->>>>>>> 0dfb716e985b5d9bb97391fc91812cbd7fa47711
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,40 +23,29 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-<<<<<<< HEAD
-        <entry key="$PROJECT_DIR$" value="Add-marker-final-implementation" />
-=======
         <entry key="$PROJECT_DIR$" value="FInal-AddMarker" />
->>>>>>> 0dfb716e985b5d9bb97391fc91812cbd7fa47711
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
-  &quot;lastFilter&quot;: {
-    &quot;state&quot;: &quot;OPEN&quot;,
-    &quot;assignee&quot;: &quot;parkdongmyeong0707&quot;
-  }
-}</component>
-<<<<<<< HEAD
+        &quot;lastFilter&quot;: {
+        &quot;state&quot;: &quot;OPEN&quot;,
+        &quot;assignee&quot;: &quot;parkdongmyeong0707&quot;
+        }
+        }</component>
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/BaihanW/team-project.git&quot;,
-    &quot;accountId&quot;: &quot;20433112-c384-4120-9d48-06ac955720bf&quot;
-=======
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/BaihanW/team-project.git",
-    "accountId": "78095f61-537a-4656-b91c-fd9a6b16111e"
->>>>>>> 0dfb716e985b5d9bb97391fc91812cbd7fa47711
+    &quot;accountId&quot;: &quot;78095f61-537a-4656-b91c-fd9a6b16111e&quot;
   }
-}]]></component>
+}</component>
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectColorInfo">{
-  &quot;associatedIndex&quot;: 3
-}</component>
+        &quot;associatedIndex&quot;: 3
+        }</component>
   <component name="ProjectId" id="34B1hosS4zTtQwCHvgzHwdBkYK2" />
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
@@ -73,7 +56,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "Application.Main.executor": "Coverage",
+    "Application.Main.executor": "Run",
     "JUnit.GenerateRouteInteractorTest.executor": "Coverage",
     "JUnit.LocationTest.executor": "Run",
     "JUnit.MarkerTest.executor": "Run",
@@ -240,10 +223,7 @@
       <workItem from="1764587025490" duration="654000" />
       <workItem from="1764587694539" duration="5255000" />
       <workItem from="1764726773642" duration="5901000" />
-<<<<<<< HEAD
-=======
       <workItem from="1764738827205" duration="545000" />
->>>>>>> 0dfb716e985b5d9bb97391fc91812cbd7fa47711
     </task>
     <task id="LOCAL-00001" summary="gitignore">
       <option name="closed" value="true" />
@@ -360,13 +340,8 @@
     <SUITE FILE_PATH="coverage/team_project$GenerateRouteInteractorTest.ic" NAME="GenerateRouteInteractorTest Coverage Results" MODIFIED="1764586387659" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
       <FILTER>use_case.generate_route.*</FILTER>
     </SUITE>
-<<<<<<< HEAD
     <SUITE FILE_PATH="coverage/team_project3$AddMarkerInteractorTest.ic" NAME="AddMarkerInteractorTest Coverage Results" MODIFIED="1764736705639" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
       <FILTER>AddMarkerTest.*</FILTER>
-=======
-    <SUITE FILE_PATH="coverage/team_project$Main.ic" NAME="Main Coverage Results" MODIFIED="1764717108675" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
-      <FILTER>app.*</FILTER>
->>>>>>> 0dfb716e985b5d9bb97391fc91812cbd7fa47711
     </SUITE>
     <SUITE FILE_PATH="coverage/team_project$MarkerTest.ic" NAME="MarkerTest Coverage Results" MODIFIED="1764586853232" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
       <FILTER>entity.*</FILTER>
