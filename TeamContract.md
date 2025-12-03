@@ -49,4 +49,4 @@ By signing below, we acknowledge that we have read, discussed, and agreed to the
 
 Team Member Signatures:
 
-Tim Wu, Raymond zhang, DongMyeong Park, Phonlakrit (MP) Tiraratn
+Tim Wu, Raymond zhang, DongMyeong Park, Phonlakrit (MP) Tiraratn, Yi Zhao
