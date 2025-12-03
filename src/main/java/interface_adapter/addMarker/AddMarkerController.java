@@ -4,14 +4,14 @@ import use_case.add_marker.AddMarkerInputBoundary;
 import use_case.add_marker.AddMarkerInputData;
 
 public class AddMarkerController {
-    private final AddMarkerInputBoundary addMarkerInputBoundary;
+    private final AddMarkerInputBoundary interactor;
 
-    public AddMarkerController(AddMarkerInputBoundary addMarkerInputBoundary) {
-        this.addMarkerInputBoundary = addMarkerInputBoundary;
+    public AddMarkerController(AddMarkerInputBoundary interactor) {
+        this.interactor = interactor;
     }
 
-    public void addMarker(double latitude, double longitude) {
-        AddMarkerInputData inputData = new AddMarkerInputData(latitude, longitude);
-        addMarkerInputBoundary.execute(inputData);
+    public void execute(double lat, double lon) {
+        AddMarkerInputData data = new AddMarkerInputData(lat, lon);
+        interactor.execute(data);
     }
 }

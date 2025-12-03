@@ -2,15 +2,19 @@ package use_case.add_marker;
 
 import entity.Location;
 import entity.Marker;
+import use_case.search.SearchDataAccessInterface;
 
 public class AddMarkerInteractor implements AddMarkerInputBoundary {
-    private final AddMarkerDataAccessInterface addMarkerAccessObj;
-    private final AddMarkerOutputBoundary addMarkerPresenter;
+    private final AddMarkerDataAccessInterface markerDAO;
+    private final SearchDataAccessInterface searchDAO;
+    private final AddMarkerOutputBoundary presenter;
 
-    public AddMarkerInteractor(AddMarkerDataAccessInterface addMarkerAccess,
-                               AddMarkerOutputBoundary addMarkerPresenter) {
-        this.addMarkerAccessObj = addMarkerAccess;
-        this.addMarkerPresenter = addMarkerPresenter;
+    public AddMarkerInteractor(AddMarkerDataAccessInterface markerDAO,
+                               SearchDataAccessInterface searchDAO,
+                               AddMarkerOutputBoundary presenter) {
+        this.markerDAO = markerDAO;
+        this.searchDAO = searchDAO;
+        this.presenter = presenter;
     }
 
     @Override
@@ -18,21 +22,25 @@ public class AddMarkerInteractor implements AddMarkerInputBoundary {
         double lat = inputData.getLatitude();
         double lon = inputData.getLongitude();
 
-        Location location = new Location("", lat, lon);
-
-        if (addMarkerAccessObj.exists(location)) {
-            addMarkerPresenter.prepareFailView("A marker already exists at this location");
-            return;
+        String locationName;
+        try {
+            locationName = searchDAO.getNameFromCoordinates(lat, lon);
+            if (locationName.length() > 30) {
+                locationName = locationName.substring(0, 27) + "...";
+            }
+        } catch (Exception e) {
+            locationName = String.format("%.5f, %.5f", lat, lon);
         }
 
+        Location location = new Location(locationName, lat, lon);
         Marker marker = new Marker(location);
-        addMarkerAccessObj.save(marker);
 
-        AddMarkerOutputData outputData=
-                new  AddMarkerOutputData(lat, lon);
-        addMarkerPresenter.prepareSuccessView(outputData);
+        markerDAO.save(marker);
+
+        AddMarkerOutputData outputData = new AddMarkerOutputData(
+                locationName, lat, lon
+        );
+
+        presenter.prepareSuccessView(outputData);
     }
-
-
-
 }
