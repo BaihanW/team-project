@@ -5,9 +5,10 @@ A simple Java Swing application for travel route planning and visualization.
 Follows Clean Architecture principles (Entities → Use Cases → Interface Adapters → Frameworks).
 
 ## Team Members
-- Baihan -
+- Baihan
 - DongMyeong Park
 - Raymond Zhang
+- Yi Zhao
 
 SwingTripPlanner Project Blueprint
 
@@ -24,62 +25,106 @@ User Stories：
 
 As a user, I want to enter a location name in a search bar so that the map can center on that location.
 
-As a user, I want to add a marker at a specific location so that I can mark points of interest.
+As a user, I want to add a marker at a specific location so that I can mark points of interest for my trip.
 
-As a user, I want to select two markers and see the route between them so that I can visualize directions.
+As a user, I want to delete a specific marker from my list so that I can remove stops I no longer wish to visit.
 
-As a user, I want to zoom in and out and pan the map so that I can explore the area in detail.
+As a user, I want to move stops up or down in my list so that I can arrange the order of locations for my trip.
+
+As a user, I want to visualize a connected path between all my selected markers so that I can see the travel directions on the map.
+
+As a user, I want to save my current list of stops to a local file so that I can reload and continue planning my trip later.
+
+As a user, I want to see a list of location suggestions as I type so that I can quickly select the correct place without typing the full name.
 
 Use Cases：
 
 Use Case 1: Search Location
-- Lead:
-- Main Flow:
-    1. User enters a location in the search bar.
-    2. System calls the OpenStreetMap Nominatim API to get coordinates.
-    3. Map centers on the returned coordinates.
-    4. Optionally, a marker is added.
-- Alternative Flow: Location not found → show error message.
+Lead: Baihan
+MVP: Yes
+Main Flow:
+1. User enters a location name (e.g., "Toronto") into the search bar.
+2. System sends the query to the OpenStreetMap Nominatim API.
+3. System retrieves the latitude and longitude coordinates.
+4. System centers the map on the retrieved coordinates.
+5. System adds the location to the user's itinerary list.
+Alternative Flows:
+- Location Not Found: If the API returns no results, the system displays an error popup ("Location does not exist").
+- Network Error: If the API cannot be reached, the system displays a network error message.
 
-Use Case 2: Add Marker at Center
-- Lead:
-- Main Flow:
-    1. User clicks "Add Marker" button.
-    2. System records map center coordinates.
-    3. System creates a marker at that location.
-- Alternative Flow: Duplicate marker → ignore。
+Use Case 2: Add Marker
+Lead: DongMyeong Park
+MVP: Yes
+Main Flow:
+1. User clicks a specific point on the map.
+2. System captures the geographic coordinates (latitude/longitude) of the click.
+3. System calls the API to perform reverse geocoding to get the location name (optional, based on implementation).
+4. System adds a marker to the map at that location.
+5. System appends the new location to the ordered list of stops.
+Alternative Flows:
+- Duplicate Location: If the user attempts to add a marker that already exists (exact coordinates), the system ignores the action or notifies the user.
 
-Use Case 3: Route Between Two Markers
-- Lead:
-- Main Flow:
-    1. User selects two markers.
-    2. System calls OSRM API for the route.
-    3. System renders route on map.
-- Alternative Flow: Fewer than two markers → prompt user to add more.
+Use Case 3: Remove Marker
+Lead: Raymond Zhang
+MVP: Yes
+Main Flow:
+1. User selects a stop from the itinerary list.
+2. User clicks the "Remove" button.
+3. System removes the corresponding marker from the map.
+4. System removes the stop from the ordered list.
+5. System refreshes the route (if one was generated).
+Alternative Flows:
+- No Selection: If the user clicks "Remove" without selecting a stop, the system displays an error message ("Select a stop to remove").
 
-Use Case 4: Browse / Select Alternative Routes
-- Lead:
-- Main Flow:
-    1. User selects two markers with multiple route options.
-    2. System calls OSRM API with alternative routes enabled.
-    3. System displays multiple routes on the map (different colors or styles).
-    4. User can select one route to visualize prominently.
-- Alternative Flow: API does not return alternatives → do nothing
+Use Case 4: Reorder Itinerary
+Lead: MP
+MVP: Yes
+Main Flow:
+1. User selects a stop in the list.
+2. User clicks the "Up" or "Down" button.
+3. System swaps the selected stop with the adjacent stop in the list.
+4. System updates the order of the list display.
+5. System clears the existing route (forcing the user to regenerate it with the new order).
+Alternative Flows:
+- Boundary Reorder: If the user tries to move the top item up or the bottom item down, the system ignores the request or displays a message ("Cannot move marker in that direction").
 
-Use Case 5: Connect All Markers into a Single Route
-- Lead:
-- Main Flow:
-    1. User clicks "Connect All Markers" button.
-    2. System retrieves all markers in the order added (or nearest-neighbor order).
-    3. System calls OSRM API to generate a full connected path.
-    4. System draws the combined route on the map.
-- Alternative Flow: Fewer than two markers → notify user to add more.
+Use Case 5: Generate Route (Connect All Markers)
+Lead: Yi Zhao
+MVP: Yes
+Main Flow:
+1. User clicks the "Route" button.
+2. System validates that there are at least two stops in the list.
+3. System iterates through the list of stops in order.
+4. System sends requests to the OSRM API for each segment (Point A to Point B).
+5. System aggregates the route segments and draws a polyline connecting all markers on the map.
+Alternative Flows:
+- Insufficient Stops: If there are fewer than two stops, the system displays an error ("Add at least two stops to compute a full route").
+- Route Not Found: If the API cannot find a path between two points (e.g., across an ocean), the system falls back to drawing a straight line for that segment.
+
+Use Case 6: Save Stops
+Lead: Baihan
+MVP: Yes
+Main Flow:
+1. User clicks the "Save" button.
+2. System retrieves the current list of stop names and coordinates.
+3. System writes this data to a local persistent file (stoplist.txt).
+4. System displays a success message ("Stops saved!").
+Alternative Flows:
+- Write Error: If the file cannot be written, the system displays an error message ("Failed to save stops").
+
+Use Case 7: Search Suggestions
+Lead: Raymond Zhang
+MVP: No (Enhancement)
+Main Flow:
+1. User begins typing in the search bar.
+2. System waits for a brief pause (debounce).
+3. System requests matching location names from the API.
+4. System displays a dropdown list of suggested locations.
+5. User clicks a suggestion to auto-fill the search bar and execute the search.
+Alternative Flows:
+- No Matches: The system displays no suggestions.
 
 Entities：
-
-MapViewer
-- Instance Variables: zoomLevel: int, centerPosition: GeoPosition, tileFactory: TileFactory
-- Notes: Handles map rendering and tile management
 
 Marker
 - Instance Variables: position: GeoPosition
@@ -111,7 +156,7 @@ OSRM API
 
 Clean Architecture realization challenges
 1. Entities:
-    - Marker, Route, GeoPosition
+    - Marker, location
     - Business logic: mostly data representation
 
 2. Use Cases / Interactors:
