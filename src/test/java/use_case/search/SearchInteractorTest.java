@@ -29,6 +29,11 @@ class SearchInteractorTest {
         public List<Location> searchSuggestions(String query, int limit) throws IOException, InterruptedException {
             return List.of();
         }
+
+        @Override
+        public String getNameFromCoordinates(double lat, double lon) throws IOException, InterruptedException {
+            return "";
+        }
     }
 
     static class FakePresenter implements SearchOutputBoundary {
