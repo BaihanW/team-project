@@ -4,6 +4,7 @@ import data_access.FileStopListDAO;
 import data_access.OSMDataAccessObject;
 import data_access.RoutingDataAccessObject;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.addMarker.AddMarkerViewModel;
 import interface_adapter.generate_route.GenerateRouteController;
 import interface_adapter.generate_route.GenerateRoutePresenter;
 import interface_adapter.generate_route.GenerateRouteViewModel;
@@ -11,18 +12,17 @@ import interface_adapter.save_stops.SaveStopsController;
 import interface_adapter.save_stops.SaveStopsPresenter;
 import interface_adapter.search.SearchController;
 import interface_adapter.search.SearchPresenter;
-import interface_adapter.search.SearchState;
 import interface_adapter.search.SearchViewModel;
 import interface_adapter.remove_marker.RemoveMarkerController;
 import interface_adapter.remove_marker.RemoveMarkerPresenter;
+import interface_adapter.suggestion.SuggestionController;
+import interface_adapter.suggestion.SuggestionPresenter;
 import use_case.generate_route.GenerateRouteInputBoundary;
 import use_case.generate_route.GenerateRouteInteractor;
 import use_case.generate_route.GenerateRouteOutputBoundary;
 import use_case.save_stops.SaveStopsInputBoundary;
 import use_case.save_stops.SaveStopsInteractor;
 import use_case.save_stops.SaveStopsOutputBoundary;
-import interface_adapter.suggestion.SuggestionController;
-import interface_adapter.suggestion.SuggestionPresenter;
 import use_case.search.SearchInputBoundary;
 import use_case.search.SearchInteractor;
 import use_case.search.SearchOutputBoundary;
@@ -37,11 +37,7 @@ import view.ViewManager;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.IOException;
 import java.net.http.HttpClient;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 /**
  * Configures and wires the application using the simplified Clean Architecture graph
@@ -60,13 +56,11 @@ public class AppBuilder {
     private final String stopListPath = "src/main/";
     final FileStopListDAO fileStopListDAO = new FileStopListDAO(stopListPath);
 
-    private final String stopListPath = "src/main/";
-    final FileStopListDAO fileStopListDAO = new FileStopListDAO(stopListPath);
-
     private SearchViewModel searchViewModel;
     private GenerateRouteViewModel generateRouteViewModel;
     private SearchView searchView;
 
+    // 준비만 해 둔 것 (아직 wiring 안 됨)
     private AddMarkerViewModel addMarkerViewModel;
 
     public AppBuilder() {
@@ -82,20 +76,23 @@ public class AppBuilder {
     }
 
     public AppBuilder addGenerateRouteUseCase() {
-        final GenerateRouteOutputBoundary generateRoutePresenter = new GenerateRoutePresenter(generateRouteViewModel);
-        final GenerateRouteInputBoundary generateRouteInteractor = new GenerateRouteInteractor(
-                routingDataAccessObject, generateRoutePresenter);
+        final GenerateRouteOutputBoundary generateRoutePresenter =
+                new GenerateRoutePresenter(generateRouteViewModel);
+        final GenerateRouteInputBoundary generateRouteInteractor =
+                new GenerateRouteInteractor(routingDataAccessObject, generateRoutePresenter);
 
-        GenerateRouteController generateRouteController = new GenerateRouteController(generateRouteInteractor);
+        GenerateRouteController generateRouteController =
+                new GenerateRouteController(generateRouteInteractor);
         searchView.setGenerateRouteController(generateRouteController);
 
         return this;
     }
 
     public AppBuilder addSearchUseCase() {
-        final SearchOutputBoundary searchOutputBoundary = new SearchPresenter(searchViewModel);
-        final SearchInputBoundary searchInteractor = new SearchInteractor(
-                osmDataAccessObject, searchOutputBoundary);
+        final SearchOutputBoundary searchOutputBoundary =
+                new SearchPresenter(searchViewModel);
+        final SearchInputBoundary searchInteractor =
+                new SearchInteractor(osmDataAccessObject, searchOutputBoundary);
 
         SearchController searchController = new SearchController(searchInteractor);
         searchView.setSearchController(searchController);
@@ -104,30 +101,39 @@ public class AppBuilder {
     }
 
     public AppBuilder addSaveStopsUseCase() {
-        final SaveStopsOutputBoundary saveStopsOutputBoundary = new SaveStopsPresenter(searchViewModel);
-        final SaveStopsInputBoundary saveStopsInteractor = new SaveStopsInteractor(
-                fileStopListDAO, saveStopsOutputBoundary);
-        SaveStopsController saveStopsController = new SaveStopsController(saveStopsInteractor);
+        final SaveStopsOutputBoundary saveStopsOutputBoundary =
+                new SaveStopsPresenter(searchViewModel);
+        final SaveStopsInputBoundary saveStopsInteractor =
+                new SaveStopsInteractor(fileStopListDAO, saveStopsOutputBoundary);
+
+        SaveStopsController saveStopsController =
+                new SaveStopsController(saveStopsInteractor);
         searchView.setSaveStopsController(saveStopsController);
 
         return this;
     }
 
     public AppBuilder addSuggestionUseCase() {
-        final SuggestionOutputBoundary outputBoundary = new SuggestionPresenter(searchViewModel);
-        final SuggestionInputBoundary interactor = new SuggestionInteractor(osmDataAccessObject, outputBoundary);
+        final SuggestionOutputBoundary outputBoundary =
+                new SuggestionPresenter(searchViewModel);
+        final SuggestionInputBoundary interactor =
+                new SuggestionInteractor(osmDataAccessObject, outputBoundary);
 
-        SuggestionController suggestionController = new SuggestionController(interactor);
+        SuggestionController suggestionController =
+                new SuggestionController(interactor);
         searchView.setSuggestionController(suggestionController);
 
         return this;
     }
 
     public AppBuilder addRemoveMarkerUseCase() {
-        final RemoveMarkerOutputBoundary removeMarkerOutputBoundary = new RemoveMarkerPresenter(searchViewModel);
-        final RemoveMarkerInputBoundary removeMarkerInteractor = new RemoveMarkerInteractor(removeMarkerOutputBoundary);
+        final RemoveMarkerOutputBoundary removeMarkerOutputBoundary =
+                new RemoveMarkerPresenter(searchViewModel);
+        final RemoveMarkerInputBoundary removeMarkerInteractor =
+                new RemoveMarkerInteractor(removeMarkerOutputBoundary);
 
-        RemoveMarkerController removeMarkerController = new RemoveMarkerController(removeMarkerInteractor);
+        RemoveMarkerController removeMarkerController =
+                new RemoveMarkerController(removeMarkerInteractor);
         searchView.setRemoveMarkerController(removeMarkerController);
 
         return this;
@@ -137,16 +143,13 @@ public class AppBuilder {
         try {
             FileStopListDAO.LoadedStops stored = fileStopListDAO.load();
 
-            if (!stored.names.isEmpty()) {
-
+            if (!stored.names().isEmpty()) {
                 var state = searchViewModel.getState();
 
-                // Load stops into state
-                state.setStopNames(stored.names);
-                state.setStops(stored.positions);
+                state.setStopNames(stored.names());
+                state.setStops(stored.positions());
 
-                // Center map on the last stop
-                var last = stored.positions.get(stored.positions.size() - 1);
+                var last = stored.positions().get(stored.positions().size() - 1);
                 state.setLatitude(last.getLatitude());
                 state.setLongitude(last.getLongitude());
 
@@ -160,8 +163,6 @@ public class AppBuilder {
 
         return this;
     }
-
-
 
     public JFrame build() {
         final JFrame application = new JFrame("trip planner");

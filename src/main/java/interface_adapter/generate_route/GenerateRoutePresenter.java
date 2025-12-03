@@ -17,7 +17,7 @@ public class GenerateRoutePresenter implements GenerateRouteOutputBoundary {
         state.setRouteSegments(outputData.getSegments());
         state.setErrorMessage(null);
         routeViewModel.setState(state);
-        routeViewModel.firePropertyChange("route", state);
+        routeViewModel.firePropertyChange();
     }
 
     @Override
@@ -25,6 +25,6 @@ public class GenerateRoutePresenter implements GenerateRouteOutputBoundary {
         GenerateRouteState state = new GenerateRouteState(routeViewModel.getState());
         state.setErrorMessage(error);
         routeViewModel.setState(state);
-        routeViewModel.firePropertyChange("error", state);
+        routeViewModel.firePropertyChange();
     }
 }

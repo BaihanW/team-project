@@ -10,12 +10,10 @@ public class Main {
             JFrame app = builder
                     .addSearchView()
                     .addSearchUseCase()
-                    .addAddMarkerView()
-                    .addAddMarkerUseCase()
-                    .addAddMarkerView()
                     .addSaveStopsUseCase()
                     .addSuggestionUseCase()
                     .addRemoveMarkerUseCase()
+                    .addGenerateRouteUseCase()
                     .loadStopsOnStartup()
                     .build();
             app.pack();

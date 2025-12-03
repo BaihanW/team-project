@@ -85,8 +85,7 @@ public class MapPanel extends JPanel {
     /* --------------------- Marker / Controller ---------------------- */
 
 
-    private final Set<Waypoint> waypoints = new HashSet<>();
-    private final WaypointPainter<Waypoint> waypointPainter = new WaypointPainter<>();
+
 
 
     private AddMarkerController addMarkerController;
