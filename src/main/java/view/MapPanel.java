@@ -2,6 +2,7 @@ package view;
 
 import org.jxmapviewer.*;
 import org.jxmapviewer.input.PanMouseInputListener;
+import org.jxmapviewer.painter.CompoundPainter;
 import org.jxmapviewer.viewer.*;
 import org.jxmapviewer.painter.CompoundPainter;
 
@@ -16,6 +17,15 @@ import java.util.List;
 import java.util.Set;
 import java.util.Arrays;
 import java.util.function.Consumer;
+import java.util.Arrays;
+import java.util.List;
+import java.util.function.Consumer;
+import view.RoutePainter;
+import java.util.HashSet;
+import java.util.Set;
+import org.jxmapviewer.viewer.WaypointPainter;
+import org.jxmapviewer.viewer.Waypoint;
+import org.jxmapviewer.viewer.DefaultWaypoint;
 
 /**
  * MapPanel
@@ -46,6 +56,12 @@ public class MapPanel extends JPanel {
     /* ================================================================
      *                   INSTANCE FIELDS
      * ================================================================ */
+
+    //Felix
+    private final Set<Waypoint> waypoints = new HashSet<>();
+    private final WaypointPainter<Waypoint> waypointPainter = new WaypointPainter<>();
+    private RoutePainter routePainter;
+    private final CompoundPainter<JXMapViewer> compoundPainter = new CompoundPainter<>();
 
     /** The JXMapViewer instance that renders the OSM map. */
     private final JXMapViewer mapViewer;
@@ -104,6 +120,12 @@ public class MapPanel extends JPanel {
         mapViewer.setAddressLocation(new GeoPosition(43.6532, -79.3832));
         mapViewer.setZoom(5);
 
+        // Add for routing
+        waypointPainter.setWaypoints(waypoints);
+        routePainter = new RoutePainter(null);
+        compoundPainter.setPainters(Arrays.asList(routePainter, waypointPainter));
+        mapViewer.setOverlayPainter(compoundPainter);
+
         // Remove default wheel zoom
         removeDefaultWheelListeners();
 
@@ -144,6 +166,22 @@ public class MapPanel extends JPanel {
                 }
             }
         });
+    }
+
+    public void setRouteSegments(List<List<GeoPosition>> segments) {
+        this.routePainter = new RoutePainter(null);
+        this.routePainter.setSegments(segments);
+        compoundPainter.setPainters(Arrays.asList(routePainter, waypointPainter));
+        mapViewer.repaint();
+    }
+
+    public void setStops(List<GeoPosition> stops) {
+        waypoints.clear();
+        for (GeoPosition pos : stops) {
+            waypoints.add(new DefaultWaypoint(pos));
+        }
+        waypointPainter.setWaypoints(waypoints);
+        mapViewer.repaint();
     }
 
     /* ================================================================

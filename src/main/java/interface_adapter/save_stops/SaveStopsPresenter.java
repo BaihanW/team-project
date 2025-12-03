@@ -18,6 +18,7 @@ public class SaveStopsPresenter implements SaveStopsOutputBoundary {
         state.setErrorMessage(null);
         viewModel.setState(state);
         viewModel.firePropertyChange();
+        viewModel.showSaveSuccessMessage("Stops saved!");
     }
 
     @Override
@@ -26,6 +27,7 @@ public class SaveStopsPresenter implements SaveStopsOutputBoundary {
         state.setErrorMessage(error);
         viewModel.setState(state);
         viewModel.firePropertyChange();
+        viewModel.showSaveErrorMessage(error);
     }
 }
 

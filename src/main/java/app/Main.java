@@ -13,6 +13,8 @@ public class Main {
                 .addSuggestionUseCase()
                 .addSaveStopsUseCase()
                 .loadStopsOnStartup()
+                .addRemoveMarkerUseCase()
+                .addGenerateRouteUseCase()
                 .build();
 
         application.pack();
